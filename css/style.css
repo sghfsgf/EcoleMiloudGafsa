@@ -110,6 +110,7 @@ body {
 }
 
 
+```css
 .school-logo {
 
     width: 70px;
@@ -128,12 +129,26 @@ body {
 
     border-radius: 50%;
 
-    font-size: 38px;
+    overflow: hidden;
 
     box-shadow: var(--ombre);
 
     flex-shrink: 0;
 }
+
+
+.school-logo img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+}
+```
+
 
 
 .school-title {
