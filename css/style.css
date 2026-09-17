@@ -1,38 +1,49 @@
-
 /* =========================================================
    ECOLE MILOUD GAFSA
-   Feuille de style principale
+   DESIGN FINAL
    ========================================================= */
 
 
 /* =========================================================
-   1. VARIABLES
+   1. POLICE ARABE
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap');
+
+
+/* =========================================================
+   2. VARIABLES
    ========================================================= */
 
 :root {
 
-    --bleu-principal: #2f80a8;
     --bleu-fonce: #174a6e;
+    --bleu-principal: #2f80a8;
     --bleu-clair: #dff1ff;
-    --bleu-tres-clair: #f4faff;
+    --bleu-tres-clair: #f5fbff;
 
-    --orange-principal: #f4a261;
+    --orange: #f4a261;
     --orange-clair: #f6c66d;
-    --orange-tres-clair: #fff4e6;
+    --orange-tres-clair: #fff6eb;
 
     --blanc: #ffffff;
 
-    --gris-texte: #444444;
-    --gris-clair: #eeeeee;
+    --gris-texte: #46545d;
+    --gris-secondaire: #6d7d86;
+    --gris-bordure: #dceaf2;
 
-    --ombre: 0 3px 10px rgba(0, 0, 0, 0.08);
+    --ombre-legere:
+        0 3px 12px rgba(23, 74, 110, 0.08);
 
-    --rayon: 10px;
+    --ombre-hover:
+        0 8px 22px rgba(23, 74, 110, 0.13);
+
+    --rayon: 12px;
 }
 
 
 /* =========================================================
-   2. RESET
+   3. RESET
    ========================================================= */
 
 * {
@@ -48,7 +59,6 @@ html {
 body {
 
     margin: 0;
-
     padding: 0;
 
     background: #f8fbfd;
@@ -56,14 +66,15 @@ body {
     color: var(--gris-texte);
 
     font-family:
+        "Cairo",
+        "Noto Sans Arabic",
         "Tahoma",
         "Arial",
-        "Noto Sans Arabic",
         sans-serif;
 
     font-size: 16px;
 
-    line-height: 1.7;
+    line-height: 1.8;
 
     direction: rtl;
 
@@ -71,8 +82,34 @@ body {
 }
 
 
+/* Tous les éléments textuels */
+
+h1,
+h2,
+h3,
+h4,
+p,
+a,
+button,
+input,
+label {
+
+    font-family:
+        "Cairo",
+        "Noto Sans Arabic",
+        "Tahoma",
+        "Arial",
+        sans-serif;
+}
+
+
+a {
+    transition: all 0.25s ease;
+}
+
+
 /* =========================================================
-   3. EN-TÊTE
+   4. EN-TÊTE
    ========================================================= */
 
 .site-header {
@@ -80,21 +117,23 @@ body {
     background:
         linear-gradient(
             135deg,
-            #fff4e6,
-            #e8f6ff
+            #fff7ed 0%,
+            #ffffff 45%,
+            #eaf7ff 100%
         );
 
-    border-bottom: 1px solid #d6eaf5;
+    border-bottom: 1px solid var(--gris-bordure);
 }
 
 
 .header-container {
 
+    width: 100%;
     max-width: 1200px;
 
     margin: 0 auto;
 
-    padding: 20px 20px;
+    padding: 18px 20px;
 }
 
 
@@ -106,21 +145,18 @@ body {
 
     justify-content: center;
 
-    gap: 18px;
+    gap: 15px;
 }
-
 
 
 .school-logo {
 
     width: 50px;
-
     height: 50px;
 
     display: flex;
 
     align-items: center;
-
     justify-content: center;
 
     background: #ffffff;
@@ -131,19 +167,21 @@ body {
 
     overflow: hidden;
 
-    box-shadow: var(--ombre);
+    box-shadow: var(--ombre-legere);
 
     flex-shrink: 0;
 }
 
+
 .school-logo img {
-    width: 32px;
-    height: 32px;
+
+    width: 28px;
+    height: 28px;
+
     object-fit: cover;
+
     display: block;
 }
-
-
 
 
 .school-title {
@@ -158,7 +196,7 @@ body {
 
     color: var(--bleu-fonce);
 
-    font-size: 28px;
+    font-size: 27px;
 
     font-weight: 700;
 
@@ -168,18 +206,20 @@ body {
 
 .school-title p {
 
-    margin: 5px 0 0;
+    margin: 3px 0 0;
 
-    color: #55778c;
+    color: #587888;
 
-    font-size: 16px;
+    font-size: 15px;
 
     font-weight: 500;
+
+    line-height: 1.6;
 }
 
 
 /* =========================================================
-   4. MENU PRINCIPAL
+   5. MENU PRINCIPAL
    ========================================================= */
 
 .main-navigation {
@@ -191,7 +231,7 @@ body {
     border-bottom: 2px solid #b9ddf5;
 
     box-shadow:
-        0 2px 7px rgba(0, 0, 0, 0.08);
+        0 2px 8px rgba(23, 74, 110, 0.08);
 
     direction: rtl;
 
@@ -203,25 +243,27 @@ body {
 }
 
 
-/* Conteneur du menu */
-
 .nav-container {
 
     display: flex;
 
-    justify-content: center;
-
     align-items: center;
 
-    gap: 5px;
+    justify-content: center;
 
-    min-height: 60px;
+    flex-wrap: nowrap;
 
-    padding: 7px 12px;
+    gap: 4px;
+
+    min-height: 58px;
+
+    padding: 6px 10px;
 
     overflow-x: auto;
 
     scrollbar-width: thin;
+
+    scrollbar-color: #a9cfdf transparent;
 }
 
 
@@ -235,9 +277,13 @@ body {
 
     justify-content: center;
 
-    min-height: 43px;
+    flex-shrink: 0;
 
-    padding: 8px 15px;
+    min-height: 42px;
+
+    padding: 7px 14px;
+
+    border-radius: 9px;
 
     color: var(--bleu-fonce);
 
@@ -245,27 +291,26 @@ body {
 
     text-decoration: none;
 
-    font-family:
-        "Tahoma",
-        "Arial",
-        "Noto Sans Arabic",
-        sans-serif;
-
-    font-size: 17px;
+    font-size: 16px;
 
     font-weight: 600;
 
     line-height: 1.6;
 
     white-space: nowrap;
+}
 
-    border-radius: 9px;
 
-    transition:
-        background-color 0.25s ease,
-        color 0.25s ease,
-        box-shadow 0.25s ease,
-        transform 0.2s ease;
+/* Premier volet : accueil */
+
+.nav-container a:first-child {
+
+    background: #ffffff;
+
+    color: var(--bleu-principal);
+
+    box-shadow:
+        0 2px 6px rgba(23, 74, 110, 0.08);
 }
 
 
@@ -275,12 +320,25 @@ body {
 
     background: #ffffff;
 
-    color: #0b6fa4;
+    color: var(--bleu-principal);
 
     box-shadow:
-        0 2px 7px rgba(0, 0, 0, 0.10);
+        0 3px 9px rgba(23, 74, 110, 0.10);
 
     transform: translateY(-1px);
+}
+
+
+/* Volet actif JS éventuel */
+
+.nav-container a.active {
+
+    background: #ffffff;
+
+    color: var(--bleu-principal);
+
+    box-shadow:
+        0 3px 9px rgba(23, 74, 110, 0.10);
 }
 
 
@@ -290,22 +348,24 @@ body {
 
     background: var(--orange-clair);
 
-    color: #173f59;
+    color: #5a3a16;
 
     font-weight: 700;
+
+    margin-right: 4px;
 }
 
 
 .nav-container a.admin-link:hover {
 
-    background: #f3b84f;
+    background: var(--orange);
 
-    color: #173f59;
+    color: #ffffff;
 }
 
 
 /* =========================================================
-   5. ACCUEIL / HERO
+   6. ACCUEIL
    ========================================================= */
 
 .hero-section {
@@ -314,18 +374,21 @@ body {
         linear-gradient(
             135deg,
             #eaf7ff,
-            #fff7ed
+            #ffffff 50%,
+            #fff5e9
         );
 
-    padding: 55px 20px;
+    border-bottom: 1px solid var(--gris-bordure);
 
-    border-bottom: 1px solid #e2edf3;
+    padding: 50px 20px;
 }
 
 
 .hero-container {
 
-    max-width: 1000px;
+    width: 100%;
+
+    max-width: 950px;
 
     margin: 0 auto;
 
@@ -335,35 +398,37 @@ body {
 
 .hero-container h2 {
 
-    margin: 0 0 15px;
+    margin: 0 0 12px;
 
     color: var(--bleu-fonce);
 
-    font-size: 30px;
-
-    line-height: 1.7;
+    font-size: 29px;
 
     font-weight: 700;
+
+    line-height: 1.8;
 }
 
 
 .hero-container > p {
 
+    max-width: 750px;
+
     margin: 0 auto 25px;
 
-    color: #526f7f;
+    color: var(--gris-secondaire);
 
-    font-size: 18px;
+    font-size: 17px;
 }
 
 
 /* =========================================================
-   6. RECHERCHE
+   7. RECHERCHE
    ========================================================= */
 
 .search-box {
 
-    max-width: 700px;
+    max-width: 720px;
 
     margin: 25px auto 0;
 
@@ -371,11 +436,11 @@ body {
 
     background: #ffffff;
 
-    border: 1px solid #dcecf5;
+    border: 1px solid var(--gris-bordure);
 
     border-radius: var(--rayon);
 
-    box-shadow: var(--ombre);
+    box-shadow: var(--ombre-legere);
 }
 
 
@@ -383,39 +448,43 @@ body {
 
     display: block;
 
-    margin-bottom: 8px;
+    margin-bottom: 7px;
 
     color: var(--bleu-fonce);
 
-    font-weight: 700;
+    font-size: 15px;
 
-    font-size: 16px;
+    font-weight: 700;
 }
 
 
 .search-box input {
 
-    width: 70%;
+    width: 72%;
 
-    min-height: 44px;
+    min-height: 45px;
 
     padding: 8px 13px;
 
-    border: 1px solid #c9dce8;
+    border: 1px solid #c8dce7;
 
     border-radius: 8px;
 
     outline: none;
 
-    font-family:
-        "Tahoma",
-        "Arial",
-        "Noto Sans Arabic",
-        sans-serif;
+    background: #ffffff;
+
+    color: var(--gris-texte);
 
     font-size: 15px;
 
     direction: rtl;
+}
+
+
+.search-box input::placeholder {
+
+    color: #91a0a8;
 }
 
 
@@ -430,9 +499,9 @@ body {
 
 .search-box button {
 
-    min-height: 44px;
+    min-height: 45px;
 
-    margin-right: 6px;
+    margin-right: 5px;
 
     padding: 8px 18px;
 
@@ -440,44 +509,35 @@ body {
 
     border-radius: 8px;
 
-    background: var(--orange-principal);
+    background: var(--orange);
 
     color: #ffffff;
-
-    font-family:
-        "Tahoma",
-        "Arial",
-        sans-serif;
 
     font-size: 15px;
 
     font-weight: 700;
 
     cursor: pointer;
-
-    transition:
-        background-color 0.2s ease,
-        transform 0.2s ease;
 }
 
 
 .search-box button:hover {
 
-    background: #e8924f;
+    background: #e8904e;
 
     transform: translateY(-1px);
 }
 
 
 /* =========================================================
-   7. CONTENEURS
+   8. CONTENEURS
    ========================================================= */
 
 .section-container {
 
     width: 100%;
 
-    max-width: 1200px;
+    max-width: 1180px;
 
     margin: 0 auto;
 
@@ -486,22 +546,16 @@ body {
 
 
 /* =========================================================
-   8. SECTIONS
+   9. SECTIONS
    ========================================================= */
 
 .content-section {
 
-    scroll-margin-top: 75px;
+    scroll-margin-top: 72px;
 
     background: #ffffff;
 
-    border-bottom: 1px solid #e7edf1;
-}
-
-
-.content-section:nth-child(even) {
-
-    background: var(--bleu-tres-clair);
+    border-bottom: 1px solid #e7eef3;
 }
 
 
@@ -511,38 +565,51 @@ body {
 }
 
 
+.special-section {
+
+    background:
+        linear-gradient(
+            135deg,
+            #fffaf3,
+            #f1f9ff
+        );
+}
+
+
 .section-container > h2 {
 
-    margin: 0 0 10px;
+    margin: 0 0 8px;
 
     color: var(--bleu-fonce);
 
-    font-size: 25px;
+    text-align: center;
+
+    font-size: 24px;
 
     font-weight: 700;
 
-    line-height: 1.6;
-
-    text-align: center;
+    line-height: 1.7;
 }
 
 
 .section-intro {
 
-    margin: 0 auto 30px;
-
     max-width: 800px;
+
+    margin: 0 auto 28px;
+
+    color: var(--gris-secondaire);
 
     text-align: center;
 
-    color: #607887;
+    font-size: 15px;
 
-    font-size: 16px;
+    line-height: 1.8;
 }
 
 
 /* =========================================================
-   9. CARTES
+   10. CARTES PRINCIPALES
    ========================================================= */
 
 .cards-container {
@@ -550,25 +617,25 @@ body {
     display: grid;
 
     grid-template-columns:
-        repeat(auto-fit, minmax(240px, 1fr));
+        repeat(auto-fit, minmax(235px, 1fr));
 
-    gap: 20px;
+    gap: 18px;
 }
 
 
 .feature-card {
 
+    padding: 22px 18px;
+
     background: #ffffff;
 
-    border: 1px solid #dcecf5;
+    border: 1px solid var(--gris-bordure);
 
     border-radius: var(--rayon);
 
-    padding: 24px 20px;
-
     text-align: center;
 
-    box-shadow: var(--ombre);
+    box-shadow: var(--ombre-legere);
 
     transition:
         transform 0.25s ease,
@@ -580,26 +647,31 @@ body {
 
     transform: translateY(-4px);
 
-    box-shadow:
-        0 7px 18px rgba(0, 0, 0, 0.11);
+    box-shadow: var(--ombre-hover);
 }
 
 
 .card-icon {
 
-    font-size: 38px;
-
     margin-bottom: 8px;
+
+    font-size: 36px;
+
+    line-height: 1;
 }
 
 
 .feature-card h3 {
 
-    margin: 5px 0 10px;
+    margin: 7px 0 10px;
 
     color: var(--bleu-fonce);
 
-    font-size: 19px;
+    font-size: 18px;
+
+    font-weight: 700;
+
+    line-height: 1.6;
 }
 
 
@@ -607,9 +679,11 @@ body {
 
     margin: 0 0 15px;
 
-    color: #5f6f78;
+    color: var(--gris-secondaire);
 
-    font-size: 15px;
+    font-size: 14px;
+
+    line-height: 1.8;
 }
 
 
@@ -617,33 +691,32 @@ body {
 
     display: inline-block;
 
-    padding: 8px 15px;
+    padding: 7px 14px;
 
     background: var(--bleu-clair);
 
     color: var(--bleu-fonce);
 
-    border-radius: 7px;
+    border-radius: 8px;
 
     text-decoration: none;
 
+    font-size: 14px;
+
     font-weight: 600;
-
-    font-size: 15px;
-
-    transition:
-        background-color 0.2s ease;
 }
 
 
 .feature-card a:hover {
 
-    background: #c7e7f8;
+    background: #c7e8f8;
+
+    color: #0d5d88;
 }
 
 
 /* =========================================================
-   10. DOCUMENTS
+   11. CARTES DOCUMENTS
    ========================================================= */
 
 .document-grid {
@@ -651,29 +724,29 @@ body {
     display: grid;
 
     grid-template-columns:
-        repeat(auto-fit, minmax(230px, 1fr));
+        repeat(auto-fit, minmax(220px, 1fr));
 
-    gap: 20px;
+    gap: 18px;
 }
 
 
 .document-card {
 
+    padding: 21px 18px;
+
     background: #ffffff;
 
-    border: 1px solid #dcecf5;
+    border: 1px solid var(--gris-bordure);
 
     border-radius: var(--rayon);
 
-    padding: 22px;
-
     text-align: center;
 
-    box-shadow: var(--ombre);
+    box-shadow: var(--ombre-legere);
 
     transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
 }
 
 
@@ -681,28 +754,31 @@ body {
 
     transform: translateY(-3px);
 
-    box-shadow:
-        0 6px 15px rgba(0, 0, 0, 0.10);
+    box-shadow: var(--ombre-hover);
 }
 
 
 .document-card h3 {
 
-    margin: 0 0 10px;
+    margin: 0 0 9px;
 
     color: var(--bleu-fonce);
 
-    font-size: 18px;
+    font-size: 17px;
+
+    font-weight: 700;
+
+    line-height: 1.7;
 }
 
 
 .document-card p {
 
-    margin: 0 0 15px;
+    margin: 0 0 14px;
 
-    color: #657781;
+    color: var(--gris-secondaire);
 
-    font-size: 15px;
+    font-size: 14px;
 }
 
 
@@ -710,40 +786,27 @@ body {
 
     display: inline-block;
 
-    padding: 8px 14px;
+    padding: 7px 13px;
 
     background: var(--orange-tres-clair);
 
-    color: #a85d20;
+    color: #a45a20;
 
-    border-radius: 7px;
+    border-radius: 8px;
 
     text-decoration: none;
 
-    font-weight: 600;
+    font-size: 14px;
 
-    font-size: 15px;
+    font-weight: 600;
 }
 
 
 .pdf-link:hover {
 
-    background: #ffe3c4;
-}
+    background: #ffe4c9;
 
-
-/* =========================================================
-   11. SECTION SPÉCIALE
-   ========================================================= */
-
-.special-section {
-
-    background:
-        linear-gradient(
-            135deg,
-            #fff8ef,
-            #f0f9ff
-        );
+    color: #8b4918;
 }
 
 
@@ -757,33 +820,35 @@ body {
 
     margin: 0 auto;
 
-    padding: 25px;
+    padding: 23px;
 
     background: #ffffff;
 
-    border-right: 5px solid var(--orange-principal);
+    border-right: 5px solid var(--orange);
 
-    border-radius: 8px;
+    border-radius: 10px;
 
-    box-shadow: var(--ombre);
+    box-shadow: var(--ombre-legere);
 }
 
 
 .announcement-card h3 {
 
-    margin-top: 0;
+    margin: 0 0 8px;
 
     color: var(--bleu-fonce);
 
-    font-size: 19px;
+    font-size: 18px;
 }
 
 
 .announcement-card p {
 
-    margin-bottom: 0;
+    margin: 0;
 
-    color: #5d6f79;
+    color: var(--gris-secondaire);
+
+    font-size: 15px;
 }
 
 
@@ -796,29 +861,29 @@ body {
     display: grid;
 
     grid-template-columns:
-        repeat(auto-fit, minmax(230px, 1fr));
+        repeat(auto-fit, minmax(220px, 1fr));
 
-    gap: 20px;
+    gap: 18px;
 }
 
 
 .gallery-category {
 
+    padding: 21px 18px;
+
     background: #ffffff;
 
-    border: 1px solid #dcecf5;
+    border: 1px solid var(--gris-bordure);
 
     border-radius: var(--rayon);
 
-    padding: 22px;
-
     text-align: center;
 
-    box-shadow: var(--ombre);
+    box-shadow: var(--ombre-legere);
 
     transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
 }
 
 
@@ -826,38 +891,41 @@ body {
 
     transform: translateY(-3px);
 
-    box-shadow:
-        0 6px 15px rgba(0, 0, 0, 0.10);
+    box-shadow: var(--ombre-hover);
 }
 
 
 .gallery-icon {
 
-    font-size: 38px;
-
     margin-bottom: 8px;
+
+    font-size: 36px;
+
+    line-height: 1;
 }
 
 
 .gallery-category h3 {
 
-    margin: 5px 0 10px;
+    margin: 6px 0 9px;
 
     color: var(--bleu-fonce);
 
-    font-size: 18px;
+    font-size: 17px;
 
-    line-height: 1.6;
+    font-weight: 700;
+
+    line-height: 1.7;
 }
 
 
 .gallery-category p {
 
-    margin: 0 0 15px;
+    margin: 0 0 14px;
 
-    color: #687984;
+    color: var(--gris-secondaire);
 
-    font-size: 15px;
+    font-size: 14px;
 }
 
 
@@ -865,15 +933,17 @@ body {
 
     display: inline-block;
 
-    padding: 8px 14px;
+    padding: 7px 13px;
 
     background: var(--bleu-clair);
 
     color: var(--bleu-fonce);
 
-    border-radius: 7px;
+    border-radius: 8px;
 
     text-decoration: none;
+
+    font-size: 14px;
 
     font-weight: 600;
 }
@@ -881,24 +951,22 @@ body {
 
 .gallery-link:hover {
 
-    background: #c7e7f8;
+    background: #c7e8f8;
 }
 
 
-/* =========================================================
-   14. GALERIE PHOTOS DYNAMIQUE
-   ========================================================= */
+/* Galerie photos */
 
 .photo-gallery {
 
     display: grid;
 
     grid-template-columns:
-        repeat(auto-fit, minmax(200px, 1fr));
+        repeat(auto-fit, minmax(190px, 1fr));
 
-    gap: 18px;
+    gap: 16px;
 
-    margin-top: 30px;
+    margin-top: 28px;
 }
 
 
@@ -908,22 +976,24 @@ body {
 
     margin: 0;
 
-    padding: 25px;
+    padding: 23px;
 
     background: #f8fbfd;
 
-    border: 1px dashed #c9dce8;
+    border: 1px dashed #c7dce7;
 
-    border-radius: 8px;
+    border-radius: 9px;
 
     text-align: center;
 
-    color: #71828c;
+    color: #71818a;
+
+    font-size: 15px;
 }
 
 
 /* =========================================================
-   15. À PROPOS
+   14. À PROPOS
    ========================================================= */
 
 .about-content {
@@ -932,15 +1002,15 @@ body {
 
     margin: 0 auto;
 
-    padding: 28px;
+    padding: 25px;
 
     background: #ffffff;
 
-    border: 1px solid #dcecf5;
+    border: 1px solid var(--gris-bordure);
 
     border-radius: var(--rayon);
 
-    box-shadow: var(--ombre);
+    box-shadow: var(--ombre-legere);
 }
 
 
@@ -950,20 +1020,24 @@ body {
 
     color: var(--bleu-fonce);
 
-    font-size: 21px;
+    font-size: 20px;
 }
 
 
 .about-content p {
 
-    color: #566973;
+    margin-bottom: 10px;
 
-    font-size: 16px;
+    color: var(--gris-texte);
+
+    font-size: 15px;
+
+    line-height: 2;
 }
 
 
 /* =========================================================
-   16. CONTACT
+   15. CONTACT
    ========================================================= */
 
 .contact-content {
@@ -972,25 +1046,27 @@ body {
 
     margin: 0 auto;
 
-    padding: 25px;
+    padding: 24px;
 
     background: #ffffff;
 
-    border: 1px solid #dcecf5;
+    border: 1px solid var(--gris-bordure);
 
     border-radius: var(--rayon);
 
-    box-shadow: var(--ombre);
+    box-shadow: var(--ombre-legere);
 }
 
 
 .contact-content p {
 
-    margin: 10px 0;
+    margin: 9px 0;
 
-    color: #526773;
+    color: var(--gris-texte);
 
-    font-size: 16px;
+    font-size: 15px;
+
+    line-height: 2;
 }
 
 
@@ -1001,24 +1077,29 @@ body {
 
 
 /* =========================================================
-   17. PIED DE PAGE
+   16. PIED DE PAGE
    ========================================================= */
 
 .site-footer {
 
-    background: #174a6e;
+    background:
+        linear-gradient(
+            135deg,
+            #174a6e,
+            #205f84
+        );
 
     color: #ffffff;
 
     text-align: center;
 
-    padding: 25px 15px;
+    padding: 24px 15px;
 }
 
 
 .footer-container {
 
-    max-width: 1200px;
+    max-width: 1180px;
 
     margin: 0 auto;
 }
@@ -1026,9 +1107,25 @@ body {
 
 .site-footer p {
 
-    margin: 5px 0;
+    margin: 4px 0;
 
     font-size: 14px;
+
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   17. FOCUS ACCESSIBILITÉ
+   ========================================================= */
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+
+    outline: 3px solid var(--orange);
+
+    outline-offset: 2px;
 }
 
 
@@ -1042,29 +1139,27 @@ body {
 
         justify-content: flex-start;
 
-        gap: 4px;
-
-        padding: 6px 9px;
+        min-height: 56px;
     }
 
 
     .nav-container a {
 
-        font-size: 16px;
+        font-size: 15px;
 
-        padding: 8px 13px;
+        padding: 7px 12px;
     }
 
 
     .school-title h1 {
 
-        font-size: 25px;
+        font-size: 24px;
     }
 
 
     .hero-container h2 {
 
-        font-size: 27px;
+        font-size: 26px;
     }
 }
 
@@ -1077,7 +1172,7 @@ body {
 
     .header-container {
 
-        padding: 15px 10px;
+        padding: 14px 10px;
     }
 
 
@@ -1089,85 +1184,89 @@ body {
 
     .school-logo {
 
-        width: 55px;
+        width: 45px;
+        height: 45px;
+    }
 
-        height: 55px;
 
-        font-size: 30px;
+    .school-logo img {
+
+        width: 25px;
+        height: 25px;
     }
 
 
     .school-title h1 {
 
-        font-size: 20px;
+        font-size: 19px;
 
-        line-height: 1.5;
+        line-height: 1.6;
     }
 
 
     .school-title p {
 
-        font-size: 14px;
+        font-size: 13px;
     }
 
 
-    /* Menu */
-
-    .main-navigation {
-
-        position: sticky;
-
-        top: 0;
-    }
-
+    /* MENU */
 
     .nav-container {
 
         justify-content: flex-start;
 
-        min-height: 54px;
+        min-height: 53px;
 
-        padding: 6px 8px;
+        padding: 5px 7px;
 
-        gap: 4px;
+        gap: 3px;
+
+        scrollbar-width: none;
+    }
+
+
+    .nav-container::-webkit-scrollbar {
+
+        display: none;
     }
 
 
     .nav-container a {
 
-        min-height: 40px;
+        min-height: 39px;
 
-        padding: 7px 11px;
+        padding: 6px 10px;
 
-        font-size: 15px;
+        font-size: 14px;
 
         border-radius: 8px;
     }
 
 
-    /* Accueil */
+    /* HERO */
 
     .hero-section {
 
-        padding: 38px 15px;
+        padding: 36px 15px;
     }
 
 
     .hero-container h2 {
 
-        font-size: 23px;
+        font-size: 22px;
 
-        line-height: 1.7;
+        line-height: 1.8;
     }
 
 
     .hero-container > p {
 
-        font-size: 16px;
+        font-size: 15px;
     }
 
 
-    /* Recherche */
+    /* RECHERCHE */
 
     .search-box {
 
@@ -1191,27 +1290,27 @@ body {
     }
 
 
-    /* Sections */
+    /* SECTIONS */
 
     .section-container {
 
-        padding: 35px 15px;
+        padding: 34px 15px;
     }
 
 
     .section-container > h2 {
 
-        font-size: 22px;
+        font-size: 21px;
     }
 
 
     .section-intro {
 
-        font-size: 15px;
+        font-size: 14px;
     }
 
 
-    /* Cartes */
+    /* CARTES */
 
     .cards-container,
     .document-grid,
@@ -1223,20 +1322,38 @@ body {
 
 
 /* =========================================================
-   20. ACCESSIBILITÉ
+   20. PETITS TÉLÉPHONES
    ========================================================= */
 
-a:focus-visible,
-button:focus-visible,
-input:focus-visible {
+@media (max-width: 400px) {
 
-    outline: 3px solid #f4a261;
+    .school-title h1 {
 
-    outline-offset: 2px;
+        font-size: 17px;
+    }
+
+
+    .school-title p {
+
+        font-size: 12px;
+    }
+
+
+    .nav-container a {
+
+        font-size: 13px;
+
+        padding: 6px 9px;
+    }
+
+
+    .hero-container h2 {
+
+        font-size: 20px;
+    }
 }
 
 
 /* =========================================================
-   FIN DU STYLE
+   FIN
    ========================================================= */
-
