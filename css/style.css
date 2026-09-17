@@ -136,18 +136,13 @@ body {
     flex-shrink: 0;
 }
 
-
 .school-logo img {
-
-    width: 38%;
-
-    height: 38%;
-
+    width: 32px;
+    height: 32px;
     object-fit: cover;
-
     display: block;
 }
-```
+
 
 
 
