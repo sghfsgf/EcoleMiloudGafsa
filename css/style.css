@@ -1,8 +1,7 @@
+```css
 /* =========================================================
-   المدرسة الابتدائية نهج ميلود
-   style.css
-   Style proche de SIGE
-   RTL - Arabe - Responsive
+   ECOLE MILOUD GAFSA
+   Feuille de style principale
    ========================================================= */
 
 
@@ -11,31 +10,24 @@
    ========================================================= */
 
 :root {
-    --primary: #2563eb;
-    --primary-dark: #1d4ed8;
-    --primary-light: #eff6ff;
 
-    --orange: #f59e0b;
-    --orange-dark: #d97706;
-    --orange-light: #fff7ed;
+    --bleu-principal: #2f80a8;
+    --bleu-fonce: #174a6e;
+    --bleu-clair: #dff1ff;
+    --bleu-tres-clair: #f4faff;
 
-    --success: #16a34a;
-    --danger: #dc2626;
+    --orange-principal: #f4a261;
+    --orange-clair: #f6c66d;
+    --orange-tres-clair: #fff4e6;
 
-    --text: #1f2937;
-    --text-light: #6b7280;
-    --text-muted: #9ca3af;
+    --blanc: #ffffff;
 
-    --background: #f5f7fa;
-    --white: #ffffff;
+    --gris-texte: #444444;
+    --gris-clair: #eeeeee;
 
-    --border: #e5e7eb;
-    --border-dark: #d1d5db;
+    --ombre: 0 3px 10px rgba(0, 0, 0, 0.08);
 
-    --shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-    --shadow-hover: 0 4px 14px rgba(0, 0, 0, 0.09);
-
-    --radius: 8px;
+    --rayon: 10px;
 }
 
 
@@ -44,1288 +36,1197 @@
    ========================================================= */
 
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
 }
+
 
 html {
     scroll-behavior: smooth;
 }
 
+
 body {
-    direction: rtl;
-    text-align: right;
-
-    font-family:
-        Tahoma,
-        Arial,
-        "Segoe UI",
-        sans-serif;
-
-    font-size: 14px;
-    line-height: 1.6;
-
-    color: var(--text);
-
-    background: var(--background);
-
-    min-height: 100vh;
-}
-
-
-/* =========================================================
-   3. TEXTES
-   ========================================================= */
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    font-family:
-        Tahoma,
-        Arial,
-        "Segoe UI",
-        sans-serif;
-
-    color: var(--text);
-
-    line-height: 1.45;
 
     margin: 0;
-}
 
-h1 {
-    font-size: 24px;
-    font-weight: 700;
-}
+    padding: 0;
 
-h2 {
-    font-size: 20px;
-    font-weight: 700;
-}
+    background: #f8fbfd;
 
-h3 {
+    color: var(--gris-texte);
+
+    font-family:
+        "Tahoma",
+        "Arial",
+        "Noto Sans Arabic",
+        sans-serif;
+
     font-size: 16px;
-    font-weight: 600;
-}
 
-h4 {
-    font-size: 14px;
-    font-weight: 600;
-}
-
-p {
-    font-size: 14px;
     line-height: 1.7;
 
-    color: var(--text-light);
-}
+    direction: rtl;
 
-a {
-    color: var(--primary);
-    text-decoration: none;
-}
-
-a:hover {
-    color: var(--primary-dark);
+    text-align: right;
 }
 
 
 /* =========================================================
-   4. HEADER
+   3. EN-TÊTE
    ========================================================= */
 
 .site-header {
-    background: var(--white);
 
-    border-bottom: 1px solid var(--border);
+    background:
+        linear-gradient(
+            135deg,
+            #fff4e6,
+            #e8f6ff
+        );
 
-    box-shadow: var(--shadow);
-
-    padding: 14px 20px;
+    border-bottom: 1px solid #d6eaf5;
 }
 
+
 .header-container {
-    width: 100%;
+
     max-width: 1200px;
 
     margin: 0 auto;
 
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 15px;
+    padding: 20px 20px;
 }
+
 
 .school-brand {
-    display: flex;
-    align-items: center;
-
-    gap: 10px;
-}
-
-.school-logo {
-    width: 46px;
-    height: 46px;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
-    background: var(--primary-light);
+    gap: 18px;
+}
 
-    border: 1px solid #dbeafe;
 
-    border-radius: 8px;
+.school-logo {
 
-    font-size: 22px;
+    width: 70px;
+
+    height: 70px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #ffffff;
+
+    border: 2px solid #b9ddf5;
+
+    border-radius: 50%;
+
+    font-size: 38px;
+
+    box-shadow: var(--ombre);
 
     flex-shrink: 0;
 }
 
-.school-name h1 {
-    font-size: 20px;
-    font-weight: 700;
 
-    color: var(--text);
+.school-title {
 
-    margin-bottom: 1px;
+    text-align: center;
 }
 
-.school-name p {
-    font-size: 12px;
 
-    color: var(--text-light);
+.school-title h1 {
+
+    margin: 0;
+
+    color: var(--bleu-fonce);
+
+    font-size: 28px;
+
+    font-weight: 700;
+
+    line-height: 1.5;
+}
+
+
+.school-title p {
+
+    margin: 5px 0 0;
+
+    color: #55778c;
+
+    font-size: 16px;
+
+    font-weight: 500;
 }
 
 
 /* =========================================================
-   5. MENU PRINCIPAL
-   STYLE / TAILLE PROCHE DE SIGE
+   4. MENU PRINCIPAL
    ========================================================= */
 
-.main-nav {
-    background: var(--white);
+.main-navigation {
 
-    border-bottom: 1px solid var(--border);
+    width: 100%;
+
+    background: var(--bleu-clair);
+
+    border-bottom: 2px solid #b9ddf5;
+
+    box-shadow:
+        0 2px 7px rgba(0, 0, 0, 0.08);
+
+    direction: rtl;
 
     position: sticky;
+
     top: 0;
 
     z-index: 1000;
 }
 
-.nav-container {
-    width: 100%;
-    max-width: 1200px;
 
-    margin: 0 auto;
+/* Conteneur du menu */
+
+.nav-container {
 
     display: flex;
+
+    justify-content: center;
+
     align-items: center;
 
-    gap: 2px;
+    gap: 5px;
 
-    padding: 5px 12px;
+    min-height: 60px;
+
+    padding: 7px 12px;
 
     overflow-x: auto;
 
     scrollbar-width: thin;
 }
 
-.main-nav a {
-    display: inline-flex;
+
+/* Volets */
+
+.nav-container a {
+
+    display: flex;
 
     align-items: center;
+
     justify-content: center;
 
-    white-space: nowrap;
+    min-height: 43px;
 
-    padding: 8px 10px;
+    padding: 8px 15px;
 
-    border-radius: 6px;
+    color: var(--bleu-fonce);
 
-    color: #374151;
-
-    font-family:
-        Tahoma,
-        Arial,
-        sans-serif;
-
-    font-size: 13px;
-
-    font-weight: 600;
-
-    line-height: 1.4;
+    background: transparent;
 
     text-decoration: none;
 
+    font-family:
+        "Tahoma",
+        "Arial",
+        "Noto Sans Arabic",
+        sans-serif;
+
+    font-size: 17px;
+
+    font-weight: 600;
+
+    line-height: 1.6;
+
+    white-space: nowrap;
+
+    border-radius: 9px;
+
     transition:
-        background 0.2s ease,
-        color 0.2s ease;
-}
-
-.main-nav a:hover {
-    background: var(--primary-light);
-
-    color: var(--primary);
-}
-
-.main-nav a.active {
-    background: var(--primary);
-
-    color: var(--white);
-}
-
-.main-nav a.admin-link {
-    margin-right: auto;
-
-    background: var(--orange-light);
-
-    color: var(--orange-dark);
-
-    border: 1px solid #fed7aa;
-
-    font-size: 13px;
-}
-
-.main-nav a.admin-link:hover {
-    background: #ffedd5;
-
-    color: #b45309;
+        background-color 0.25s ease,
+        color 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.2s ease;
 }
 
 
-/* =========================================================
-   6. CONTAINER
-   ========================================================= */
+/* Survol */
 
-.container {
-    width: 100%;
-    max-width: 1200px;
+.nav-container a:hover {
 
-    margin: 0 auto;
+    background: #ffffff;
 
-    padding: 0 18px;
+    color: #0b6fa4;
+
+    box-shadow:
+        0 2px 7px rgba(0, 0, 0, 0.10);
+
+    transform: translateY(-1px);
+}
+
+
+/* Administration */
+
+.nav-container a.admin-link {
+
+    background: var(--orange-clair);
+
+    color: #173f59;
+
+    font-weight: 700;
+}
+
+
+.nav-container a.admin-link:hover {
+
+    background: #f3b84f;
+
+    color: #173f59;
 }
 
 
 /* =========================================================
-   7. HERO
+   5. ACCUEIL / HERO
    ========================================================= */
 
-.hero {
+.hero-section {
+
     background:
         linear-gradient(
             135deg,
-            #eff6ff 0%,
-            #ffffff 55%,
-            #fff7ed 100%
+            #eaf7ff,
+            #fff7ed
         );
 
-    border-bottom: 1px solid var(--border);
+    padding: 55px 20px;
 
-    padding: 35px 20px;
+    border-bottom: 1px solid #e2edf3;
 }
 
-.hero-content {
-    width: 100%;
-    max-width: 850px;
+
+.hero-container {
+
+    max-width: 1000px;
 
     margin: 0 auto;
 
     text-align: center;
 }
 
-.hero h1 {
-    font-size: 26px;
+
+.hero-container h2 {
+
+    margin: 0 0 15px;
+
+    color: var(--bleu-fonce);
+
+    font-size: 30px;
+
+    line-height: 1.7;
 
     font-weight: 700;
-
-    color: var(--primary-dark);
-
-    margin-bottom: 6px;
 }
 
-.hero p {
-    font-size: 14px;
 
-    margin-bottom: 18px;
+.hero-container > p {
+
+    margin: 0 auto 25px;
+
+    color: #526f7f;
+
+    font-size: 18px;
 }
 
 
 /* =========================================================
-   8. RECHERCHE
+   6. RECHERCHE
    ========================================================= */
 
 .search-box {
-    width: 100%;
-    max-width: 650px;
 
-    margin: 0 auto;
+    max-width: 700px;
 
-    display: flex;
+    margin: 25px auto 0;
 
-    gap: 7px;
+    padding: 18px;
+
+    background: #ffffff;
+
+    border: 1px solid #dcecf5;
+
+    border-radius: var(--rayon);
+
+    box-shadow: var(--ombre);
 }
 
 
-/* =========================================================
-   9. INPUTS / SELECT / TEXTAREA
-   ========================================================= */
+.search-box label {
 
-input,
-select,
-textarea {
-    width: 100%;
+    display: block;
 
-    font-family:
-        Tahoma,
-        Arial,
-        sans-serif;
+    margin-bottom: 8px;
 
-    font-size: 13px;
+    color: var(--bleu-fonce);
 
-    line-height: 1.5;
+    font-weight: 700;
 
-    color: var(--text);
+    font-size: 16px;
+}
 
-    background: var(--white);
 
-    border: 1px solid var(--border-dark);
+.search-box input {
 
-    border-radius: 7px;
+    width: 70%;
 
-    padding: 9px 11px;
+    min-height: 44px;
+
+    padding: 8px 13px;
+
+    border: 1px solid #c9dce8;
+
+    border-radius: 8px;
 
     outline: none;
 
-    transition:
-        border-color 0.2s ease,
-        box-shadow 0.2s ease;
-}
-
-input::placeholder,
-textarea::placeholder {
-    color: var(--text-muted);
-
-    font-size: 12px;
-}
-
-input:focus,
-select:focus,
-textarea:focus {
-    border-color: var(--primary);
-
-    box-shadow:
-        0 0 0 3px rgba(37, 99, 235, 0.10);
-}
-
-
-/* =========================================================
-   10. BOUTONS
-   ========================================================= */
-
-button,
-.btn {
-    display: inline-flex;
-
-    align-items: center;
-    justify-content: center;
-
-    gap: 5px;
-
     font-family:
-        Tahoma,
-        Arial,
+        "Tahoma",
+        "Arial",
+        "Noto Sans Arabic",
         sans-serif;
 
-    font-size: 13px;
+    font-size: 15px;
 
-    font-weight: 600;
+    direction: rtl;
+}
 
-    line-height: 1.4;
+
+.search-box input:focus {
+
+    border-color: var(--bleu-principal);
+
+    box-shadow:
+        0 0 0 3px rgba(47, 128, 168, 0.12);
+}
+
+
+.search-box button {
+
+    min-height: 44px;
+
+    margin-right: 6px;
+
+    padding: 8px 18px;
 
     border: none;
 
-    border-radius: 7px;
+    border-radius: 8px;
 
-    padding: 8px 13px;
+    background: var(--orange-principal);
+
+    color: #ffffff;
+
+    font-family:
+        "Tahoma",
+        "Arial",
+        sans-serif;
+
+    font-size: 15px;
+
+    font-weight: 700;
 
     cursor: pointer;
 
     transition:
-        background 0.2s ease,
-        transform 0.15s ease,
-        box-shadow 0.2s ease;
+        background-color 0.2s ease,
+        transform 0.2s ease;
 }
 
-button:hover,
-.btn:hover {
+
+.search-box button:hover {
+
+    background: #e8924f;
+
     transform: translateY(-1px);
 }
 
 
-/* Bouton principal */
+/* =========================================================
+   7. CONTENEURS
+   ========================================================= */
 
-.btn-primary,
-.btn-blue {
-    background: var(--primary);
+.section-container {
 
-    color: var(--white);
-}
+    width: 100%;
 
-.btn-primary:hover,
-.btn-blue:hover {
-    background: var(--primary-dark);
-}
+    max-width: 1200px;
 
+    margin: 0 auto;
 
-/* Bouton orange */
-
-.btn-orange {
-    background: var(--orange);
-
-    color: var(--white);
-}
-
-.btn-orange:hover {
-    background: var(--orange-dark);
-}
-
-
-/* Bouton secondaire */
-
-.btn-secondary {
-    background: #f3f4f6;
-
-    color: var(--text);
-
-    border: 1px solid var(--border);
-}
-
-.btn-secondary:hover {
-    background: #e5e7eb;
-}
-
-
-/* Bouton suppression */
-
-.btn-danger {
-    background: #fee2e2;
-
-    color: var(--danger);
-}
-
-.btn-danger:hover {
-    background: #fecaca;
+    padding: 45px 20px;
 }
 
 
 /* =========================================================
-   11. SECTIONS
+   8. SECTIONS
    ========================================================= */
 
-section {
-    padding: 32px 0;
-}
+.content-section {
 
-.section-header {
-    margin-bottom: 18px;
-}
+    scroll-margin-top: 75px;
 
-.section-header h2 {
-    position: relative;
+    background: #ffffff;
 
-    padding-right: 11px;
-
-    font-size: 20px;
-}
-
-.section-header h2::before {
-    content: "";
-
-    position: absolute;
-
-    right: 0;
-    top: 5px;
-
-    width: 4px;
-    height: 23px;
-
-    background: var(--primary);
-
-    border-radius: 3px;
-}
-
-.section-header p {
-    margin-top: 4px;
-
-    font-size: 13px;
+    border-bottom: 1px solid #e7edf1;
 }
 
 
-/* =========================================================
-   12. CARTES
-   ========================================================= */
+.content-section:nth-child(even) {
 
-.cards-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(auto-fit, minmax(220px, 1fr));
-
-    gap: 14px;
+    background: var(--bleu-tres-clair);
 }
 
-.card {
-    background: var(--white);
-
-    border: 1px solid var(--border);
-
-    border-radius: var(--radius);
-
-    padding: 16px;
-
-    box-shadow: var(--shadow);
-
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease,
-        border-color 0.2s ease;
-}
-
-.card:hover {
-    transform: translateY(-2px);
-
-    border-color: #bfdbfe;
-
-    box-shadow: var(--shadow-hover);
-}
-
-.card-icon {
-    width: 40px;
-    height: 40px;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    background: var(--primary-light);
-
-    border-radius: 8px;
-
-    font-size: 19px;
-
-    margin-bottom: 10px;
-}
-
-.card h3 {
-    font-size: 15px;
-
-    margin-bottom: 5px;
-}
-
-.card p {
-    font-size: 13px;
-}
-
-
-/* =========================================================
-   13. ACCÈS RAPIDE
-   ========================================================= */
 
 .quick-access {
-    background: var(--white);
+
+    background: var(--orange-tres-clair);
 }
 
-.quick-card {
-    display: block;
 
-    text-align: right;
+.section-container > h2 {
 
-    color: var(--text);
+    margin: 0 0 10px;
+
+    color: var(--bleu-fonce);
+
+    font-size: 25px;
+
+    font-weight: 700;
+
+    line-height: 1.6;
+
+    text-align: center;
 }
 
-.quick-card:hover {
-    color: var(--text);
-}
 
-.quick-card .card-icon {
-    background: var(--orange-light);
+.section-intro {
+
+    margin: 0 auto 30px;
+
+    max-width: 800px;
+
+    text-align: center;
+
+    color: #607887;
+
+    font-size: 16px;
 }
 
 
 /* =========================================================
-   14. PDF
+   9. CARTES
    ========================================================= */
 
-.pdf-grid {
+.cards-container {
+
     display: grid;
 
     grid-template-columns:
-        repeat(auto-fit, minmax(250px, 1fr));
+        repeat(auto-fit, minmax(240px, 1fr));
 
-    gap: 12px;
-}
-
-.pdf-card {
-    display: flex;
-
-    align-items: center;
-
-    gap: 10px;
-
-    background: var(--white);
-
-    border: 1px solid var(--border);
-
-    border-radius: var(--radius);
-
-    padding: 13px;
-
-    box-shadow: var(--shadow);
-
-    transition: 0.2s ease;
-}
-
-.pdf-card:hover {
-    border-color: #bfdbfe;
-
-    background: #fafcff;
-}
-
-.pdf-icon {
-    width: 40px;
-    height: 40px;
-
-    flex-shrink: 0;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    background: #fef2f2;
-
-    color: var(--danger);
-
-    border-radius: 7px;
-
-    font-size: 19px;
-}
-
-.pdf-info {
-    flex: 1;
-}
-
-.pdf-info h3 {
-    font-size: 14px;
-
-    margin-bottom: 2px;
-}
-
-.pdf-info p {
-    font-size: 12px;
+    gap: 20px;
 }
 
 
-/* =========================================================
-   15. ANNONCES
-   ========================================================= */
+.feature-card {
 
-.annonces-list {
-    display: flex;
+    background: #ffffff;
 
-    flex-direction: column;
+    border: 1px solid #dcecf5;
 
-    gap: 10px;
-}
+    border-radius: var(--rayon);
 
-.annonce {
-    background: var(--white);
+    padding: 24px 20px;
 
-    border: 1px solid var(--border);
+    text-align: center;
 
-    border-right: 4px solid var(--orange);
+    box-shadow: var(--ombre);
 
-    border-radius: var(--radius);
-
-    padding: 13px 15px;
-
-    box-shadow: var(--shadow);
-}
-
-.annonce h3 {
-    font-size: 14px;
-
-    margin-bottom: 4px;
-}
-
-.annonce p {
-    font-size: 13px;
-}
-
-.annonce-date {
-    display: inline-block;
-
-    font-size: 11px;
-
-    color: var(--text-muted);
-
-    margin-bottom: 4px;
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
 }
 
 
-/* =========================================================
-   16. ACTIVITÉS
-   ========================================================= */
+.feature-card:hover {
 
-.activities-grid {
-    display: grid;
+    transform: translateY(-4px);
 
-    grid-template-columns:
-        repeat(auto-fit, minmax(220px, 1fr));
-
-    gap: 14px;
+    box-shadow:
+        0 7px 18px rgba(0, 0, 0, 0.11);
 }
 
 
-/* =========================================================
-   17. GALERIE
-   ========================================================= */
+.card-icon {
 
-.gallery-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(auto-fill, minmax(210px, 1fr));
-
-    gap: 12px;
-}
-
-.gallery-item {
-    overflow: hidden;
-
-    background: var(--white);
-
-    border: 1px solid var(--border);
-
-    border-radius: var(--radius);
-
-    box-shadow: var(--shadow);
-}
-
-.gallery-item img {
-    width: 100%;
-    height: 175px;
-
-    object-fit: cover;
-
-    display: block;
-
-    transition: transform 0.25s ease;
-}
-
-.gallery-item:hover img {
-    transform: scale(1.03);
-}
-
-.gallery-caption {
-    padding: 10px 12px;
-}
-
-.gallery-caption h3 {
-    font-size: 13px;
-
-    margin-bottom: 2px;
-}
-
-.gallery-caption p {
-    font-size: 12px;
-}
-
-
-/* =========================================================
-   18. ANCIENS ÉLÈVES
-   ========================================================= */
-
-.alumni-card {
-    background:
-        linear-gradient(
-            135deg,
-            var(--orange-light),
-            var(--white)
-        );
-
-    border: 1px solid #fed7aa;
-}
-
-.alumni-card .card-icon {
-    background: #ffedd5;
-}
-
-
-/* =========================================================
-   19. À PROPOS
-   ========================================================= */
-
-.about-box {
-    background: var(--white);
-
-    border: 1px solid var(--border);
-
-    border-radius: var(--radius);
-
-    padding: 20px;
-
-    box-shadow: var(--shadow);
-}
-
-.about-box p {
-    font-size: 14px;
-
-    line-height: 1.9;
+    font-size: 38px;
 
     margin-bottom: 8px;
 }
 
 
+.feature-card h3 {
+
+    margin: 5px 0 10px;
+
+    color: var(--bleu-fonce);
+
+    font-size: 19px;
+}
+
+
+.feature-card p {
+
+    margin: 0 0 15px;
+
+    color: #5f6f78;
+
+    font-size: 15px;
+}
+
+
+.feature-card a {
+
+    display: inline-block;
+
+    padding: 8px 15px;
+
+    background: var(--bleu-clair);
+
+    color: var(--bleu-fonce);
+
+    border-radius: 7px;
+
+    text-decoration: none;
+
+    font-weight: 600;
+
+    font-size: 15px;
+
+    transition:
+        background-color 0.2s ease;
+}
+
+
+.feature-card a:hover {
+
+    background: #c7e7f8;
+}
+
+
 /* =========================================================
-   20. CONTACT
+   10. DOCUMENTS
    ========================================================= */
 
-.contact-grid {
+.document-grid {
+
     display: grid;
 
     grid-template-columns:
         repeat(auto-fit, minmax(230px, 1fr));
 
-    gap: 12px;
-}
-
-.contact-item {
-    background: var(--white);
-
-    border: 1px solid var(--border);
-
-    border-radius: var(--radius);
-
-    padding: 14px;
-
-    box-shadow: var(--shadow);
-}
-
-.contact-item strong {
-    display: block;
-
-    color: var(--text);
-
-    font-size: 13px;
-
-    margin-bottom: 3px;
-}
-
-.contact-item span,
-.contact-item a {
-    font-size: 13px;
+    gap: 20px;
 }
 
 
-/* =========================================================
-   21. FORMULAIRE
-   ========================================================= */
+.document-card {
 
-.form-group {
-    margin-bottom: 13px;
-}
+    background: #ffffff;
 
-.form-group label {
-    display: block;
+    border: 1px solid #dcecf5;
 
-    margin-bottom: 5px;
+    border-radius: var(--rayon);
 
-    font-size: 13px;
-
-    font-weight: 600;
-
-    color: var(--text);
-}
-
-.form-row {
-    display: grid;
-
-    grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-
-    gap: 13px;
-}
-
-.form-actions {
-    display: flex;
-
-    justify-content: flex-start;
-
-    gap: 7px;
-
-    margin-top: 16px;
-}
-
-
-/* =========================================================
-   22. TABLEAUX
-   ========================================================= */
-
-table {
-    width: 100%;
-
-    border-collapse: collapse;
-
-    background: var(--white);
-
-    border: 1px solid var(--border);
-
-    border-radius: var(--radius);
-
-    overflow: hidden;
-}
-
-th,
-td {
-    padding: 9px 11px;
-
-    border-bottom: 1px solid var(--border);
-
-    font-size: 13px;
-
-    text-align: right;
-}
-
-th {
-    background: var(--primary-light);
-
-    color: var(--text);
-
-    font-weight: 700;
-}
-
-td {
-    color: var(--text);
-}
-
-tr:hover td {
-    background: #fafafa;
-}
-
-
-/* =========================================================
-   23. BADGES
-   ========================================================= */
-
-.badge {
-    display: inline-block;
-
-    padding: 3px 8px;
-
-    border-radius: 20px;
-
-    font-size: 11px;
-
-    font-weight: 600;
-}
-
-.badge-blue {
-    background: #dbeafe;
-    color: #1d4ed8;
-}
-
-.badge-orange {
-    background: #ffedd5;
-    color: #c2410c;
-}
-
-.badge-green {
-    background: #dcfce7;
-    color: #15803d;
-}
-
-
-/* =========================================================
-   24. ÉTAT VIDE
-   ========================================================= */
-
-.empty-state {
-    background: var(--white);
-
-    border: 1px dashed #cbd5e1;
-
-    border-radius: var(--radius);
-
-    padding: 24px;
+    padding: 22px;
 
     text-align: center;
 
-    color: var(--text-light);
+    box-shadow: var(--ombre);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
-.empty-state p {
-    font-size: 13px;
-}
 
+.document-card:hover {
 
-/* =========================================================
-   25. MODAL
-   ========================================================= */
-
-.modal {
-    position: fixed;
-
-    inset: 0;
-
-    background: rgba(15, 23, 42, 0.55);
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    padding: 20px;
-
-    z-index: 2000;
-}
-
-.modal-content {
-    width: 100%;
-
-    max-width: 650px;
-
-    max-height: 90vh;
-
-    overflow-y: auto;
-
-    background: var(--white);
-
-    border-radius: 10px;
-
-    padding: 20px;
+    transform: translateY(-3px);
 
     box-shadow:
-        0 15px 40px rgba(0, 0, 0, 0.20);
+        0 6px 15px rgba(0, 0, 0, 0.10);
 }
 
-.modal-header {
-    display: flex;
 
-    align-items: center;
-    justify-content: space-between;
+.document-card h3 {
 
-    margin-bottom: 16px;
-}
+    margin: 0 0 10px;
 
-.modal-header h2 {
+    color: var(--bleu-fonce);
+
     font-size: 18px;
 }
 
-.modal-close {
-    width: 32px;
-    height: 32px;
 
-    padding: 0;
+.document-card p {
 
-    border-radius: 6px;
+    margin: 0 0 15px;
 
-    background: #f3f4f6;
+    color: #657781;
 
-    color: var(--text);
+    font-size: 15px;
 }
 
-.modal-close:hover {
-    background: #e5e7eb;
+
+.pdf-link {
+
+    display: inline-block;
+
+    padding: 8px 14px;
+
+    background: var(--orange-tres-clair);
+
+    color: #a85d20;
+
+    border-radius: 7px;
+
+    text-decoration: none;
+
+    font-weight: 600;
+
+    font-size: 15px;
+}
+
+
+.pdf-link:hover {
+
+    background: #ffe3c4;
 }
 
 
 /* =========================================================
-   26. FOOTER
+   11. SECTION SPÉCIALE
+   ========================================================= */
+
+.special-section {
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff8ef,
+            #f0f9ff
+        );
+}
+
+
+/* =========================================================
+   12. ANNONCES
+   ========================================================= */
+
+.announcement-card {
+
+    max-width: 850px;
+
+    margin: 0 auto;
+
+    padding: 25px;
+
+    background: #ffffff;
+
+    border-right: 5px solid var(--orange-principal);
+
+    border-radius: 8px;
+
+    box-shadow: var(--ombre);
+}
+
+
+.announcement-card h3 {
+
+    margin-top: 0;
+
+    color: var(--bleu-fonce);
+
+    font-size: 19px;
+}
+
+
+.announcement-card p {
+
+    margin-bottom: 0;
+
+    color: #5d6f79;
+}
+
+
+/* =========================================================
+   13. GALERIE
+   ========================================================= */
+
+.gallery-categories {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(230px, 1fr));
+
+    gap: 20px;
+}
+
+
+.gallery-category {
+
+    background: #ffffff;
+
+    border: 1px solid #dcecf5;
+
+    border-radius: var(--rayon);
+
+    padding: 22px;
+
+    text-align: center;
+
+    box-shadow: var(--ombre);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.gallery-category:hover {
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 6px 15px rgba(0, 0, 0, 0.10);
+}
+
+
+.gallery-icon {
+
+    font-size: 38px;
+
+    margin-bottom: 8px;
+}
+
+
+.gallery-category h3 {
+
+    margin: 5px 0 10px;
+
+    color: var(--bleu-fonce);
+
+    font-size: 18px;
+
+    line-height: 1.6;
+}
+
+
+.gallery-category p {
+
+    margin: 0 0 15px;
+
+    color: #687984;
+
+    font-size: 15px;
+}
+
+
+.gallery-link {
+
+    display: inline-block;
+
+    padding: 8px 14px;
+
+    background: var(--bleu-clair);
+
+    color: var(--bleu-fonce);
+
+    border-radius: 7px;
+
+    text-decoration: none;
+
+    font-weight: 600;
+}
+
+
+.gallery-link:hover {
+
+    background: #c7e7f8;
+}
+
+
+/* =========================================================
+   14. GALERIE PHOTOS DYNAMIQUE
+   ========================================================= */
+
+.photo-gallery {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(200px, 1fr));
+
+    gap: 18px;
+
+    margin-top: 30px;
+}
+
+
+.empty-gallery {
+
+    grid-column: 1 / -1;
+
+    margin: 0;
+
+    padding: 25px;
+
+    background: #f8fbfd;
+
+    border: 1px dashed #c9dce8;
+
+    border-radius: 8px;
+
+    text-align: center;
+
+    color: #71828c;
+}
+
+
+/* =========================================================
+   15. À PROPOS
+   ========================================================= */
+
+.about-content {
+
+    max-width: 900px;
+
+    margin: 0 auto;
+
+    padding: 28px;
+
+    background: #ffffff;
+
+    border: 1px solid #dcecf5;
+
+    border-radius: var(--rayon);
+
+    box-shadow: var(--ombre);
+}
+
+
+.about-content h3 {
+
+    margin-top: 0;
+
+    color: var(--bleu-fonce);
+
+    font-size: 21px;
+}
+
+
+.about-content p {
+
+    color: #566973;
+
+    font-size: 16px;
+}
+
+
+/* =========================================================
+   16. CONTACT
+   ========================================================= */
+
+.contact-content {
+
+    max-width: 800px;
+
+    margin: 0 auto;
+
+    padding: 25px;
+
+    background: #ffffff;
+
+    border: 1px solid #dcecf5;
+
+    border-radius: var(--rayon);
+
+    box-shadow: var(--ombre);
+}
+
+
+.contact-content p {
+
+    margin: 10px 0;
+
+    color: #526773;
+
+    font-size: 16px;
+}
+
+
+.contact-content strong {
+
+    color: var(--bleu-fonce);
+}
+
+
+/* =========================================================
+   17. PIED DE PAGE
    ========================================================= */
 
 .site-footer {
-    margin-top: 30px;
 
-    background: #1f2937;
+    background: #174a6e;
 
-    color: white;
-
-    padding: 22px 18px;
+    color: #ffffff;
 
     text-align: center;
+
+    padding: 25px 15px;
 }
+
+
+.footer-container {
+
+    max-width: 1200px;
+
+    margin: 0 auto;
+}
+
 
 .site-footer p {
-    color: #d1d5db;
 
-    font-size: 12px;
-}
+    margin: 5px 0;
 
-.site-footer a {
-    color: #93c5fd;
-
-    font-size: 12px;
+    font-size: 14px;
 }
 
 
 /* =========================================================
-   27. RESPONSIVE TABLETTE
+   18. TABLETTE
    ========================================================= */
 
 @media (max-width: 900px) {
 
-    .header-container {
-        flex-direction: column;
+    .nav-container {
 
-        align-items: flex-start;
+        justify-content: flex-start;
+
+        gap: 4px;
+
+        padding: 6px 9px;
     }
 
-    .main-nav a {
-        font-size: 13px;
 
-        padding: 8px 9px;
+    .nav-container a {
+
+        font-size: 16px;
+
+        padding: 8px 13px;
     }
 
-    .hero h1 {
-        font-size: 23px;
+
+    .school-title h1 {
+
+        font-size: 25px;
     }
 
-    .form-row {
-        grid-template-columns: 1fr;
+
+    .hero-container h2 {
+
+        font-size: 27px;
     }
 }
 
 
 /* =========================================================
-   28. RESPONSIVE MOBILE
+   19. TÉLÉPHONE
    ========================================================= */
 
 @media (max-width: 600px) {
 
-    body {
-        font-size: 13px;
+    .header-container {
+
+        padding: 15px 10px;
     }
 
-    .site-header {
-        padding: 11px 13px;
+
+    .school-brand {
+
+        gap: 10px;
     }
+
 
     .school-logo {
-        width: 42px;
-        height: 42px;
+
+        width: 55px;
+
+        height: 55px;
+
+        font-size: 30px;
+    }
+
+
+    .school-title h1 {
 
         font-size: 20px;
+
+        line-height: 1.5;
     }
 
-    .school-name h1 {
-        font-size: 17px;
+
+    .school-title p {
+
+        font-size: 14px;
     }
 
-    .school-name p {
-        font-size: 11px;
+
+    /* Menu */
+
+    .main-navigation {
+
+        position: sticky;
+
+        top: 0;
     }
+
 
     .nav-container {
-        padding: 4px 8px;
 
-        gap: 1px;
+        justify-content: flex-start;
+
+        min-height: 54px;
+
+        padding: 6px 8px;
+
+        gap: 4px;
     }
 
-    .main-nav a {
-        font-size: 12px;
 
-        padding: 7px 8px;
+    .nav-container a {
+
+        min-height: 40px;
+
+        padding: 7px 11px;
+
+        font-size: 15px;
+
+        border-radius: 8px;
     }
 
-    .hero {
-        padding: 28px 14px;
+
+    /* Accueil */
+
+    .hero-section {
+
+        padding: 38px 15px;
     }
 
-    .hero h1 {
-        font-size: 21px;
+
+    .hero-container h2 {
+
+        font-size: 23px;
+
+        line-height: 1.7;
     }
 
-    .hero p {
-        font-size: 13px;
+
+    .hero-container > p {
+
+        font-size: 16px;
     }
+
+
+    /* Recherche */
 
     .search-box {
-        flex-direction: column;
+
+        padding: 15px;
     }
+
+
+    .search-box input {
+
+        width: 100%;
+
+        margin-bottom: 8px;
+    }
+
 
     .search-box button {
+
         width: 100%;
+
+        margin-right: 0;
     }
 
-    section {
-        padding: 27px 0;
+
+    /* Sections */
+
+    .section-container {
+
+        padding: 35px 15px;
     }
 
-    .container {
-        padding: 0 12px;
+
+    .section-container > h2 {
+
+        font-size: 22px;
     }
 
-    .section-header h2 {
-        font-size: 18px;
+
+    .section-intro {
+
+        font-size: 15px;
     }
 
-    .section-header p {
-        font-size: 12px;
-    }
 
-    .cards-grid,
-    .pdf-grid,
-    .activities-grid,
-    .gallery-grid,
-    .contact-grid {
+    /* Cartes */
+
+    .cards-container,
+    .document-grid,
+    .gallery-categories {
+
         grid-template-columns: 1fr;
-    }
-
-    .gallery-item img {
-        height: 205px;
-    }
-
-    .modal {
-        padding: 10px;
-    }
-
-    .modal-content {
-        padding: 16px;
-    }
-
-    input,
-    select,
-    textarea {
-        font-size: 13px;
-    }
-
-    button,
-    .btn {
-        font-size: 12px;
     }
 }
 
 
 /* =========================================================
-   29. ACCESSIBILITÉ
+   20. ACCESSIBILITÉ
    ========================================================= */
 
-button:focus-visible,
 a:focus-visible,
-input:focus-visible,
-select:focus-visible,
-textarea:focus-visible {
-    outline: 3px solid rgba(37, 99, 235, 0.25);
+button:focus-visible,
+input:focus-visible {
+
+    outline: 3px solid #f4a261;
 
     outline-offset: 2px;
 }
+
+
+/* =========================================================
+   FIN DU STYLE
+   ========================================================= */
+```
