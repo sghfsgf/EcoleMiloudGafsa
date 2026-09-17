@@ -1,41 +1,47 @@
 /* =========================================================
    المدرسة الابتدائية نهج ميلود
-   Style inspiré de l'interface SIGE
+   style.css
+   Style proche de SIGE
    RTL - Arabe - Responsive
    ========================================================= */
 
-/* =========================
-   VARIABLES
-   ========================= */
+
+/* =========================================================
+   1. VARIABLES
+   ========================================================= */
 
 :root {
-    --bleu: #2563eb;
-    --bleu-fonce: #1e40af;
-    --bleu-clair: #eff6ff;
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --primary-light: #eff6ff;
 
     --orange: #f59e0b;
-    --orange-fonce: #d97706;
-    --orange-clair: #fff7ed;
+    --orange-dark: #d97706;
+    --orange-light: #fff7ed;
 
-    --vert: #16a34a;
-    --rouge: #dc2626;
+    --success: #16a34a;
+    --danger: #dc2626;
 
-    --texte: #1f2937;
-    --texte-secondaire: #6b7280;
+    --text: #1f2937;
+    --text-light: #6b7280;
+    --text-muted: #9ca3af;
 
-    --fond: #f5f7fa;
-    --blanc: #ffffff;
+    --background: #f5f7fa;
+    --white: #ffffff;
 
-    --bordure: #e5e7eb;
-    --ombre: 0 2px 10px rgba(0, 0, 0, 0.06);
+    --border: #e5e7eb;
+    --border-dark: #d1d5db;
 
-    --rayon: 10px;
+    --shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    --shadow-hover: 0 4px 14px rgba(0, 0, 0, 0.09);
+
+    --radius: 8px;
 }
 
 
-/* =========================
-   RESET
-   ========================= */
+/* =========================================================
+   2. RESET
+   ========================================================= */
 
 * {
     margin: 0;
@@ -58,18 +64,19 @@ body {
         sans-serif;
 
     font-size: 14px;
-    line-height: 1.7;
+    line-height: 1.6;
 
-    color: var(--texte);
-    background: var(--fond);
+    color: var(--text);
+
+    background: var(--background);
 
     min-height: 100vh;
 }
 
 
-/* =========================
-   TEXTES
-   ========================= */
+/* =========================================================
+   3. TEXTES
+   ========================================================= */
 
 h1,
 h2,
@@ -83,169 +90,233 @@ h6 {
         "Segoe UI",
         sans-serif;
 
-    color: var(--texte);
-    line-height: 1.4;
+    color: var(--text);
+
+    line-height: 1.45;
+
+    margin: 0;
 }
 
 h1 {
-    font-size: 1.9rem;
+    font-size: 24px;
     font-weight: 700;
 }
 
 h2 {
-    font-size: 1.55rem;
+    font-size: 20px;
     font-weight: 700;
 }
 
 h3 {
-    font-size: 1.15rem;
-    font-weight: 700;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+h4 {
+    font-size: 14px;
+    font-weight: 600;
 }
 
 p {
     font-size: 14px;
-    color: var(--texte-secondaire);
+    line-height: 1.7;
+
+    color: var(--text-light);
 }
 
 a {
-    color: var(--bleu);
+    color: var(--primary);
     text-decoration: none;
 }
 
 a:hover {
-    color: var(--bleu-fonce);
+    color: var(--primary-dark);
 }
 
 
-/* =========================
-   HEADER
-   ========================= */
+/* =========================================================
+   4. HEADER
+   ========================================================= */
 
 .site-header {
-    background: var(--blanc);
-    border-bottom: 1px solid var(--bordure);
-    box-shadow: var(--ombre);
+    background: var(--white);
 
-    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+
+    box-shadow: var(--shadow);
+
+    padding: 14px 20px;
 }
 
 .header-container {
+    width: 100%;
     max-width: 1200px;
-    margin: auto;
+
+    margin: 0 auto;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 20px;
+
+    gap: 15px;
 }
 
 .school-brand {
     display: flex;
     align-items: center;
-    gap: 12px;
+
+    gap: 10px;
 }
 
 .school-logo {
-    width: 52px;
-    height: 52px;
+    width: 46px;
+    height: 46px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    background: var(--bleu-clair);
-    border: 1px solid #dbeafe;
-    border-radius: 12px;
+    background: var(--primary-light);
 
-    font-size: 26px;
+    border: 1px solid #dbeafe;
+
+    border-radius: 8px;
+
+    font-size: 22px;
+
+    flex-shrink: 0;
 }
 
 .school-name h1 {
-    font-size: 1.35rem;
-    margin-bottom: 2px;
+    font-size: 20px;
+    font-weight: 700;
+
+    color: var(--text);
+
+    margin-bottom: 1px;
 }
 
 .school-name p {
-    font-size: 13px;
-    color: var(--texte-secondaire);
+    font-size: 12px;
+
+    color: var(--text-light);
 }
 
 
-/* =========================
-   NAVIGATION
-   ========================= */
+/* =========================================================
+   5. MENU PRINCIPAL
+   STYLE / TAILLE PROCHE DE SIGE
+   ========================================================= */
 
 .main-nav {
-    background: var(--blanc);
-    border-bottom: 1px solid var(--bordure);
+    background: var(--white);
+
+    border-bottom: 1px solid var(--border);
 
     position: sticky;
     top: 0;
+
     z-index: 1000;
 }
 
 .nav-container {
+    width: 100%;
     max-width: 1200px;
-    margin: auto;
+
+    margin: 0 auto;
 
     display: flex;
     align-items: center;
-    gap: 4px;
 
-    padding: 7px 15px;
+    gap: 2px;
+
+    padding: 5px 12px;
 
     overflow-x: auto;
+
+    scrollbar-width: thin;
 }
 
 .main-nav a {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
     white-space: nowrap;
 
-    color: var(--texte);
+    padding: 8px 10px;
+
+    border-radius: 6px;
+
+    color: #374151;
+
+    font-family:
+        Tahoma,
+        Arial,
+        sans-serif;
+
     font-size: 13px;
+
     font-weight: 600;
 
-    padding: 9px 12px;
+    line-height: 1.4;
 
-    border-radius: 7px;
+    text-decoration: none;
 
-    transition: 0.2s ease;
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
 }
 
 .main-nav a:hover {
-    background: var(--bleu-clair);
-    color: var(--bleu);
+    background: var(--primary-light);
+
+    color: var(--primary);
+}
+
+.main-nav a.active {
+    background: var(--primary);
+
+    color: var(--white);
 }
 
 .main-nav a.admin-link {
     margin-right: auto;
 
-    background: var(--orange-clair);
-    color: var(--orange-fonce);
+    background: var(--orange-light);
+
+    color: var(--orange-dark);
 
     border: 1px solid #fed7aa;
+
+    font-size: 13px;
 }
 
 .main-nav a.admin-link:hover {
     background: #ffedd5;
+
+    color: #b45309;
 }
 
 
-/* =========================
-   CONTAINER
-   ========================= */
+/* =========================================================
+   6. CONTAINER
+   ========================================================= */
 
 .container {
     width: 100%;
     max-width: 1200px;
 
-    margin: auto;
+    margin: 0 auto;
+
     padding: 0 18px;
 }
 
 
-/* =========================
-   HERO
-   ========================= */
+/* =========================================================
+   7. HERO
+   ========================================================= */
 
 .hero {
     background:
@@ -256,53 +327,56 @@ a:hover {
             #fff7ed 100%
         );
 
-    border-bottom: 1px solid var(--bordure);
+    border-bottom: 1px solid var(--border);
 
-    padding: 45px 20px;
+    padding: 35px 20px;
 }
 
 .hero-content {
-    max-width: 900px;
-    margin: auto;
+    width: 100%;
+    max-width: 850px;
+
+    margin: 0 auto;
+
     text-align: center;
 }
 
 .hero h1 {
-    font-size: 2rem;
-    color: var(--bleu-fonce);
-    margin-bottom: 8px;
+    font-size: 26px;
+
+    font-weight: 700;
+
+    color: var(--primary-dark);
+
+    margin-bottom: 6px;
 }
 
 .hero p {
-    font-size: 15px;
-    margin-bottom: 22px;
+    font-size: 14px;
+
+    margin-bottom: 18px;
 }
 
 
-/* =========================
-   RECHERCHE
-   ========================= */
+/* =========================================================
+   8. RECHERCHE
+   ========================================================= */
 
 .search-box {
+    width: 100%;
     max-width: 650px;
-    margin: auto;
+
+    margin: 0 auto;
 
     display: flex;
-    gap: 8px;
-}
 
-.search-box input {
-    flex: 1;
-}
-
-.search-box button {
-    white-space: nowrap;
+    gap: 7px;
 }
 
 
-/* =========================
-   INPUTS
-   ========================= */
+/* =========================================================
+   9. INPUTS / SELECT / TEXTAREA
+   ========================================================= */
 
 input,
 select,
@@ -316,13 +390,17 @@ textarea {
 
     font-size: 13px;
 
-    color: var(--texte);
-    background: var(--blanc);
+    line-height: 1.5;
 
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
+    color: var(--text);
 
-    padding: 10px 12px;
+    background: var(--white);
+
+    border: 1px solid var(--border-dark);
+
+    border-radius: 7px;
+
+    padding: 9px 11px;
 
     outline: none;
 
@@ -333,22 +411,24 @@ textarea {
 
 input::placeholder,
 textarea::placeholder {
-    color: #9ca3af;
+    color: var(--text-muted);
+
+    font-size: 12px;
 }
 
 input:focus,
 select:focus,
 textarea:focus {
-    border-color: var(--bleu);
+    border-color: var(--primary);
 
     box-shadow:
         0 0 0 3px rgba(37, 99, 235, 0.10);
 }
 
 
-/* =========================
-   BOUTONS
-   ========================= */
+/* =========================================================
+   10. BOUTONS
+   ========================================================= */
 
 button,
 .btn {
@@ -357,7 +437,7 @@ button,
     align-items: center;
     justify-content: center;
 
-    gap: 6px;
+    gap: 5px;
 
     font-family:
         Tahoma,
@@ -365,12 +445,16 @@ button,
         sans-serif;
 
     font-size: 13px;
+
     font-weight: 600;
 
-    border: none;
-    border-radius: 8px;
+    line-height: 1.4;
 
-    padding: 9px 15px;
+    border: none;
+
+    border-radius: 7px;
+
+    padding: 8px 13px;
 
     cursor: pointer;
 
@@ -390,13 +474,14 @@ button:hover,
 
 .btn-primary,
 .btn-blue {
-    background: var(--bleu);
-    color: white;
+    background: var(--primary);
+
+    color: var(--white);
 }
 
 .btn-primary:hover,
 .btn-blue:hover {
-    background: var(--bleu-fonce);
+    background: var(--primary-dark);
 }
 
 
@@ -404,11 +489,12 @@ button:hover,
 
 .btn-orange {
     background: var(--orange);
-    color: white;
+
+    color: var(--white);
 }
 
 .btn-orange:hover {
-    background: var(--orange-fonce);
+    background: var(--orange-dark);
 }
 
 
@@ -416,9 +502,10 @@ button:hover,
 
 .btn-secondary {
     background: #f3f4f6;
-    color: var(--texte);
 
-    border: 1px solid var(--bordure);
+    color: var(--text);
+
+    border: 1px solid var(--border);
 }
 
 .btn-secondary:hover {
@@ -430,7 +517,8 @@ button:hover,
 
 .btn-danger {
     background: #fee2e2;
-    color: var(--rouge);
+
+    color: var(--danger);
 }
 
 .btn-danger:hover {
@@ -438,46 +526,52 @@ button:hover,
 }
 
 
-/* =========================
-   SECTIONS
-   ========================= */
+/* =========================================================
+   11. SECTIONS
+   ========================================================= */
 
 section {
-    padding: 38px 0;
+    padding: 32px 0;
 }
 
 .section-header {
-    margin-bottom: 20px;
+    margin-bottom: 18px;
 }
 
 .section-header h2 {
     position: relative;
 
-    padding-right: 12px;
+    padding-right: 11px;
+
+    font-size: 20px;
 }
 
 .section-header h2::before {
     content: "";
 
     position: absolute;
+
     right: 0;
-    top: 6px;
+    top: 5px;
 
     width: 4px;
-    height: 24px;
+    height: 23px;
 
-    background: var(--bleu);
-    border-radius: 4px;
+    background: var(--primary);
+
+    border-radius: 3px;
 }
 
 .section-header p {
-    margin-top: 5px;
+    margin-top: 4px;
+
+    font-size: 13px;
 }
 
 
-/* =========================
-   CARTES
-   ========================= */
+/* =========================================================
+   12. CARTES
+   ========================================================= */
 
 .cards-grid {
     display: grid;
@@ -485,18 +579,19 @@ section {
     grid-template-columns:
         repeat(auto-fit, minmax(220px, 1fr));
 
-    gap: 15px;
+    gap: 14px;
 }
 
 .card {
-    background: var(--blanc);
+    background: var(--white);
 
-    border: 1px solid var(--bordure);
-    border-radius: var(--rayon);
+    border: 1px solid var(--border);
 
-    padding: 18px;
+    border-radius: var(--radius);
 
-    box-shadow: var(--ombre);
+    padding: 16px;
+
+    box-shadow: var(--shadow);
 
     transition:
         transform 0.2s ease,
@@ -509,29 +604,31 @@ section {
 
     border-color: #bfdbfe;
 
-    box-shadow:
-        0 5px 16px rgba(0, 0, 0, 0.08);
+    box-shadow: var(--shadow-hover);
 }
 
 .card-icon {
-    width: 42px;
-    height: 42px;
+    width: 40px;
+    height: 40px;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
-    background: var(--bleu-clair);
+    background: var(--primary-light);
 
-    border-radius: 9px;
+    border-radius: 8px;
 
-    font-size: 21px;
+    font-size: 19px;
 
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 
 .card h3 {
-    margin-bottom: 6px;
+    font-size: 15px;
+
+    margin-bottom: 5px;
 }
 
 .card p {
@@ -539,12 +636,12 @@ section {
 }
 
 
-/* =========================
-   ACCÈS RAPIDE
-   ========================= */
+/* =========================================================
+   13. ACCÈS RAPIDE
+   ========================================================= */
 
 .quick-access {
-    background: var(--blanc);
+    background: var(--white);
 }
 
 .quick-card {
@@ -552,21 +649,21 @@ section {
 
     text-align: right;
 
-    color: var(--texte);
+    color: var(--text);
 }
 
 .quick-card:hover {
-    color: var(--texte);
+    color: var(--text);
 }
 
 .quick-card .card-icon {
-    background: var(--orange-clair);
+    background: var(--orange-light);
 }
 
 
-/* =========================
-   DOCUMENTS PDF
-   ========================= */
+/* =========================================================
+   14. PDF
+   ========================================================= */
 
 .pdf-grid {
     display: grid;
@@ -574,48 +671,53 @@ section {
     grid-template-columns:
         repeat(auto-fit, minmax(250px, 1fr));
 
-    gap: 14px;
+    gap: 12px;
 }
 
 .pdf-card {
     display: flex;
+
     align-items: center;
 
-    gap: 12px;
+    gap: 10px;
 
-    background: var(--blanc);
+    background: var(--white);
 
-    border: 1px solid var(--bordure);
-    border-radius: var(--rayon);
+    border: 1px solid var(--border);
 
-    padding: 14px;
+    border-radius: var(--radius);
 
-    box-shadow: var(--ombre);
+    padding: 13px;
+
+    box-shadow: var(--shadow);
 
     transition: 0.2s ease;
 }
 
 .pdf-card:hover {
     border-color: #bfdbfe;
+
     background: #fafcff;
 }
 
 .pdf-icon {
-    width: 42px;
-    height: 42px;
+    width: 40px;
+    height: 40px;
 
     flex-shrink: 0;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
     background: #fef2f2;
-    color: var(--rouge);
 
-    border-radius: 8px;
+    color: var(--danger);
 
-    font-size: 20px;
+    border-radius: 7px;
+
+    font-size: 19px;
 }
 
 .pdf-info {
@@ -624,7 +726,8 @@ section {
 
 .pdf-info h3 {
     font-size: 14px;
-    margin-bottom: 3px;
+
+    margin-bottom: 2px;
 }
 
 .pdf-info p {
@@ -632,47 +735,56 @@ section {
 }
 
 
-/* =========================
-   ANNONCES
-   ========================= */
+/* =========================================================
+   15. ANNONCES
+   ========================================================= */
 
 .annonces-list {
     display: flex;
+
     flex-direction: column;
-    gap: 12px;
+
+    gap: 10px;
 }
 
 .annonce {
-    background: var(--blanc);
+    background: var(--white);
 
-    border: 1px solid var(--bordure);
+    border: 1px solid var(--border);
+
     border-right: 4px solid var(--orange);
 
-    border-radius: var(--rayon);
+    border-radius: var(--radius);
 
-    padding: 15px 17px;
+    padding: 13px 15px;
 
-    box-shadow: var(--ombre);
+    box-shadow: var(--shadow);
 }
 
 .annonce h3 {
     font-size: 14px;
-    margin-bottom: 5px;
+
+    margin-bottom: 4px;
+}
+
+.annonce p {
+    font-size: 13px;
 }
 
 .annonce-date {
     display: inline-block;
 
     font-size: 11px;
-    color: var(--texte-secondaire);
 
-    margin-bottom: 5px;
+    color: var(--text-muted);
+
+    margin-bottom: 4px;
 }
 
 
-/* =========================
-   ACTIVITÉS
-   ========================= */
+/* =========================================================
+   16. ACTIVITÉS
+   ========================================================= */
 
 .activities-grid {
     display: grid;
@@ -680,13 +792,13 @@ section {
     grid-template-columns:
         repeat(auto-fit, minmax(220px, 1fr));
 
-    gap: 15px;
+    gap: 14px;
 }
 
 
-/* =========================
-   GALERIE
-   ========================= */
+/* =========================================================
+   17. GALERIE
+   ========================================================= */
 
 .gallery-grid {
     display: grid;
@@ -694,24 +806,24 @@ section {
     grid-template-columns:
         repeat(auto-fill, minmax(210px, 1fr));
 
-    gap: 14px;
+    gap: 12px;
 }
 
 .gallery-item {
     overflow: hidden;
 
-    background: var(--blanc);
+    background: var(--white);
 
-    border: 1px solid var(--bordure);
+    border: 1px solid var(--border);
 
-    border-radius: var(--rayon);
+    border-radius: var(--radius);
 
-    box-shadow: var(--ombre);
+    box-shadow: var(--shadow);
 }
 
 .gallery-item img {
     width: 100%;
-    height: 180px;
+    height: 175px;
 
     object-fit: cover;
 
@@ -725,12 +837,13 @@ section {
 }
 
 .gallery-caption {
-    padding: 11px 13px;
+    padding: 10px 12px;
 }
 
 .gallery-caption h3 {
     font-size: 13px;
-    margin-bottom: 3px;
+
+    margin-bottom: 2px;
 }
 
 .gallery-caption p {
@@ -738,16 +851,16 @@ section {
 }
 
 
-/* =========================
-   ANCIENS ÉLÈVES
-   ========================= */
+/* =========================================================
+   18. ANCIENS ÉLÈVES
+   ========================================================= */
 
 .alumni-card {
     background:
         linear-gradient(
             135deg,
-            var(--orange-clair),
-            var(--blanc)
+            var(--orange-light),
+            var(--white)
         );
 
     border: 1px solid #fed7aa;
@@ -758,31 +871,34 @@ section {
 }
 
 
-/* =========================
-   À PROPOS
-   ========================= */
+/* =========================================================
+   19. À PROPOS
+   ========================================================= */
 
 .about-box {
-    background: var(--blanc);
+    background: var(--white);
 
-    border: 1px solid var(--bordure);
+    border: 1px solid var(--border);
 
-    border-radius: var(--rayon);
+    border-radius: var(--radius);
 
-    padding: 22px;
+    padding: 20px;
 
-    box-shadow: var(--ombre);
+    box-shadow: var(--shadow);
 }
 
 .about-box p {
+    font-size: 14px;
+
     line-height: 1.9;
-    margin-bottom: 10px;
+
+    margin-bottom: 8px;
 }
 
 
-/* =========================
-   CONTACT
-   ========================= */
+/* =========================================================
+   20. CONTACT
+   ========================================================= */
 
 .contact-grid {
     display: grid;
@@ -790,29 +906,29 @@ section {
     grid-template-columns:
         repeat(auto-fit, minmax(230px, 1fr));
 
-    gap: 14px;
+    gap: 12px;
 }
 
 .contact-item {
-    background: var(--blanc);
+    background: var(--white);
 
-    border: 1px solid var(--bordure);
+    border: 1px solid var(--border);
 
-    border-radius: var(--rayon);
+    border-radius: var(--radius);
 
-    padding: 16px;
+    padding: 14px;
 
-    box-shadow: var(--ombre);
+    box-shadow: var(--shadow);
 }
 
 .contact-item strong {
     display: block;
 
-    color: var(--texte);
+    color: var(--text);
 
     font-size: 13px;
 
-    margin-bottom: 4px;
+    margin-bottom: 3px;
 }
 
 .contact-item span,
@@ -821,34 +937,95 @@ section {
 }
 
 
-/* =========================
-   FOOTER
-   ========================= */
+/* =========================================================
+   21. FORMULAIRE
+   ========================================================= */
 
-.site-footer {
-    margin-top: 30px;
-
-    background: #1f2937;
-    color: white;
-
-    padding: 25px 18px;
-
-    text-align: center;
+.form-group {
+    margin-bottom: 13px;
 }
 
-.site-footer p {
-    color: #d1d5db;
-    font-size: 12px;
+.form-group label {
+    display: block;
+
+    margin-bottom: 5px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    color: var(--text);
 }
 
-.site-footer a {
-    color: #93c5fd;
+.form-row {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 13px;
+}
+
+.form-actions {
+    display: flex;
+
+    justify-content: flex-start;
+
+    gap: 7px;
+
+    margin-top: 16px;
 }
 
 
-/* =========================
-   BADGES
-   ========================= */
+/* =========================================================
+   22. TABLEAUX
+   ========================================================= */
+
+table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    background: var(--white);
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius);
+
+    overflow: hidden;
+}
+
+th,
+td {
+    padding: 9px 11px;
+
+    border-bottom: 1px solid var(--border);
+
+    font-size: 13px;
+
+    text-align: right;
+}
+
+th {
+    background: var(--primary-light);
+
+    color: var(--text);
+
+    font-weight: 700;
+}
+
+td {
+    color: var(--text);
+}
+
+tr:hover td {
+    background: #fafafa;
+}
+
+
+/* =========================================================
+   23. BADGES
+   ========================================================= */
 
 .badge {
     display: inline-block;
@@ -858,6 +1035,7 @@ section {
     border-radius: 20px;
 
     font-size: 11px;
+
     font-weight: 600;
 }
 
@@ -877,64 +1055,22 @@ section {
 }
 
 
-/* =========================
-   TABLEAUX
-   ========================= */
-
-table {
-    width: 100%;
-
-    border-collapse: collapse;
-
-    background: var(--blanc);
-
-    border: 1px solid var(--bordure);
-
-    border-radius: var(--rayon);
-
-    overflow: hidden;
-}
-
-th,
-td {
-    padding: 10px 12px;
-
-    border-bottom: 1px solid var(--bordure);
-
-    font-size: 13px;
-
-    text-align: right;
-}
-
-th {
-    background: var(--bleu-clair);
-
-    color: var(--texte);
-
-    font-weight: 700;
-}
-
-tr:hover td {
-    background: #fafafa;
-}
-
-
-/* =========================
-   MESSAGE / ÉTAT VIDE
-   ========================= */
+/* =========================================================
+   24. ÉTAT VIDE
+   ========================================================= */
 
 .empty-state {
-    background: var(--blanc);
+    background: var(--white);
 
     border: 1px dashed #cbd5e1;
 
-    border-radius: var(--rayon);
+    border-radius: var(--radius);
 
-    padding: 25px;
+    padding: 24px;
 
     text-align: center;
 
-    color: var(--texte-secondaire);
+    color: var(--text-light);
 }
 
 .empty-state p {
@@ -942,9 +1078,9 @@ tr:hover td {
 }
 
 
-/* =========================
-   MODAL
-   ========================= */
+/* =========================================================
+   25. MODAL
+   ========================================================= */
 
 .modal {
     position: fixed;
@@ -965,17 +1101,18 @@ tr:hover td {
 
 .modal-content {
     width: 100%;
+
     max-width: 650px;
 
     max-height: 90vh;
 
     overflow-y: auto;
 
-    background: var(--blanc);
+    background: var(--white);
 
-    border-radius: 12px;
+    border-radius: 10px;
 
-    padding: 22px;
+    padding: 20px;
 
     box-shadow:
         0 15px 40px rgba(0, 0, 0, 0.20);
@@ -987,24 +1124,24 @@ tr:hover td {
     align-items: center;
     justify-content: space-between;
 
-    margin-bottom: 18px;
+    margin-bottom: 16px;
 }
 
 .modal-header h2 {
-    font-size: 1.25rem;
+    font-size: 18px;
 }
 
 .modal-close {
-    width: 34px;
-    height: 34px;
+    width: 32px;
+    height: 32px;
 
-    border-radius: 7px;
+    padding: 0;
+
+    border-radius: 6px;
 
     background: #f3f4f6;
 
-    color: var(--texte);
-
-    padding: 0;
+    color: var(--text);
 }
 
 .modal-close:hover {
@@ -1012,63 +1149,55 @@ tr:hover td {
 }
 
 
-/* =========================
-   FORMULAIRES
-   ========================= */
+/* =========================================================
+   26. FOOTER
+   ========================================================= */
 
-.form-group {
-    margin-bottom: 14px;
+.site-footer {
+    margin-top: 30px;
+
+    background: #1f2937;
+
+    color: white;
+
+    padding: 22px 18px;
+
+    text-align: center;
 }
 
-.form-group label {
-    display: block;
+.site-footer p {
+    color: #d1d5db;
 
-    margin-bottom: 5px;
-
-    font-size: 13px;
-    font-weight: 600;
-
-    color: var(--texte);
+    font-size: 12px;
 }
 
-.form-row {
-    display: grid;
+.site-footer a {
+    color: #93c5fd;
 
-    grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-
-    gap: 14px;
-}
-
-.form-actions {
-    display: flex;
-
-    justify-content: flex-start;
-
-    gap: 8px;
-
-    margin-top: 18px;
+    font-size: 12px;
 }
 
 
-/* =========================
-   RESPONSIVE TABLETTE
-   ========================= */
+/* =========================================================
+   27. RESPONSIVE TABLETTE
+   ========================================================= */
 
 @media (max-width: 900px) {
 
     .header-container {
         flex-direction: column;
+
         align-items: flex-start;
     }
 
     .main-nav a {
-        font-size: 12px;
-        padding: 8px 10px;
+        font-size: 13px;
+
+        padding: 8px 9px;
     }
 
     .hero h1 {
-        font-size: 1.7rem;
+        font-size: 23px;
     }
 
     .form-row {
@@ -1077,9 +1206,9 @@ tr:hover td {
 }
 
 
-/* =========================
-   RESPONSIVE MOBILE
-   ========================= */
+/* =========================================================
+   28. RESPONSIVE MOBILE
+   ========================================================= */
 
 @media (max-width: 600px) {
 
@@ -1088,17 +1217,18 @@ tr:hover td {
     }
 
     .site-header {
-        padding: 12px 14px;
+        padding: 11px 13px;
     }
 
     .school-logo {
-        width: 45px;
-        height: 45px;
-        font-size: 22px;
+        width: 42px;
+        height: 42px;
+
+        font-size: 20px;
     }
 
     .school-name h1 {
-        font-size: 1.1rem;
+        font-size: 17px;
     }
 
     .school-name p {
@@ -1106,15 +1236,23 @@ tr:hover td {
     }
 
     .nav-container {
-        padding: 5px 10px;
+        padding: 4px 8px;
+
+        gap: 1px;
+    }
+
+    .main-nav a {
+        font-size: 12px;
+
+        padding: 7px 8px;
     }
 
     .hero {
-        padding: 32px 15px;
+        padding: 28px 14px;
     }
 
     .hero h1 {
-        font-size: 1.45rem;
+        font-size: 21px;
     }
 
     .hero p {
@@ -1130,7 +1268,7 @@ tr:hover td {
     }
 
     section {
-        padding: 28px 0;
+        padding: 27px 0;
     }
 
     .container {
@@ -1138,7 +1276,11 @@ tr:hover td {
     }
 
     .section-header h2 {
-        font-size: 1.3rem;
+        font-size: 18px;
+    }
+
+    .section-header p {
+        font-size: 12px;
     }
 
     .cards-grid,
@@ -1150,7 +1292,7 @@ tr:hover td {
     }
 
     .gallery-item img {
-        height: 210px;
+        height: 205px;
     }
 
     .modal {
@@ -1160,12 +1302,23 @@ tr:hover td {
     .modal-content {
         padding: 16px;
     }
+
+    input,
+    select,
+    textarea {
+        font-size: 13px;
+    }
+
+    button,
+    .btn {
+        font-size: 12px;
+    }
 }
 
 
-/* =========================
-   ACCESSIBILITÉ
-   ========================= */
+/* =========================================================
+   29. ACCESSIBILITÉ
+   ========================================================= */
 
 button:focus-visible,
 a:focus-visible,
@@ -1173,5 +1326,6 @@ input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
     outline: 3px solid rgba(37, 99, 235, 0.25);
+
     outline-offset: 2px;
 }
