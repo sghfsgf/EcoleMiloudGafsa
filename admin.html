@@ -1,0 +1,512 @@
+```html
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        الإدارة - المدرسة الابتدائية نهج ميلود
+    </title>
+
+    <meta
+        name="description"
+        content="فضاء إدارة المدرسة الابتدائية نهج ميلود"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/admin.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     EN-TÊTE
+====================================================== -->
+
+<header class="admin-header">
+
+    <div class="admin-header-content">
+
+        <h1>
+            🔐 الإدارة
+        </h1>
+
+        <p>
+            المدرسة الابتدائية نهج ميلود
+        </p>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     CONTENU
+====================================================== -->
+
+<main class="admin-container">
+
+
+    <!-- =================================================
+         CONNEXION
+    ================================================== -->
+
+    <section
+        id="loginSection"
+        class="admin-card"
+    >
+
+        <h2>
+            تسجيل الدخول
+        </h2>
+
+        <p class="form-intro">
+            الدخول مخصص للإدارة فقط
+        </p>
+
+
+        <form id="loginForm">
+
+
+            <!-- البريد الإلكتروني -->
+
+            <div class="form-group">
+
+                <label for="email">
+                    البريد الإلكتروني
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    autocomplete="username"
+                    placeholder="أدخل البريد الإلكتروني"
+                >
+
+            </div>
+
+
+            <!-- mot de passe -->
+
+            <div class="form-group">
+
+                <label for="password">
+                    كلمة المرور
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    required
+                    autocomplete="current-password"
+                    placeholder="أدخل كلمة المرور"
+                >
+
+            </div>
+
+
+            <!-- bouton connexion -->
+
+            <button
+                type="submit"
+                class="primary-button"
+            >
+                🔐 تسجيل الدخول
+            </button>
+
+
+            <!-- mot de passe oublié -->
+
+            <button
+                type="button"
+                id="forgotPassword"
+                class="secondary-button"
+            >
+                نسيت كلمة المرور؟
+            </button>
+
+
+            <!-- message -->
+
+            <p
+                id="loginMessage"
+                class="message"
+                aria-live="polite"
+            ></p>
+
+
+        </form>
+
+    </section>
+
+
+
+    <!-- =================================================
+         TABLEAU DE BORD ADMIN
+    ================================================== -->
+
+    <section
+        id="dashboardSection"
+        class="dashboard hidden"
+    >
+
+
+        <!-- En-tête du tableau de bord -->
+
+        <div class="dashboard-header">
+
+            <div>
+
+                <h2>
+                    لوحة الإدارة
+                </h2>
+
+                <p id="adminEmail"></p>
+
+            </div>
+
+
+            <button
+                type="button"
+                id="logoutButton"
+                class="logout-button"
+            >
+                🚪 تسجيل الخروج
+            </button>
+
+        </div>
+
+
+
+        <!-- =================================================
+             ANNONCES
+        ================================================== -->
+
+        <section class="admin-card">
+
+            <h2>
+                📢 إدارة الإعلانات
+            </h2>
+
+
+            <form id="annonceForm">
+
+
+                <input
+                    type="hidden"
+                    id="annonceId"
+                >
+
+
+                <div class="form-group">
+
+                    <label for="annonceTitre">
+                        عنوان الإعلان
+                    </label>
+
+                    <input
+                        type="text"
+                        id="annonceTitre"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="annonceContenu">
+                        محتوى الإعلان
+                    </label>
+
+                    <textarea
+                        id="annonceContenu"
+                        rows="5"
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <label class="checkbox-line">
+
+                    <input
+                        type="checkbox"
+                        id="annoncePubliee"
+                        checked
+                    >
+
+                    نشر الإعلان
+
+                </label>
+
+
+                <div class="form-buttons">
+
+                    <button
+                        type="submit"
+                        class="primary-button"
+                    >
+                        💾 حفظ الإعلان
+                    </button>
+
+                    <button
+                        type="button"
+                        id="annonceAnnuler"
+                        class="secondary-button"
+                    >
+                        إلغاء
+                    </button>
+
+                </div>
+
+            </form>
+
+
+            <div id="annoncesAdmin"></div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             DOCUMENTS
+        ================================================== -->
+
+        <section class="admin-card">
+
+            <h2>
+                📚 إدارة الوثائق
+            </h2>
+
+
+            <form id="documentForm">
+
+
+                <input
+                    type="hidden"
+                    id="documentId"
+                >
+
+
+                <div class="form-group">
+
+                    <label for="documentTitre">
+                        عنوان الوثيقة
+                    </label>
+
+                    <input
+                        type="text"
+                        id="documentTitre"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="documentDescription">
+                        وصف الوثيقة
+                    </label>
+
+                    <textarea
+                        id="documentDescription"
+                        rows="3"
+                    ></textarea>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="documentUrl">
+                        رابط الوثيقة
+                    </label>
+
+                    <input
+                        type="url"
+                        id="documentUrl"
+                        required
+                        placeholder="https://..."
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="documentCategorie">
+                        تصنيف الوثيقة
+                    </label>
+
+                    <select id="documentCategorie">
+
+                        <option value="documents">
+                            الوثائق
+                        </option>
+
+                        <option value="horaires">
+                            جداول الأوقات
+                        </option>
+
+                        <option value="examens">
+                            جداول الامتحانات
+                        </option>
+
+                        <option value="concours-six">
+                            مناظرة السادسة
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <label class="checkbox-line">
+
+                    <input
+                        type="checkbox"
+                        id="documentPublie"
+                        checked
+                    >
+
+                    نشر الوثيقة
+
+                </label>
+
+
+                <div class="form-buttons">
+
+                    <button
+                        type="submit"
+                        class="primary-button"
+                    >
+                        💾 حفظ الوثيقة
+                    </button>
+
+                    <button
+                        type="button"
+                        id="documentAnnuler"
+                        class="secondary-button"
+                    >
+                        إلغاء
+                    </button>
+
+                </div>
+
+
+            </form>
+
+
+            <div id="documentsAdmin"></div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             PHOTOS
+        ================================================== -->
+
+        <section class="admin-card">
+
+            <h2>
+                📸 إدارة الصور
+            </h2>
+
+            <p class="section-note">
+                سيتم إضافة تحميل الصور عبر Firebase Storage
+                في l'étape suivante.
+            </p>
+
+        </section>
+
+
+
+        <!-- =================================================
+             HORAIRES
+        ================================================== -->
+
+        <section class="admin-card">
+
+            <h2>
+                🕐 إدارة جداول الأوقات
+            </h2>
+
+            <p class="section-note">
+                سيتم تفعيل إدارة جداول الأوقات لاحقًا.
+            </p>
+
+        </section>
+
+
+
+        <!-- =================================================
+             EXAMENS
+        ================================================== -->
+
+        <section class="admin-card">
+
+            <h2>
+                📝 إدارة جداول الامتحانات
+            </h2>
+
+            <p class="section-note">
+                سيتم تفعيل إدارة جداول الامتحانات لاحقًا.
+            </p>
+
+        </section>
+
+
+
+    </section>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     PIED DE PAGE
+====================================================== -->
+
+<footer class="admin-footer">
+
+    <p>
+        المدرسة الابتدائية نهج ميلود
+    </p>
+
+</footer>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+====================================================== -->
+
+<script
+    type="module"
+    src="js/admin.js"
+></script>
+
+
+</body>
+</html>
+```
