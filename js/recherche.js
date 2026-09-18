@@ -2,10 +2,17 @@
 /* =========================================================
    ECOLE MILOUD GAFSA
    RECHERCHE DU SITE
+
    Recherche dans :
    - Rubriques statiques
    - Annonces Firestore
    - Documents Firestore
+
+   Documents :
+   - categorie
+   - cible
+   - fichier = Bytes Firestore
+   - compatibilité ancienne URL
    ========================================================= */
 
 
@@ -27,82 +34,181 @@ import {
 
 
 /* =========================================================
-   RUBRIQUES STATIQUES DU SITE
+   RUBRIQUES STATIQUES
    ========================================================= */
 
 const sections = [
 
     {
         id: "accueil",
+
         titre: "الرئيسية",
+
         texte:
             "الموقع الرسمي للمدرسة الابتدائية نهج ميلود"
     },
 
+
     {
         id: "horaires",
+
         titre: "جداول الأوقات",
+
         texte:
             "جداول أوقات الدراسة حسب المستوى الدراسي"
     },
 
+
     {
         id: "examens",
+
         titre: "جداول الامتحانات",
+
         texte:
             "جداول الامتحانات حسب الثلاثي والمستوى الدراسي"
     },
 
+
     {
         id: "concours-six",
-        titre: "مناظرة السادسة",
+
+        titre: "مناظرة السيزيام",
+
         texte:
             "مناظرة الدخول إلى المدارس الإعدادية النموذجية"
     },
 
+
     {
         id: "documents",
+
         titre: "الوثائق",
+
         texte:
             "الوثائق المدرسية والمذكرات"
     },
 
+
     {
         id: "annonces",
+
         titre: "الإعلانات",
+
         texte:
             "آخر الإعلانات والمعلومات الخاصة بالمدرسة"
     },
 
+
     {
         id: "activites",
+
         titre: "أنشطة المدرسة",
+
         texte:
             "الأنشطة الثقافية والتربوية والرياضية والترفيهية"
     },
 
+
     {
         id: "galerie",
+
         titre: "معرض الصور",
+
         texte:
             "صور وذكريات أنشطة المدرسة"
     },
 
+
     {
         id: "ecole",
+
         titre: "حول المدرسة",
+
         texte:
             "تعريف بالمدرسة الابتدائية نهج ميلود"
     },
 
+
     {
         id: "contact",
+
         titre: "اتصل بنا",
+
         texte:
             "معلومات الاتصال بالمدرسة"
     }
 
 ];
+
+
+/* =========================================================
+   LIBELLÉS CATÉGORIES
+   ========================================================= */
+
+const libellesCategorie = {
+
+    documents:
+        "📚 الوثائق",
+
+    horaires:
+        "🕐 جداول الأوقات",
+
+    examens:
+        "📝 جداول الامتحانات",
+
+    "concours-six":
+        "🎓 مناظرة السيزيام"
+};
+
+
+/* =========================================================
+   LIBELLÉS DESTINATIONS
+   ========================================================= */
+
+const libellesDestination = {
+
+    sana1:
+        "السنة الأولى",
+
+    sana2:
+        "السنة الثانية",
+
+    sana3:
+        "السنة الثالثة",
+
+    sana4:
+        "السنة الرابعة",
+
+    sana5:
+        "السنة الخامسة",
+
+    sana6:
+        "السنة السادسة",
+
+    trimestre1:
+        "الثلاثي الأول",
+
+    trimestre2:
+        "الثلاثي الثاني",
+
+    trimestre3:
+        "الثلاثي الثالث",
+
+    calendrier:
+        "الرزنامة والمواعيد",
+
+    "anciens-sujets":
+        "مواضيع السنوات السابقة",
+
+    preparation:
+        "تمارين للتحضير",
+
+    annonces:
+        "الإعلانات",
+
+    general:
+        "الوثائق العامة"
+};
 
 
 /* =========================================================
@@ -115,36 +221,42 @@ function normaliser(texte) {
         .toLowerCase()
 
         /* Supprimer les voyelles arabes */
+
         .replace(
             /[\u064B-\u065F\u0670]/g,
             ""
         )
 
         /* Supprimer le tatweel */
+
         .replace(
             /\u0640/g,
             ""
         )
 
-        /* Alif */
+        /* Normalisation Alif */
+
         .replace(
             /[إأآٱ]/g,
             "ا"
         )
 
         /* Alif maqṣūra */
+
         .replace(
             /ى/g,
             "ي"
         )
 
         /* Ta marbuta */
+
         .replace(
             /ة/g,
             "ه"
         )
 
         /* Espaces multiples */
+
         .replace(
             /\s+/g,
             " "
@@ -155,17 +267,25 @@ function normaliser(texte) {
 
 
 /* =========================================================
-   ÉLÉMENTS
+   ÉLÉMENTS HTML
    ========================================================= */
 
 const searchBox =
-    document.querySelector(".search-box");
+    document.querySelector(
+        ".search-box"
+    );
+
 
 const searchInput =
-    document.getElementById("search");
+    document.getElementById(
+        "search"
+    );
+
 
 const searchButton =
-    document.getElementById("searchButton");
+    document.getElementById(
+        "searchButton"
+    );
 
 
 /* =========================================================
@@ -181,12 +301,11 @@ if (
     console.error(
         "Éléments de recherche introuvables."
     );
-
 }
 
 
 /* =========================================================
-   ZONE DES RÉSULTATS
+   ZONE RÉSULTATS
    ========================================================= */
 
 let searchResults =
@@ -195,19 +314,282 @@ let searchResults =
     );
 
 
-if (!searchResults && searchBox) {
+if (
+    !searchResults &&
+    searchBox
+) {
 
     searchResults =
         document.createElement(
             "div"
         );
 
+
     searchResults.id =
         "searchResults";
+
 
     searchBox.appendChild(
         searchResults
     );
+}
+
+
+/* =========================================================
+   DESTINATION DOCUMENT
+   ========================================================= */
+
+function obtenirLibelleDestination(
+    categorie,
+    cible
+) {
+
+    const destination =
+        libellesDestination[
+            cible
+        ];
+
+
+    if (destination) {
+
+        return destination;
+    }
+
+
+    if (
+        categorie ===
+        "documents"
+    ) {
+
+        return "الوثائق العامة";
+    }
+
+
+    return "";
+}
+
+
+/* =========================================================
+   ID DE LA CARTE CIBLE
+   ========================================================= */
+
+function obtenirIdCarte(
+    categorie,
+    cible
+) {
+
+    if (
+        categorie ===
+        "horaires"
+    ) {
+
+        return (
+            "horaire-" +
+            cible
+        );
+    }
+
+
+    if (
+        categorie ===
+        "examens"
+    ) {
+
+        return (
+            "examen-" +
+            cible
+        );
+    }
+
+
+    if (
+        categorie ===
+        "concours-six"
+    ) {
+
+        return (
+            "concours-" +
+            cible
+        );
+    }
+
+
+    if (
+        categorie ===
+        "documents"
+    ) {
+
+        return "document-general";
+    }
+
+
+    return "";
+}
+
+
+/* =========================================================
+   OUVRIR UN DOCUMENT
+   ========================================================= */
+
+function ouvrirDocument(
+    documentData
+) {
+
+    try {
+
+
+        /* =========================================
+           NOUVEAU SYSTÈME :
+           fichier = Bytes Firestore
+        ========================================== */
+
+        if (
+            documentData.fichier &&
+            typeof documentData
+                .fichier
+                .toUint8Array ===
+            "function"
+        ) {
+
+            const bytes =
+                documentData
+                    .fichier
+                    .toUint8Array();
+
+
+            const type =
+                documentData.typeFichier ||
+                "application/pdf";
+
+
+            const blob =
+                new Blob(
+                    [bytes],
+                    {
+                        type:
+                            type
+                    }
+                );
+
+
+            const url =
+                URL.createObjectURL(
+                    blob
+                );
+
+
+            /* PDF */
+
+            if (
+                type ===
+                "application/pdf"
+            ) {
+
+                window.open(
+                    url,
+                    "_blank"
+                );
+
+
+                setTimeout(
+                    function () {
+
+                        URL.revokeObjectURL(
+                            url
+                        );
+
+                    },
+                    60000
+                );
+
+
+                return;
+            }
+
+
+            /* DOC / DOCX */
+
+            const lien =
+                document.createElement(
+                    "a"
+                );
+
+
+            lien.href =
+                url;
+
+
+            lien.download =
+                documentData.nomFichier ||
+                "document";
+
+
+            document.body.appendChild(
+                lien
+            );
+
+
+            lien.click();
+
+
+            lien.remove();
+
+
+            setTimeout(
+                function () {
+
+                    URL.revokeObjectURL(
+                        url
+                    );
+
+                },
+                5000
+            );
+
+
+            return;
+        }
+
+
+        /* =========================================
+           COMPATIBILITÉ ANCIENS DOCUMENTS URL
+        ========================================== */
+
+        if (
+            documentData.url
+        ) {
+
+            window.open(
+                documentData.url,
+                "_blank"
+            );
+
+
+            return;
+        }
+
+
+        /* =========================================
+           DOCUMENT ABSENT
+        ========================================== */
+
+        alert(
+            "الوثيقة غير متوفرة."
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Erreur ouverture document :",
+            error
+        );
+
+
+        alert(
+            "تعذر فتح الوثيقة."
+        );
+    }
 }
 
 
@@ -221,6 +603,7 @@ async function effectuerRecherche() {
         !searchInput ||
         !searchResults
     ) {
+
         return;
     }
 
@@ -231,7 +614,7 @@ async function effectuerRecherche() {
         );
 
 
-    /* Effacer les anciens résultats */
+    /* Effacer anciens résultats */
 
     searchResults.innerHTML =
         "";
@@ -240,14 +623,19 @@ async function effectuerRecherche() {
     /* Recherche vide */
 
     if (!terme) {
+
         return;
     }
 
 
     searchResults.innerHTML = `
-        <div class="search-results-loading">
+
+        <div
+            class="search-results-loading"
+        >
             🔎 جاري البحث...
         </div>
+
     `;
 
 
@@ -259,7 +647,7 @@ async function effectuerRecherche() {
     ====================================================== */
 
     sections.forEach(
-        section => {
+        function (section) {
 
             const texte =
                 normaliser(
@@ -270,12 +658,15 @@ async function effectuerRecherche() {
 
 
             if (
-                texte.includes(terme)
+                texte.includes(
+                    terme
+                )
             ) {
 
                 resultats.push({
 
-                    type: "section",
+                    type:
+                        "section",
 
                     titre:
                         section.titre,
@@ -287,7 +678,6 @@ async function effectuerRecherche() {
                         section.id
                 });
             }
-
         }
     );
 
@@ -300,10 +690,12 @@ async function effectuerRecherche() {
 
         const annoncesQuery =
             query(
+
                 collection(
                     db,
                     "annonces"
                 ),
+
                 where(
                     "publie",
                     "==",
@@ -319,7 +711,7 @@ async function effectuerRecherche() {
 
 
         annoncesSnapshot.forEach(
-            docSnap => {
+            function (docSnap) {
 
                 const data =
                     docSnap.data();
@@ -327,6 +719,7 @@ async function effectuerRecherche() {
 
                 const texte =
                     normaliser(
+
                         (data.titre || "") +
                         " " +
                         (data.contenu || "")
@@ -334,12 +727,15 @@ async function effectuerRecherche() {
 
 
                 if (
-                    texte.includes(terme)
+                    texte.includes(
+                        terme
+                    )
                 ) {
 
                     resultats.push({
 
-                        type: "annonce",
+                        type:
+                            "annonce",
 
                         titre:
                             data.titre ||
@@ -353,7 +749,6 @@ async function effectuerRecherche() {
                             "annonces"
                     });
                 }
-
             }
         );
 
@@ -375,10 +770,12 @@ async function effectuerRecherche() {
 
         const documentsQuery =
             query(
+
                 collection(
                     db,
                     "documents"
                 ),
+
                 where(
                     "publie",
                     "==",
@@ -394,24 +791,69 @@ async function effectuerRecherche() {
 
 
         documentsSnapshot.forEach(
-            docSnap => {
+            function (docSnap) {
 
                 const data =
                     docSnap.data();
 
 
+                /* -----------------------------------------
+                   Catégorie
+                ----------------------------------------- */
+
+                const categorie =
+                    data.categorie ||
+                    "documents";
+
+
+                /* -----------------------------------------
+                   Cible
+                ----------------------------------------- */
+
+                const cible =
+                    data.cible ||
+                    "general";
+
+
+                /* -----------------------------------------
+                   Texte recherché
+                ----------------------------------------- */
+
                 const texte =
                     normaliser(
+
                         (data.titre || "") +
                         " " +
+
                         (data.description || "") +
                         " " +
-                        (data.categorie || "")
+
+                        (categorie || "") +
+                        " " +
+
+                        (cible || "") +
+                        " " +
+
+                        (
+                            libellesCategorie[
+                                categorie
+                            ] || ""
+                        ) +
+
+                        " " +
+
+                        (
+                            libellesDestination[
+                                cible
+                            ] || ""
+                        )
                     );
 
 
                 if (
-                    texte.includes(terme)
+                    texte.includes(
+                        terme
+                    )
                 ) {
 
                     resultats.push({
@@ -427,16 +869,29 @@ async function effectuerRecherche() {
                             data.description ||
                             "",
 
-                        url:
-                            data.url ||
+                        categorie:
+                            categorie,
+
+                        cible:
+                            cible,
+
+                        nomFichier:
+                            data.nomFichier ||
                             "",
 
-                        categorie:
-                            data.categorie ||
+                        typeFichier:
+                            data.typeFichier ||
+                            "",
+
+                        fichier:
+                            data.fichier ||
+                            null,
+
+                        url:
+                            data.url ||
                             ""
                     });
                 }
-
             }
         );
 
@@ -471,6 +926,7 @@ function afficherResultats(
     if (
         !searchResults
     ) {
+
         return;
     }
 
@@ -482,12 +938,15 @@ function afficherResultats(
     /* Aucun résultat */
 
     if (
-        resultats.length === 0
+        resultats.length ===
+        0
     ) {
 
         searchResults.innerHTML = `
 
-            <div class="search-no-result">
+            <div
+                class="search-no-result"
+            >
 
                 🔎 لا توجد نتائج لهذا البحث.
 
@@ -520,10 +979,12 @@ function afficherResultats(
     );
 
 
-    /* Résultats */
+    /* =====================================================
+       RÉSULTATS
+    ====================================================== */
 
     resultats.forEach(
-        resultat => {
+        function (resultat) {
 
             const item =
                 document.createElement(
@@ -536,7 +997,7 @@ function afficherResultats(
 
 
             /* -----------------------------------------
-               Titre
+               TITRE
             ----------------------------------------- */
 
             const h3 =
@@ -550,7 +1011,7 @@ function afficherResultats(
 
 
             /* -----------------------------------------
-               Description
+               DESCRIPTION
             ----------------------------------------- */
 
             const p =
@@ -565,7 +1026,7 @@ function afficherResultats(
 
 
             /* -----------------------------------------
-               Type
+               TYPE
             ----------------------------------------- */
 
             const type =
@@ -581,8 +1042,8 @@ function afficherResultats(
 
                 type.textContent =
                     "📂 Rubrique";
-
             }
+
             else if (
                 resultat.type ===
                 "annonce"
@@ -590,17 +1051,73 @@ function afficherResultats(
 
                 type.textContent =
                     "📢 إعلان";
-
             }
+
             else if (
                 resultat.type ===
                 "document"
             ) {
 
                 type.textContent =
-                    "📚 وثيقة";
+                    "📄 وثيقة";
+
+
+                const categorie =
+                    document.createElement(
+                        "small"
+                    );
+
+
+                categorie.className =
+                    "search-document-category";
+
+
+                categorie.textContent =
+                    libellesCategorie[
+                        resultat.categorie
+                    ] ||
+                    "📄 وثيقة";
+
+
+                item.appendChild(
+                    categorie
+                );
+
+
+                const destination =
+                    obtenirLibelleDestination(
+                        resultat.categorie,
+                        resultat.cible
+                    );
+
+
+                if (
+                    destination
+                ) {
+
+                    const cible =
+                        document.createElement(
+                            "small"
+                        );
+
+
+                    cible.className =
+                        "search-document-destination";
+
+
+                    cible.textContent =
+                        "📌 " +
+                        destination;
+
+
+                    item.appendChild(
+                        cible
+                    );
+                }
             }
 
+
+            /* Ajouter éléments */
 
             item.appendChild(
                 h3
@@ -617,15 +1134,18 @@ function afficherResultats(
             );
 
 
-            /* -----------------------------------------
-               Clic
-            ----------------------------------------- */
+            /* =================================================
+               CLIC
+            ================================================= */
 
             item.addEventListener(
                 "click",
                 function () {
 
-                    /* Rubrique */
+
+                    /* -----------------------------------------
+                       RUBRIQUE
+                    ----------------------------------------- */
 
                     if (
                         resultat.type ===
@@ -641,18 +1161,23 @@ function afficherResultats(
                         if (section) {
 
                             section.scrollIntoView({
+
                                 behavior:
                                     "smooth",
+
                                 block:
                                     "start"
                             });
                         }
 
+
                         return;
                     }
 
 
-                    /* Annonce */
+                    /* -----------------------------------------
+                       ANNONCE
+                    ----------------------------------------- */
 
                     if (
                         resultat.type ===
@@ -668,32 +1193,68 @@ function afficherResultats(
                         if (section) {
 
                             section.scrollIntoView({
+
                                 behavior:
                                     "smooth",
+
                                 block:
                                     "start"
                             });
                         }
 
+
                         return;
                     }
 
 
-                    /* Document */
+                    /* -----------------------------------------
+                       DOCUMENT
+                    ----------------------------------------- */
 
                     if (
                         resultat.type ===
-                            "document" &&
-                        resultat.url
+                        "document"
                     ) {
 
-                        window.open(
-                            resultat.url,
-                            "_blank",
-                            "noopener,noreferrer"
+                        /* Aller à la bonne carte */
+
+                        const carteId =
+                            obtenirIdCarte(
+                                resultat.categorie,
+                                resultat.cible
+                            );
+
+
+                        if (
+                            carteId
+                        ) {
+
+                            const carte =
+                                document.getElementById(
+                                    carteId
+                                );
+
+
+                            if (carte) {
+
+                                carte.scrollIntoView({
+
+                                    behavior:
+                                        "smooth",
+
+                                    block:
+                                        "center"
+                                });
+                            }
+                        }
+
+
+                        /* Ouvrir le document */
+
+                        ouvrirDocument(
+                            resultat
                         );
                     }
-
                 }
             );
 
@@ -710,7 +1271,9 @@ function afficherResultats(
    BOUTON RECHERCHE
    ========================================================= */
 
-if (searchButton) {
+if (
+    searchButton
+) {
 
     searchButton.addEventListener(
         "click",
@@ -723,7 +1286,9 @@ if (searchButton) {
    TOUCHE ENTRÉE
    ========================================================= */
 
-if (searchInput) {
+if (
+    searchInput
+) {
 
     searchInput.addEventListener(
         "keydown",
