@@ -3,6 +3,11 @@
    ECOLE MILOUD GAFSA
    ADMIN.JS
    Firebase Authentication + Firestore
+   Gestion :
+   - Connexion Admin
+   - Mot de passe oublié
+   - Annonces
+   - Documents PDF / Word depuis le PC
    ========================================================= */
 
 
@@ -18,7 +23,6 @@ import {
 
 /* =========================================================
    FIREBASE AUTH
-   Pour "Mot de passe oublié"
    ========================================================= */
 
 import {
@@ -37,9 +41,14 @@ import {
     updateDoc,
     deleteDoc,
     doc,
-    serverTimestamp
+    serverTimestamp,
+    Bytes
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
+
+/* =========================================================
+   FIREBASE CONFIG
+   ========================================================= */
 
 import {
     db,
@@ -88,26 +97,36 @@ const documentAnnuler =
 
 
 /* =========================================================
-   VÉRIFICATION
+   VÉRIFICATION DU CHARGEMENT
    ========================================================= */
 
-console.log("admin.js chargé correctement.");
+console.log(
+    "admin.js chargé correctement."
+);
 
 
 /* =========================================================
-   MESSAGE
+   MESSAGE DE CONNEXION
    ========================================================= */
 
-function afficherMessage(message, erreur = false) {
+function afficherMessage(
+    message,
+    erreur = false
+) {
 
     if (!loginMessage) {
         return;
     }
 
-    loginMessage.textContent = message;
+
+    loginMessage.textContent =
+        message;
+
 
     loginMessage.style.color =
-        erreur ? "#b42318" : "#174a6e";
+        erreur
+            ? "#b42318"
+            : "#174a6e";
 }
 
 
@@ -123,14 +142,23 @@ if (loginForm) {
 
             event.preventDefault();
 
+
             const emailInput =
-                document.getElementById("email");
+                document.getElementById(
+                    "email"
+                );
+
 
             const passwordInput =
-                document.getElementById("password");
+                document.getElementById(
+                    "password"
+                );
 
 
-            if (!emailInput || !passwordInput) {
+            if (
+                !emailInput ||
+                !passwordInput
+            ) {
 
                 afficherMessage(
                     "Erreur : champs de connexion introuvables.",
@@ -144,11 +172,15 @@ if (loginForm) {
             const email =
                 emailInput.value.trim();
 
+
             const password =
                 passwordInput.value;
 
 
-            if (!email || !password) {
+            if (
+                !email ||
+                !password
+            ) {
 
                 afficherMessage(
                     "يرجى إدخال البريد الإلكتروني وكلمة المرور.",
@@ -173,24 +205,28 @@ if (loginForm) {
                     );
 
 
-                /* -----------------------------------------
-                   CONNEXION RÉUSSIE
-                ----------------------------------------- */
-
                 console.log(
                     "Admin connecté :",
                     user.email
                 );
 
 
-                loginSection.classList.add(
-                    "hidden"
-                );
+                /* Afficher dashboard */
+
+                if (loginSection) {
+
+                    loginSection.classList.add(
+                        "hidden"
+                    );
+                }
 
 
-                dashboardSection.classList.remove(
-                    "hidden"
-                );
+                if (dashboardSection) {
+
+                    dashboardSection.classList.remove(
+                        "hidden"
+                    );
+                }
 
 
                 if (adminEmail) {
@@ -203,9 +239,7 @@ if (loginForm) {
                 afficherMessage("");
 
 
-                /* -----------------------------------------
-                   CHARGEMENT DES DONNÉES
-                ----------------------------------------- */
+                /* Charger données */
 
                 await chargerAnnonces();
 
@@ -230,10 +264,12 @@ if (loginForm) {
 
 
 /* =========================================================
-   ERREURS CONNEXION
+   AFFICHER ERREUR CONNEXION
    ========================================================= */
 
-function afficherErreurConnexion(error) {
+function afficherErreurConnexion(
+    error
+) {
 
     let message =
         "تعذر تسجيل الدخول. تحقق من البريد الإلكتروني وكلمة المرور.";
@@ -241,7 +277,8 @@ function afficherErreurConnexion(error) {
 
     if (
         error &&
-        error.code === "auth/invalid-credential"
+        error.code ===
+        "auth/invalid-credential"
     ) {
 
         message =
@@ -250,7 +287,8 @@ function afficherErreurConnexion(error) {
 
     else if (
         error &&
-        error.code === "auth/user-not-found"
+        error.code ===
+        "auth/user-not-found"
     ) {
 
         message =
@@ -259,7 +297,8 @@ function afficherErreurConnexion(error) {
 
     else if (
         error &&
-        error.code === "auth/wrong-password"
+        error.code ===
+        "auth/wrong-password"
     ) {
 
         message =
@@ -268,7 +307,8 @@ function afficherErreurConnexion(error) {
 
     else if (
         error &&
-        error.code === "auth/invalid-email"
+        error.code ===
+        "auth/invalid-email"
     ) {
 
         message =
@@ -277,7 +317,8 @@ function afficherErreurConnexion(error) {
 
     else if (
         error &&
-        error.code === "auth/too-many-requests"
+        error.code ===
+        "auth/too-many-requests"
     ) {
 
         message =
@@ -286,7 +327,8 @@ function afficherErreurConnexion(error) {
 
     else if (
         error &&
-        error.message === "Compte non autorisé."
+        error.message ===
+        "Compte non autorisé."
     ) {
 
         message =
@@ -312,7 +354,9 @@ if (forgotPasswordButton) {
         async function () {
 
             const emailInput =
-                document.getElementById("email");
+                document.getElementById(
+                    "email"
+                );
 
 
             if (!emailInput) {
@@ -412,14 +456,14 @@ if (logoutButton) {
 
                 if (adminEmail) {
 
-                    adminEmail.textContent = "";
+                    adminEmail.textContent =
+                        "";
                 }
 
 
                 resetAnnonceForm();
 
                 resetDocumentForm();
-
 
                 afficherMessage("");
 
@@ -437,7 +481,7 @@ if (logoutButton) {
 
 
 /* =========================================================
-   ===================== ANNONCES =========================
+   ====================== ANNONCES =========================
    ========================================================= */
 
 if (annonceForm) {
@@ -473,7 +517,10 @@ if (annonceForm) {
                 )?.checked === true;
 
 
-            if (!titre || !contenu) {
+            if (
+                !titre ||
+                !contenu
+            ) {
 
                 alert(
                     "يرجى إدخال عنوان ومحتوى الإعلان."
@@ -487,18 +534,23 @@ if (annonceForm) {
 
                 const donnees = {
 
-                    titre: titre,
+                    titre:
+                        titre,
 
-                    contenu: contenu,
+                    contenu:
+                        contenu,
 
-                    publie: publie,
+                    publie:
+                        publie,
 
                     updatedAt:
                         serverTimestamp()
                 };
 
 
-                /* MODIFICATION */
+                /* -----------------------------------------
+                   MODIFICATION
+                ----------------------------------------- */
 
                 if (id) {
 
@@ -518,7 +570,9 @@ if (annonceForm) {
                 }
 
 
-                /* AJOUT */
+                /* -----------------------------------------
+                   AJOUT
+                ----------------------------------------- */
 
                 else {
 
@@ -596,7 +650,8 @@ async function chargerAnnonces() {
             );
 
 
-        container.innerHTML = "";
+        container.innerHTML =
+            "";
 
 
         if (snapshot.empty) {
@@ -615,7 +670,10 @@ async function chargerAnnonces() {
             function (docSnap) {
 
                 annonces.push({
-                    id: docSnap.id,
+
+                    id:
+                        docSnap.id,
+
                     ...docSnap.data()
                 });
             }
@@ -629,14 +687,16 @@ async function chargerAnnonces() {
 
                 const dateA =
                     a.createdAt &&
-                    typeof a.createdAt.toMillis === "function"
+                    typeof a.createdAt.toMillis ===
+                    "function"
                         ? a.createdAt.toMillis()
                         : 0;
 
 
                 const dateB =
                     b.createdAt &&
-                    typeof b.createdAt.toMillis === "function"
+                    typeof b.createdAt.toMillis ===
+                    "function"
                         ? b.createdAt.toMillis()
                         : 0;
 
@@ -668,7 +728,8 @@ async function chargerAnnonces() {
 
 
                 titre.textContent =
-                    annonce.titre || "إعلان";
+                    annonce.titre ||
+                    "إعلان";
 
 
                 /* CONTENU */
@@ -680,7 +741,8 @@ async function chargerAnnonces() {
 
 
                 contenu.textContent =
-                    annonce.contenu || "";
+                    annonce.contenu ||
+                    "";
 
 
                 /* STATUT */
@@ -738,13 +800,15 @@ async function chargerAnnonces() {
                         document.getElementById(
                             "annonceTitre"
                         ).value =
-                            annonce.titre || "";
+                            annonce.titre ||
+                            "";
 
 
                         document.getElementById(
                             "annonceContenu"
                         ).value =
-                            annonce.contenu || "";
+                            annonce.contenu ||
+                            "";
 
 
                         document.getElementById(
@@ -759,8 +823,11 @@ async function chargerAnnonces() {
 
 
                         window.scrollTo({
+
                             top: 0,
-                            behavior: "smooth"
+
+                            behavior:
+                                "smooth"
                         });
                     }
                 );
@@ -791,6 +858,7 @@ async function chargerAnnonces() {
                                 "هل تريد حذف هذا الإعلان؟"
                             )
                         ) {
+
                             return;
                         }
 
@@ -825,6 +893,8 @@ async function chargerAnnonces() {
                 );
 
 
+                /* Ajouter boutons */
+
                 boutons.appendChild(
                     modifier
                 );
@@ -834,6 +904,8 @@ async function chargerAnnonces() {
                     supprimer
                 );
 
+
+                /* Assemblage */
 
                 article.appendChild(
                     titre
@@ -889,6 +961,10 @@ if (annonceAnnuler) {
 }
 
 
+/* =========================================================
+   RESET ANNONCE
+   ========================================================= */
+
 function resetAnnonceForm() {
 
     if (!annonceForm) {
@@ -912,18 +988,96 @@ function resetAnnonceForm() {
 
 
     if (id) {
-        id.value = "";
+
+        id.value =
+            "";
     }
 
 
     if (publie) {
-        publie.checked = true;
+
+        publie.checked =
+            true;
     }
 }
 
 
 /* =========================================================
-   ===================== DOCUMENTS =========================
+   ====================== DOCUMENTS ========================
+   ========================================================= */
+
+
+/* =========================================================
+   CONVERSION FICHIER → BYTES FIRESTORE
+   ========================================================= */
+
+function lireFichierEnBytes(
+    file
+) {
+
+    return new Promise(
+        function (resolve, reject) {
+
+            const reader =
+                new FileReader();
+
+
+            reader.onload =
+                function () {
+
+                    try {
+
+                        const buffer =
+                            reader.result;
+
+
+                        const tableau =
+                            new Uint8Array(
+                                buffer
+                            );
+
+
+                        const bytes =
+                            Bytes.fromUint8Array(
+                                tableau
+                            );
+
+
+                        resolve(
+                            bytes
+                        );
+
+
+                    } catch (error) {
+
+                        reject(
+                            error
+                        );
+                    }
+                };
+
+
+            reader.onerror =
+                function () {
+
+                    reject(
+                        new Error(
+                            "Impossible de lire le fichier."
+                        )
+                    );
+                };
+
+
+            reader.readAsArrayBuffer(
+                file
+            );
+        }
+    );
+}
+
+
+/* =========================================================
+   FORMULAIRE DOCUMENT
    ========================================================= */
 
 if (documentForm) {
@@ -953,10 +1107,10 @@ if (documentForm) {
                 )?.value.trim();
 
 
-            const url =
+            const fichierInput =
                 document.getElementById(
-                    "documentUrl"
-                )?.value.trim();
+                    "documentFile"
+                );
 
 
             const categorie =
@@ -971,26 +1125,59 @@ if (documentForm) {
                 )?.checked === true;
 
 
-            if (!titre || !url) {
+            const fichier =
+                fichierInput?.files?.[0] ||
+                null;
+
+
+            /* -----------------------------------------
+               TITRE OBLIGATOIRE
+            ----------------------------------------- */
+
+            if (!titre) {
 
                 alert(
-                    "يرجى إدخال عنوان الوثيقة ورابطها."
+                    "يرجى إدخال عنوان الوثيقة."
                 );
 
                 return;
             }
 
 
-            /* Vérifier URL */
+            /* -----------------------------------------
+               NOUVEL AJOUT
+               Fichier obligatoire
+            ----------------------------------------- */
 
-            try {
-
-                new URL(url);
-
-            } catch {
+            if (
+                !id &&
+                !fichier
+            ) {
 
                 alert(
-                    "يرجى إدخال رابط صحيح للوثيقة."
+                    "يرجى اختيار الوثيقة من جهاز الكمبيوتر."
+                );
+
+                return;
+            }
+
+
+            /* -----------------------------------------
+               LIMITE PRATIQUE
+               900 Ko
+            ----------------------------------------- */
+
+            const tailleMax =
+                900 * 1024;
+
+
+            if (
+                fichier &&
+                fichier.size > tailleMax
+            ) {
+
+                alert(
+                    "حجم الوثيقة كبير جدًا. الحد الأقصى العملي هو 900 كيلوبايت."
                 );
 
                 return;
@@ -1001,24 +1188,103 @@ if (documentForm) {
 
                 const donnees = {
 
-                    titre: titre,
+                    titre:
+                        titre,
 
                     description:
                         description || "",
 
-                    url: url,
-
                     categorie:
-                        categorie || "documents",
+                        categorie ||
+                        "documents",
 
-                    publie: publie,
+                    publie:
+                        publie,
 
                     updatedAt:
                         serverTimestamp()
                 };
 
 
-                /* MODIFICATION */
+                /* -----------------------------------------
+                   NOUVEAU FICHIER
+                ----------------------------------------- */
+
+                if (fichier) {
+
+                    const extensionsAcceptees = [
+
+                        "pdf",
+
+                        "doc",
+
+                        "docx"
+                    ];
+
+
+                    const extension =
+                        fichier.name
+                            .toLowerCase()
+                            .split(".")
+                            .pop();
+
+
+                    const typesAcceptes = [
+
+                        "application/pdf",
+
+                        "application/msword",
+
+                        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                    ];
+
+
+                    if (
+                        !extensionsAcceptees.includes(
+                            extension
+                        ) &&
+                        !typesAcceptes.includes(
+                            fichier.type
+                        )
+                    ) {
+
+                        alert(
+                            "يرجى اختيار ملف PDF أو Word فقط."
+                        );
+
+                        return;
+                    }
+
+
+                    /* Lire fichier */
+
+                    const fichierBytes =
+                        await lireFichierEnBytes(
+                            fichier
+                        );
+
+
+                    donnees.fichier =
+                        fichierBytes;
+
+
+                    donnees.nomFichier =
+                        fichier.name;
+
+
+                    donnees.typeFichier =
+                        fichier.type ||
+                        "application/octet-stream";
+
+
+                    donnees.tailleFichier =
+                        fichier.size;
+                }
+
+
+                /* -----------------------------------------
+                   MODIFICATION
+                ----------------------------------------- */
 
                 if (id) {
 
@@ -1038,7 +1304,9 @@ if (documentForm) {
                 }
 
 
-                /* AJOUT */
+                /* -----------------------------------------
+                   AJOUT
+                ----------------------------------------- */
 
                 else {
 
@@ -1075,9 +1343,22 @@ if (documentForm) {
                 );
 
 
-                alert(
-                    "حدث خطأ أثناء حفظ الوثيقة."
-                );
+                if (
+                    error &&
+                    error.code ===
+                    "resource-exhausted"
+                ) {
+
+                    alert(
+                        "حجم الوثيقة يتجاوز الحد المسموح به في Firestore."
+                    );
+
+                } else {
+
+                    alert(
+                        "حدث خطأ أثناء حفظ الوثيقة."
+                    );
+                }
             }
         }
     );
@@ -1116,7 +1397,8 @@ async function chargerDocuments() {
             );
 
 
-        container.innerHTML = "";
+        container.innerHTML =
+            "";
 
 
         if (snapshot.empty) {
@@ -1135,26 +1417,33 @@ async function chargerDocuments() {
             function (docSnap) {
 
                 documents.push({
-                    id: docSnap.id,
+
+                    id:
+                        docSnap.id,
+
                     ...docSnap.data()
                 });
             }
         );
 
 
+        /* Plus récent en premier */
+
         documents.sort(
             function (a, b) {
 
                 const dateA =
                     a.createdAt &&
-                    typeof a.createdAt.toMillis === "function"
+                    typeof a.createdAt.toMillis ===
+                    "function"
                         ? a.createdAt.toMillis()
                         : 0;
 
 
                 const dateB =
                     b.createdAt &&
-                    typeof b.createdAt.toMillis === "function"
+                    typeof b.createdAt.toMillis ===
+                    "function"
                         ? b.createdAt.toMillis()
                         : 0;
 
@@ -1203,6 +1492,48 @@ async function chargerDocuments() {
                     "";
 
 
+                /* NOM FICHIER */
+
+                const nomFichier =
+                    document.createElement(
+                        "small"
+                    );
+
+
+                nomFichier.textContent =
+                    "📄 " +
+                    (
+                        documentData.nomFichier ||
+                        "وثيقة"
+                    );
+
+
+                /* TAILLE */
+
+                const taille =
+                    document.createElement(
+                        "small"
+                    );
+
+
+                if (
+                    documentData.tailleFichier
+                ) {
+
+                    const ko =
+                        (
+                            documentData.tailleFichier /
+                            1024
+                        ).toFixed(1);
+
+
+                    taille.textContent =
+                        " • " +
+                        ko +
+                        " Ko";
+                }
+
+
                 /* CATÉGORIE */
 
                 const categorie =
@@ -1233,7 +1564,7 @@ async function chargerDocuments() {
                         : " ⏸️ غير منشور";
 
 
-                /* BOUTONS */
+                /* CONTENEUR BOUTONS */
 
                 const boutons =
                     document.createElement(
@@ -1245,31 +1576,124 @@ async function chargerDocuments() {
                     "item-buttons";
 
 
-                /* OUVRIR */
+                /* =========================================
+                   OUVRIR
+                ========================================== */
 
                 const ouvrir =
                     document.createElement(
-                        "a"
+                        "button"
                     );
 
 
-                ouvrir.href =
-                    documentData.url || "#";
-
-
-                ouvrir.target =
-                    "_blank";
-
-
-                ouvrir.rel =
-                    "noopener noreferrer";
+                ouvrir.type =
+                    "button";
 
 
                 ouvrir.textContent =
-                    "🔗 فتح";
+                    "📄 فتح";
 
 
-                /* MODIFIER */
+                ouvrir.addEventListener(
+                    "click",
+                    async function () {
+
+                        try {
+
+                            /* Nouveau fichier Bytes */
+
+                            if (
+                                documentData.fichier &&
+                                typeof documentData
+                                    .fichier
+                                    .toUint8Array ===
+                                    "function"
+                            ) {
+
+                                const bytes =
+                                    documentData
+                                        .fichier
+                                        .toUint8Array();
+
+
+                                const blob =
+                                    new Blob(
+                                        [bytes],
+                                        {
+                                            type:
+                                                documentData
+                                                    .typeFichier ||
+                                                "application/pdf"
+                                        }
+                                    );
+
+
+                                const url =
+                                    URL.createObjectURL(
+                                        blob
+                                    );
+
+
+                                window.open(
+                                    url,
+                                    "_blank"
+                                );
+
+
+                                setTimeout(
+                                    function () {
+
+                                        URL.revokeObjectURL(
+                                            url
+                                        );
+
+                                    },
+                                    60000
+                                );
+
+
+                            }
+
+                            /* Ancienne compatibilité URL */
+
+                            else if (
+                                documentData.url
+                            ) {
+
+                                window.open(
+                                    documentData.url,
+                                    "_blank"
+                                );
+
+                            }
+
+                            else {
+
+                                alert(
+                                    "الوثيقة غير متوفرة."
+                                );
+                            }
+
+
+                        } catch (error) {
+
+                            console.error(
+                                "Erreur ouverture document :",
+                                error
+                            );
+
+
+                            alert(
+                                "تعذر فتح الوثيقة."
+                            );
+                        }
+                    }
+                );
+
+
+                /* =========================================
+                   MODIFIER
+                ========================================== */
 
                 const modifier =
                     document.createElement(
@@ -1298,19 +1722,15 @@ async function chargerDocuments() {
                         document.getElementById(
                             "documentTitre"
                         ).value =
-                            documentData.titre || "";
+                            documentData.titre ||
+                            "";
 
 
                         document.getElementById(
                             "documentDescription"
                         ).value =
-                            documentData.description || "";
-
-
-                        document.getElementById(
-                            "documentUrl"
-                        ).value =
-                            documentData.url || "";
+                            documentData.description ||
+                            "";
 
 
                         document.getElementById(
@@ -1326,20 +1746,40 @@ async function chargerDocuments() {
                             documentData.publie === true;
 
 
+                        /* Vider champ fichier */
+
+                        const fichierInput =
+                            document.getElementById(
+                                "documentFile"
+                            );
+
+
+                        if (fichierInput) {
+
+                            fichierInput.value =
+                                "";
+                        }
+
+
                         document.getElementById(
                             "documentTitre"
                         ).focus();
 
 
                         window.scrollTo({
+
                             top: 0,
-                            behavior: "smooth"
+
+                            behavior:
+                                "smooth"
                         });
                     }
                 );
 
 
-                /* SUPPRIMER */
+                /* =========================================
+                   SUPPRIMER
+                ========================================== */
 
                 const supprimer =
                     document.createElement(
@@ -1364,6 +1804,7 @@ async function chargerDocuments() {
                                 "هل تريد حذف هذه الوثيقة؟"
                             )
                         ) {
+
                             return;
                         }
 
@@ -1398,7 +1839,9 @@ async function chargerDocuments() {
                 );
 
 
-                /* AJOUT BOUTONS */
+                /* =========================================
+                   AJOUT BOUTONS
+                ========================================== */
 
                 boutons.appendChild(
                     ouvrir
@@ -1415,7 +1858,9 @@ async function chargerDocuments() {
                 );
 
 
-                /* ASSEMBLAGE */
+                /* =========================================
+                   ASSEMBLAGE
+                ========================================== */
 
                 article.appendChild(
                     titre
@@ -1424,6 +1869,16 @@ async function chargerDocuments() {
 
                 article.appendChild(
                     description
+                );
+
+
+                article.appendChild(
+                    nomFichier
+                );
+
+
+                article.appendChild(
+                    taille
                 );
 
 
@@ -1476,6 +1931,10 @@ if (documentAnnuler) {
 }
 
 
+/* =========================================================
+   RESET DOCUMENT
+   ========================================================= */
+
 function resetDocumentForm() {
 
     if (!documentForm) {
@@ -1499,12 +1958,16 @@ function resetDocumentForm() {
 
 
     if (id) {
-        id.value = "";
+
+        id.value =
+            "";
     }
 
 
     if (publie) {
-        publie.checked = true;
+
+        publie.checked =
+            true;
     }
 }
 
