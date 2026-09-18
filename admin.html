@@ -452,31 +452,32 @@
 
                 </div>
 
+```html
+<!-- إدراج الوثيقة -->
 
-                <!-- Lien -->
+<div class="form-group">
 
-                <div class="form-group">
+    <label for="documentFile">
+        📄 إدراج الوثيقة
+    </label>
 
-                    <label for="documentUrl">
-                        🔗 رابط الوثيقة
-                    </label>
+    <input
+        type="file"
+        id="documentFile"
+        name="documentFile"
+        accept=".pdf,.doc,.docx"
+    >
 
-                    <input
-                        type="url"
-                        id="documentUrl"
-                        name="documentUrl"
-                        required
-                        placeholder="https://..."
-                    >
+    <small class="file-help">
+        اختر الوثيقة من جهاز الكمبيوتر.
+    </small>
 
-                    <small class="file-help">
+</div>
+```
 
-                        أدخل رابط ملف PDF الموجود على الإنترنت.
+           
 
-                    </small>
-
-                </div>
-
+                
 
                 <!-- Catégorie -->
 
