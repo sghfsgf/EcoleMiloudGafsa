@@ -1764,3 +1764,167 @@ a:focus-visible {
 /* =========================================================
    FIN
    ========================================================= */
+/* =========================================================
+COULEURS DES VOLETS ADMINISTRATION
+========================================================= */
+
+/* ---------------------------------------------------------
+
+1. إدارة الإعلانات
+   Orange clair
+   --------------------------------------------------------- */
+
+#gestionAnnonces .card-header {
+
+background: #fff3e6;
+
+border-right: 5px solid #f4a261;
+
+
+}
+
+#gestionAnnonces .announcement-icon {
+
+
+background: #f4a261;
+
+color: #ffffff;
+
+
+}
+
+/* ---------------------------------------------------------
+2. إدارة الوثائق
+Bleu clair
+--------------------------------------------------------- */
+
+#gestionDocuments .card-header {
+
+
+background: #eaf6ff;
+
+border-right: 5px solid #5dade2;
+
+
+}
+
+#gestionDocuments .document-icon {
+
+
+background: #5dade2;
+
+color: #ffffff;
+
+
+}
+
+/* ---------------------------------------------------------
+3. إدارة الصور
+Violet clair
+--------------------------------------------------------- */
+
+#gestionPhotos .card-header {
+
+
+background: #f3edff;
+
+border-right: 5px solid #9b7ede;
+
+
+}
+
+#gestionPhotos .photo-icon {
+
+
+background: #9b7ede;
+
+color: #ffffff;
+
+
+}
+
+/* ---------------------------------------------------------
+4. إدارة جداول الأوقات
+Vert clair
+--------------------------------------------------------- */
+
+#gestionHoraires .card-header {
+
+
+background: #eaf8ef;
+
+border-right: 5px solid #67b77a;
+
+
+}
+
+#gestionHoraires .schedule-icon {
+
+
+background: #67b77a;
+
+color: #ffffff;
+
+
+}
+
+/* ---------------------------------------------------------
+5. إدارة جداول الامتحانات
+Jaune clair
+--------------------------------------------------------- */
+
+#gestionExamens .card-header {
+
+
+background: #fff9df;
+
+border-right: 5px solid #e2b93b;
+
+
+}
+
+#gestionExamens .exam-icon {
+
+
+background: #e2b93b;
+
+color: #ffffff;
+
+
+}
+
+/* =========================================================
+TEXTE DES TITRES
+========================================================= */
+
+#gestionAnnonces .card-header h2,
+#gestionDocuments .card-header h2,
+#gestionPhotos .card-header h2,
+#gestionHoraires .card-header h2,
+#gestionExamens .card-header h2 {
+
+
+color: #174a6e;
+
+
+}
+
+/* =========================================================
+MOBILE
+Les couleurs restent identiques sur téléphone
+========================================================= */
+
+@media (max-width: 600px) {
+
+
+#gestionAnnonces .card-header,
+#gestionDocuments .card-header,
+#gestionPhotos .card-header,
+#gestionHoraires .card-header,
+#gestionExamens .card-header {
+
+    border-right-width: 4px;
+}
+
+
+}
