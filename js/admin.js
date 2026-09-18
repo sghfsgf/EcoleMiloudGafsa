@@ -1,3 +1,15 @@
+
+/* =========================================================
+   ECOLE MILOUD GAFSA
+   ADMIN.JS
+   Connexion + gestion Firestore
+   ========================================================= */
+
+
+/* =========================================================
+   FIREBASE AUTH
+   ========================================================= */
+
 import {
     connexionAdmin,
     deconnexion
@@ -5,7 +17,27 @@ import {
 
 
 /* =========================================================
-   ÉLÉMENTS
+   FIRESTORE
+   ========================================================= */
+
+import {
+    collection,
+    addDoc,
+    getDocs,
+    updateDoc,
+    deleteDoc,
+    doc,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+
+import {
+    db
+} from "../firebase-config.js";
+
+
+/* =========================================================
+   ÉLÉMENTS HTML
    ========================================================= */
 
 const loginForm =
@@ -28,7 +60,7 @@ const logoutButton =
 
 
 /* =========================================================
-   CONNEXION
+   CONNEXION ADMIN
    ========================================================= */
 
 loginForm.addEventListener(
@@ -62,11 +94,10 @@ loginForm.addEventListener(
                 );
 
 
-            /* Connexion réussie */
-
             loginSection.classList.add(
                 "hidden"
             );
+
 
             dashboardSection.classList.remove(
                 "hidden"
@@ -80,6 +111,13 @@ loginForm.addEventListener(
             loginMessage.textContent = "";
 
 
+            /* Charger les données */
+
+            await chargerAnnonces();
+
+            await chargerDocuments();
+
+
         } catch (error) {
 
             console.error(
@@ -87,8 +125,6 @@ loginForm.addEventListener(
                 error
             );
 
-
-            /* Messages plus explicites */
 
             if (
                 error.code ===
@@ -130,9 +166,7 @@ loginForm.addEventListener(
 
                 loginMessage.textContent =
                     "تعذر تسجيل الدخول. افتح F12 لمعرفة الخطأ.";
-
             }
-
         }
     }
 );
@@ -146,17 +180,957 @@ logoutButton.addEventListener(
     "click",
     async function () {
 
-        await deconnexion();
+        try {
 
-        dashboardSection.classList.add(
-            "hidden"
-        );
+            await deconnexion();
 
-        loginSection.classList.remove(
-            "hidden"
-        );
 
-        loginForm.reset();
+            dashboardSection.classList.add(
+                "hidden"
+            );
 
+
+            loginSection.classList.remove(
+                "hidden"
+            );
+
+
+            loginForm.reset();
+
+
+        } catch (error) {
+
+            console.error(
+                "Erreur déconnexion :",
+                error
+            );
+        }
     }
 );
+
+
+/* =========================================================
+   ANNONCES
+   ========================================================= */
+
+const annonceForm =
+    document.getElementById("annonceForm");
+
+
+annonceForm.addEventListener(
+    "submit",
+    async function (event) {
+
+        event.preventDefault();
+
+
+        const id =
+            document.getElementById(
+                "annonceId"
+            ).value;
+
+
+        const titre =
+            document.getElementById(
+                "annonceTitre"
+            ).value.trim();
+
+
+        const contenu =
+            document.getElementById(
+                "annonceContenu"
+            ).value.trim();
+
+
+        const publie =
+            document.getElementById(
+                "annoncePubliee"
+            ).checked;
+
+
+        if (!titre || !contenu) {
+
+            alert(
+                "يرجى إدخال عنوان ومحتوى الإعلان."
+            );
+
+            return;
+        }
+
+
+        try {
+
+            const donnees = {
+
+                titre: titre,
+
+                contenu: contenu,
+
+                publie: publie,
+
+                updatedAt:
+                    serverTimestamp()
+            };
+
+
+            /* Modification */
+
+            if (id) {
+
+                await updateDoc(
+                    doc(
+                        db,
+                        "annonces",
+                        id
+                    ),
+                    donnees
+                );
+
+            }
+
+            /* Ajout */
+
+            else {
+
+                await addDoc(
+                    collection(
+                        db,
+                        "annonces"
+                    ),
+                    {
+                        ...donnees,
+
+                        createdAt:
+                            serverTimestamp()
+                    }
+                );
+            }
+
+
+            annonceForm.reset();
+
+
+            document.getElementById(
+                "annonceId"
+            ).value = "";
+
+
+            document.getElementById(
+                "annoncePubliee"
+            ).checked = true;
+
+
+            await chargerAnnonces();
+
+
+            alert(
+                "تم حفظ الإعلان بنجاح."
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "Erreur annonce :",
+                error
+            );
+
+
+            alert(
+                "حدث خطأ أثناء حفظ الإعلان."
+            );
+        }
+    }
+);
+
+
+/* =========================================================
+   CHARGER ANNONCES
+   ========================================================= */
+
+async function chargerAnnonces() {
+
+    const container =
+        document.getElementById(
+            "annoncesAdmin"
+        );
+
+
+    container.innerHTML =
+        "<p>جاري تحميل الإعلانات...</p>";
+
+
+    try {
+
+        const snapshot =
+            await getDocs(
+                collection(
+                    db,
+                    "annonces"
+                )
+            );
+
+
+        container.innerHTML = "";
+
+
+        if (snapshot.empty) {
+
+            container.innerHTML =
+                "<p>لا توجد إعلانات.</p>";
+
+            return;
+        }
+
+
+        snapshot.forEach(
+            (docSnap) => {
+
+                const data =
+                    docSnap.data();
+
+
+                const article =
+                    document.createElement(
+                        "article"
+                    );
+
+
+                article.className =
+                    "admin-item";
+
+
+                const titre =
+                    document.createElement(
+                        "h3"
+                    );
+
+
+                titre.textContent =
+                    data.titre || "";
+
+
+                const contenu =
+                    document.createElement(
+                        "p"
+                    );
+
+
+                contenu.textContent =
+                    data.contenu || "";
+
+
+                const statut =
+                    document.createElement(
+                        "small"
+                    );
+
+
+                statut.textContent =
+                    data.publie
+                    ? "✅ منشور"
+                    : "⏸️ غير منشور";
+
+
+                const boutons =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                boutons.className =
+                    "item-buttons";
+
+
+                /* Bouton modifier */
+
+                const modifier =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                modifier.type =
+                    "button";
+
+
+                modifier.textContent =
+                    "✏️ تعديل";
+
+
+                modifier.addEventListener(
+                    "click",
+                    function () {
+
+                        document.getElementById(
+                            "annonceId"
+                        ).value =
+                            docSnap.id;
+
+
+                        document.getElementById(
+                            "annonceTitre"
+                        ).value =
+                            data.titre || "";
+
+
+                        document.getElementById(
+                            "annonceContenu"
+                        ).value =
+                            data.contenu || "";
+
+
+                        document.getElementById(
+                            "annoncePubliee"
+                        ).checked =
+                            data.publie === true;
+
+
+                        document.getElementById(
+                            "annonceTitre"
+                        ).focus();
+                    }
+                );
+
+
+                /* Bouton supprimer */
+
+                const supprimer =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                supprimer.type =
+                    "button";
+
+
+                supprimer.textContent =
+                    "🗑️ حذف";
+
+
+                supprimer.addEventListener(
+                    "click",
+                    async function () {
+
+                        const confirmation =
+                            confirm(
+                                "هل تريد حذف هذا الإعلان؟"
+                            );
+
+
+                        if (!confirmation) {
+                            return;
+                        }
+
+
+                        try {
+
+                            await deleteDoc(
+                                doc(
+                                    db,
+                                    "annonces",
+                                    docSnap.id
+                                )
+                            );
+
+
+                            await chargerAnnonces();
+
+
+                        } catch (error) {
+
+                            console.error(
+                                error
+                            );
+
+
+                            alert(
+                                "تعذر حذف الإعلان."
+                            );
+                        }
+                    }
+                );
+
+
+                boutons.appendChild(
+                    modifier
+                );
+
+
+                boutons.appendChild(
+                    supprimer
+                );
+
+
+                article.appendChild(
+                    titre
+                );
+
+
+                article.appendChild(
+                    contenu
+                );
+
+
+                article.appendChild(
+                    statut
+                );
+
+
+                article.appendChild(
+                    boutons
+                );
+
+
+                container.appendChild(
+                    article
+                );
+            }
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Erreur chargement annonces :",
+            error
+        );
+
+
+        container.innerHTML =
+            "<p>تعذر تحميل الإعلانات.</p>";
+    }
+}
+
+
+/* =========================================================
+   ANNULATION ANNONCE
+   ========================================================= */
+
+document
+    .getElementById(
+        "annonceAnnuler"
+    )
+    .addEventListener(
+        "click",
+        function () {
+
+            annonceForm.reset();
+
+
+            document.getElementById(
+                "annonceId"
+            ).value = "";
+
+
+            document.getElementById(
+                "annoncePubliee"
+            ).checked = true;
+        }
+    );
+
+
+/* =========================================================
+   DOCUMENTS
+   ========================================================= */
+
+const documentForm =
+    document.getElementById(
+        "documentForm"
+    );
+
+
+documentForm.addEventListener(
+    "submit",
+    async function (event) {
+
+        event.preventDefault();
+
+
+        const id =
+            document.getElementById(
+                "documentId"
+            ).value;
+
+
+        const titre =
+            document.getElementById(
+                "documentTitre"
+            ).value.trim();
+
+
+        const description =
+            document.getElementById(
+                "documentDescription"
+            ).value.trim();
+
+
+        const url =
+            document.getElementById(
+                "documentUrl"
+            ).value.trim();
+
+
+        const categorie =
+            document.getElementById(
+                "documentCategorie"
+            ).value;
+
+
+        const publie =
+            document.getElementById(
+                "documentPublie"
+            ).checked;
+
+
+        if (!titre || !url) {
+
+            alert(
+                "يرجى إدخال عنوان الوثيقة ورابطها."
+            );
+
+            return;
+        }
+
+
+        try {
+
+            const donnees = {
+
+                titre: titre,
+
+                description:
+                    description,
+
+                url: url,
+
+                categorie:
+                    categorie,
+
+                publie:
+                    publie,
+
+                updatedAt:
+                    serverTimestamp()
+            };
+
+
+            /* Modification */
+
+            if (id) {
+
+                await updateDoc(
+                    doc(
+                        db,
+                        "documents",
+                        id
+                    ),
+                    donnees
+                );
+
+            }
+
+            /* Ajout */
+
+            else {
+
+                await addDoc(
+                    collection(
+                        db,
+                        "documents"
+                    ),
+                    {
+                        ...donnees,
+
+                        createdAt:
+                            serverTimestamp()
+                    }
+                );
+            }
+
+
+            documentForm.reset();
+
+
+            document.getElementById(
+                "documentId"
+            ).value = "";
+
+
+            document.getElementById(
+                "documentPublie"
+            ).checked = true;
+
+
+            await chargerDocuments();
+
+
+            alert(
+                "تم حفظ الوثيقة بنجاح."
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "Erreur document :",
+                error
+            );
+
+
+            alert(
+                "حدث خطأ أثناء حفظ الوثيقة."
+            );
+        }
+    }
+);
+
+
+/* =========================================================
+   CHARGER DOCUMENTS
+   ========================================================= */
+
+async function chargerDocuments() {
+
+    const container =
+        document.getElementById(
+            "documentsAdmin"
+        );
+
+
+    container.innerHTML =
+        "<p>جاري تحميل الوثائق...</p>";
+
+
+    try {
+
+        const snapshot =
+            await getDocs(
+                collection(
+                    db,
+                    "documents"
+                )
+            );
+
+
+        container.innerHTML = "";
+
+
+        if (snapshot.empty) {
+
+            container.innerHTML =
+                "<p>لا توجد وثائق.</p>";
+
+            return;
+        }
+
+
+        snapshot.forEach(
+            (docSnap) => {
+
+                const data =
+                    docSnap.data();
+
+
+                const article =
+                    document.createElement(
+                        "article"
+                    );
+
+
+                article.className =
+                    "admin-item";
+
+
+                const titre =
+                    document.createElement(
+                        "h3"
+                    );
+
+
+                titre.textContent =
+                    data.titre || "";
+
+
+                const description =
+                    document.createElement(
+                        "p"
+                    );
+
+
+                description.textContent =
+                    data.description || "";
+
+
+                const categorie =
+                    document.createElement(
+                        "small"
+                    );
+
+
+                categorie.textContent =
+                    "القسم: " +
+                    (
+                        data.categorie ||
+                        ""
+                    );
+
+
+                const statut =
+                    document.createElement(
+                        "small"
+                    );
+
+
+                statut.textContent =
+                    data.publie
+                    ? " ✅ منشور"
+                    : " ⏸️ غير منشور";
+
+
+                const boutons =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                boutons.className =
+                    "item-buttons";
+
+
+                /* Ouvrir */
+
+                const ouvrir =
+                    document.createElement(
+                        "a"
+                    );
+
+
+                ouvrir.href =
+                    data.url || "#";
+
+
+                ouvrir.target =
+                    "_blank";
+
+
+                ouvrir.rel =
+                    "noopener noreferrer";
+
+
+                ouvrir.textContent =
+                    "🔗 فتح";
+
+
+                /* Modifier */
+
+                const modifier =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                modifier.type =
+                    "button";
+
+
+                modifier.textContent =
+                    "✏️ تعديل";
+
+
+                modifier.addEventListener(
+                    "click",
+                    function () {
+
+                        document.getElementById(
+                            "documentId"
+                        ).value =
+                            docSnap.id;
+
+
+                        document.getElementById(
+                            "documentTitre"
+                        ).value =
+                            data.titre || "";
+
+
+                        document.getElementById(
+                            "documentDescription"
+                        ).value =
+                            data.description || "";
+
+
+                        document.getElementById(
+                            "documentUrl"
+                        ).value =
+                            data.url || "";
+
+
+                        document.getElementById(
+                            "documentCategorie"
+                        ).value =
+                            data.categorie ||
+                            "documents";
+
+
+                        document.getElementById(
+                            "documentPublie"
+                        ).checked =
+                            data.publie === true;
+
+
+                        document.getElementById(
+                            "documentTitre"
+                        ).focus();
+                    }
+                );
+
+
+                /* Supprimer */
+
+                const supprimer =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                supprimer.type =
+                    "button";
+
+
+                supprimer.textContent =
+                    "🗑️ حذف";
+
+
+                supprimer.addEventListener(
+                    "click",
+                    async function () {
+
+                        const confirmation =
+                            confirm(
+                                "هل تريد حذف هذه الوثيقة؟"
+                            );
+
+
+                        if (!confirmation) {
+                            return;
+                        }
+
+
+                        try {
+
+                            await deleteDoc(
+                                doc(
+                                    db,
+                                    "documents",
+                                    docSnap.id
+                                )
+                            );
+
+
+                            await chargerDocuments();
+
+
+                        } catch (error) {
+
+                            console.error(
+                                error
+                            );
+
+
+                            alert(
+                                "تعذر حذف الوثيقة."
+                            );
+                        }
+                    }
+                );
+
+
+                boutons.appendChild(
+                    ouvrir
+                );
+
+
+                boutons.appendChild(
+                    modifier
+                );
+
+
+                boutons.appendChild(
+                    supprimer
+                );
+
+
+                article.appendChild(
+                    titre
+                );
+
+
+                article.appendChild(
+                    description
+                );
+
+
+                article.appendChild(
+                    categorie
+                );
+
+
+                article.appendChild(
+                    statut
+                );
+
+
+                article.appendChild(
+                    boutons
+                );
+
+
+                container.appendChild(
+                    article
+                );
+            }
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Erreur chargement documents :",
+            error
+        );
+
+
+        container.innerHTML =
+            "<p>تعذر تحميل الوثائق.</p>";
+    }
+}
+
+
+/* =========================================================
+   ANNULATION DOCUMENT
+   ========================================================= */
+
+document
+    .getElementById(
+        "documentAnnuler"
+    )
+    .addEventListener(
+        "click",
+        function () {
+
+            documentForm.reset();
+
+
+            document.getElementById(
+                "documentId"
+            ).value = "";
+
+
+            document.getElementById(
+                "documentPublie"
+            ).checked = true;
+        }
+    );
+
