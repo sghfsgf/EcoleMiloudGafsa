@@ -1,3 +1,18 @@
+
+/* =========================================================
+   ECOLE MILOUD GAFSA
+   RECHERCHE DU SITE
+   Recherche dans :
+   - Rubriques statiques
+   - Annonces Firestore
+   - Documents Firestore
+   ========================================================= */
+
+
+/* =========================================================
+   FIRESTORE
+   ========================================================= */
+
 import {
     collection,
     getDocs,
@@ -12,7 +27,7 @@ import {
 
 
 /* =========================================================
-   SECTIONS STATIQUES
+   RUBRIQUES STATIQUES DU SITE
    ========================================================= */
 
 const sections = [
@@ -91,32 +106,45 @@ const sections = [
 
 
 /* =========================================================
-   RECHERCHE ARABE
+   NORMALISATION TEXTE ARABE
    ========================================================= */
 
 function normaliser(texte) {
 
     return String(texte || "")
-
         .toLowerCase()
 
-        .normalize("NFD")
-
+        /* Supprimer les voyelles arabes */
         .replace(
             /[\u064B-\u065F\u0670]/g,
             ""
         )
 
+        /* Supprimer le tatweel */
         .replace(
-            /[إأآ]/g,
+            /\u0640/g,
+            ""
+        )
+
+        /* Alif */
+        .replace(
+            /[إأآٱ]/g,
             "ا"
         )
 
+        /* Alif maqṣūra */
         .replace(
             /ى/g,
             "ي"
         )
 
+        /* Ta marbuta */
+        .replace(
+            /ة/g,
+            "ه"
+        )
+
+        /* Espaces multiples */
         .replace(
             /\s+/g,
             " "
@@ -127,59 +155,108 @@ function normaliser(texte) {
 
 
 /* =========================================================
-   CRÉER ZONE RESULTATS
+   ÉLÉMENTS
    ========================================================= */
 
 const searchBox =
     document.querySelector(".search-box");
 
+const searchInput =
+    document.getElementById("search");
 
-const searchResults =
-    document.createElement("div");
-
-
-searchResults.id =
-    "searchResults";
-
-
-searchBox.appendChild(
-    searchResults
-);
+const searchButton =
+    document.getElementById("searchButton");
 
 
 /* =========================================================
-   RECHERCHE
+   VÉRIFICATION
+   ========================================================= */
+
+if (
+    !searchBox ||
+    !searchInput ||
+    !searchButton
+) {
+
+    console.error(
+        "Éléments de recherche introuvables."
+    );
+
+}
+
+
+/* =========================================================
+   ZONE DES RÉSULTATS
+   ========================================================= */
+
+let searchResults =
+    document.getElementById(
+        "searchResults"
+    );
+
+
+if (!searchResults && searchBox) {
+
+    searchResults =
+        document.createElement(
+            "div"
+        );
+
+    searchResults.id =
+        "searchResults";
+
+    searchBox.appendChild(
+        searchResults
+    );
+}
+
+
+/* =========================================================
+   EFFECTUER UNE RECHERCHE
    ========================================================= */
 
 async function effectuerRecherche() {
 
-    const input =
-        document.getElementById(
-            "search"
-        );
-
-
-    const terme =
-        normaliser(
-            input.value
-        );
-
-
-    searchResults.innerHTML = "";
-
-
-    if (!terme) {
-
+    if (
+        !searchInput ||
+        !searchResults
+    ) {
         return;
     }
 
 
-    /* ---------------------------------------------
-       Résultats sections statiques
-    --------------------------------------------- */
+    const terme =
+        normaliser(
+            searchInput.value
+        );
+
+
+    /* Effacer les anciens résultats */
+
+    searchResults.innerHTML =
+        "";
+
+
+    /* Recherche vide */
+
+    if (!terme) {
+        return;
+    }
+
+
+    searchResults.innerHTML = `
+        <div class="search-results-loading">
+            🔎 جاري البحث...
+        </div>
+    `;
+
 
     let resultats = [];
 
+
+    /* =====================================================
+       1. RUBRIQUES STATIQUES
+    ====================================================== */
 
     sections.forEach(
         section => {
@@ -210,13 +287,14 @@ async function effectuerRecherche() {
                         section.id
                 });
             }
+
         }
     );
 
 
-    /* ---------------------------------------------
-       Annonces Firebase
-    --------------------------------------------- */
+    /* =====================================================
+       2. ANNONCES FIRESTORE
+    ====================================================== */
 
     try {
 
@@ -264,10 +342,12 @@ async function effectuerRecherche() {
                         type: "annonce",
 
                         titre:
-                            data.titre,
+                            data.titre ||
+                            "إعلان",
 
                         texte:
-                            data.contenu,
+                            data.contenu ||
+                            "",
 
                         id:
                             "annonces"
@@ -281,15 +361,15 @@ async function effectuerRecherche() {
     } catch (error) {
 
         console.error(
-            "Recherche annonces :",
+            "Erreur recherche annonces :",
             error
         );
     }
 
 
-    /* ---------------------------------------------
-       Documents Firebase
-    --------------------------------------------- */
+    /* =====================================================
+       3. DOCUMENTS FIRESTORE
+    ====================================================== */
 
     try {
 
@@ -336,16 +416,24 @@ async function effectuerRecherche() {
 
                     resultats.push({
 
-                        type: "document",
+                        type:
+                            "document",
 
                         titre:
-                            data.titre,
+                            data.titre ||
+                            "وثيقة",
 
                         texte:
-                            data.description,
+                            data.description ||
+                            "",
 
                         url:
-                            data.url
+                            data.url ||
+                            "",
+
+                        categorie:
+                            data.categorie ||
+                            ""
                     });
                 }
 
@@ -356,11 +444,15 @@ async function effectuerRecherche() {
     } catch (error) {
 
         console.error(
-            "Recherche documents :",
+            "Erreur recherche documents :",
             error
         );
     }
 
+
+    /* =====================================================
+       AFFICHAGE
+    ====================================================== */
 
     afficherResultats(
         resultats
@@ -369,12 +461,25 @@ async function effectuerRecherche() {
 
 
 /* =========================================================
-   AFFICHER RESULTATS
+   AFFICHER LES RÉSULTATS
    ========================================================= */
 
 function afficherResultats(
     resultats
 ) {
+
+    if (
+        !searchResults
+    ) {
+        return;
+    }
+
+
+    searchResults.innerHTML =
+        "";
+
+
+    /* Aucun résultat */
 
     if (
         resultats.length === 0
@@ -384,14 +489,17 @@ function afficherResultats(
 
             <div class="search-no-result">
 
-                لا توجد نتائج لهذا البحث.
+                🔎 لا توجد نتائج لهذا البحث.
 
             </div>
+
         `;
 
         return;
     }
 
+
+    /* Nombre de résultats */
 
     const titre =
         document.createElement(
@@ -412,6 +520,8 @@ function afficherResultats(
     );
 
 
+    /* Résultats */
+
     resultats.forEach(
         resultat => {
 
@@ -425,6 +535,10 @@ function afficherResultats(
                 "search-result-item";
 
 
+            /* -----------------------------------------
+               Titre
+            ----------------------------------------- */
+
             const h3 =
                 document.createElement(
                     "h3"
@@ -435,6 +549,10 @@ function afficherResultats(
                 resultat.titre;
 
 
+            /* -----------------------------------------
+               Description
+            ----------------------------------------- */
+
             const p =
                 document.createElement(
                     "p"
@@ -442,21 +560,72 @@ function afficherResultats(
 
 
             p.textContent =
-                resultat.texte || "";
+                resultat.texte ||
+                "";
+
+
+            /* -----------------------------------------
+               Type
+            ----------------------------------------- */
+
+            const type =
+                document.createElement(
+                    "small"
+                );
+
+
+            if (
+                resultat.type ===
+                "section"
+            ) {
+
+                type.textContent =
+                    "📂 Rubrique";
+
+            }
+            else if (
+                resultat.type ===
+                "annonce"
+            ) {
+
+                type.textContent =
+                    "📢 إعلان";
+
+            }
+            else if (
+                resultat.type ===
+                "document"
+            ) {
+
+                type.textContent =
+                    "📚 وثيقة";
+            }
 
 
             item.appendChild(
                 h3
             );
 
+
             item.appendChild(
                 p
             );
 
 
+            item.appendChild(
+                type
+            );
+
+
+            /* -----------------------------------------
+               Clic
+            ----------------------------------------- */
+
             item.addEventListener(
                 "click",
-                () => {
+                function () {
+
+                    /* Rubrique */
 
                     if (
                         resultat.type ===
@@ -472,13 +641,20 @@ function afficherResultats(
                         if (section) {
 
                             section.scrollIntoView({
-                                behavior: "smooth"
+                                behavior:
+                                    "smooth",
+                                block:
+                                    "start"
                             });
                         }
+
+                        return;
                     }
 
 
-                    else if (
+                    /* Annonce */
+
+                    if (
                         resultat.type ===
                         "annonce"
                     ) {
@@ -492,23 +668,29 @@ function afficherResultats(
                         if (section) {
 
                             section.scrollIntoView({
-                                behavior: "smooth"
+                                behavior:
+                                    "smooth",
+                                block:
+                                    "start"
                             });
                         }
+
+                        return;
                     }
 
 
-                    else if (
+                    /* Document */
+
+                    if (
                         resultat.type ===
-                        "document"
-                        &&
+                            "document" &&
                         resultat.url
                     ) {
 
                         window.open(
                             resultat.url,
                             "_blank",
-                            "noopener"
+                            "noopener,noreferrer"
                         );
                     }
 
@@ -525,37 +707,38 @@ function afficherResultats(
 
 
 /* =========================================================
-   BOUTON
+   BOUTON RECHERCHE
    ========================================================= */
 
-document
-    .getElementById(
-        "searchButton"
-    )
-    .addEventListener(
+if (searchButton) {
+
+    searchButton.addEventListener(
         "click",
         effectuerRecherche
     );
+}
 
 
 /* =========================================================
    TOUCHE ENTRÉE
    ========================================================= */
 
-document
-    .getElementById(
-        "search"
-    )
-    .addEventListener(
+if (searchInput) {
+
+    searchInput.addEventListener(
         "keydown",
-        event => {
+        function (event) {
 
             if (
                 event.key ===
                 "Enter"
             ) {
 
+                event.preventDefault();
+
                 effectuerRecherche();
             }
         }
     );
+}
+
