@@ -20,6 +20,11 @@
         content="فضاء إدارة المدرسة الابتدائية نهج ميلود"
     >
 
+    <meta
+        name="theme-color"
+        content="#f4a261"
+    >
+
     <link
         rel="stylesheet"
         href="css/admin.css"
@@ -32,20 +37,32 @@
 
 
 <!-- =====================================================
-     EN-TÊTE
+     EN-TÊTE ADMIN
 ====================================================== -->
 
 <header class="admin-header">
 
     <div class="admin-header-content">
 
-        <h1>
-            🔐 الإدارة
-        </h1>
+        <div class="admin-brand">
 
-        <p>
-            المدرسة الابتدائية نهج ميلود
-        </p>
+            <div class="admin-brand-icon">
+                🔐
+            </div>
+
+            <div>
+
+                <h1>
+                    الإدارة
+                </h1>
+
+                <p>
+                    المدرسة الابتدائية نهج ميلود
+                </p>
+
+            </div>
+
+        </div>
 
     </div>
 
@@ -61,24 +78,39 @@
 
 
     <!-- =================================================
-         CONNEXION ADMIN
+         CONNEXION
     ================================================== -->
 
     <section
         id="loginSection"
-        class="admin-card"
+        class="admin-card login-card"
     >
 
-        <h2>
-            تسجيل الدخول
-        </h2>
+        <div class="card-header">
 
-        <p class="form-intro">
-            الدخول مخصص للإدارة فقط
-        </p>
+            <div class="card-header-icon">
+                🔐
+            </div>
+
+            <div>
+
+                <h2>
+                    تسجيل الدخول
+                </h2>
+
+                <p>
+                    الدخول مخصص للإدارة فقط
+                </p>
+
+            </div>
+
+        </div>
 
 
         <form id="loginForm">
+
+
+            <!-- البريد الإلكتروني -->
 
             <div class="form-group">
 
@@ -98,6 +130,8 @@
             </div>
 
 
+            <!-- كلمة المرور -->
+
             <div class="form-group">
 
                 <label for="password">
@@ -116,6 +150,8 @@
             </div>
 
 
+            <!-- Connexion -->
+
             <button
                 type="submit"
                 class="primary-button"
@@ -123,6 +159,8 @@
                 🔐 تسجيل الدخول
             </button>
 
+
+            <!-- Mot de passe oublié -->
 
             <button
                 type="button"
@@ -132,6 +170,8 @@
                 نسيت كلمة المرور؟
             </button>
 
+
+            <!-- Message -->
 
             <p
                 id="loginMessage"
@@ -157,29 +197,51 @@
 
 
         <!-- =================================================
-             EN-TÊTE
+             BARRE ADMIN
         ================================================== -->
 
         <div class="dashboard-header">
 
-            <div>
+            <div class="dashboard-title">
 
-                <h2>
-                    لوحة الإدارة
-                </h2>
+                <div class="dashboard-icon">
+                    🛠️
+                </div>
 
-                <p id="adminEmail"></p>
+                <div>
+
+                    <h2>
+                        لوحة الإدارة
+                    </h2>
+
+                    <p id="adminEmail">
+                        ...
+                    </p>
+
+                </div>
 
             </div>
 
 
-            <button
-                type="button"
-                id="logoutButton"
-                class="logout-button"
-            >
-                🚪 تسجيل الخروج
-            </button>
+            <div class="dashboard-actions">
+
+                <a
+                    href="index.html"
+                    class="site-button"
+                >
+                    🏠 الموقع الرئيسي
+                </a>
+
+
+                <button
+                    type="button"
+                    id="logoutButton"
+                    class="logout-button"
+                >
+                    🚪 تسجيل الخروج
+                </button>
+
+            </div>
 
         </div>
 
@@ -189,14 +251,34 @@
              ANNONCES
         ================================================== -->
 
-        <section class="admin-card">
+        <section
+            id="gestionAnnonces"
+            class="admin-card"
+        >
 
-            <h2>
-                📢 إدارة الإعلانات
-            </h2>
+            <div class="card-header">
+
+                <div class="card-header-icon announcement-icon">
+                    📢
+                </div>
+
+                <div>
+
+                    <h2>
+                        إدارة الإعلانات
+                    </h2>
+
+                    <p>
+                        إضافة وتعديل وحذف الإعلانات المنشورة على الموقع.
+                    </p>
+
+                </div>
+
+            </div>
 
 
             <form id="annonceForm">
+
 
                 <input
                     type="hidden"
@@ -214,6 +296,7 @@
                         type="text"
                         id="annonceTitre"
                         required
+                        placeholder="أدخل عنوان الإعلان"
                     >
 
                 </div>
@@ -229,6 +312,7 @@
                         id="annonceContenu"
                         rows="5"
                         required
+                        placeholder="أدخل محتوى الإعلان"
                     ></textarea>
 
                 </div>
@@ -242,7 +326,9 @@
                         checked
                     >
 
-                    نشر الإعلان
+                    <span>
+                        نشر الإعلان على الموقع
+                    </span>
 
                 </label>
 
@@ -256,12 +342,13 @@
                         💾 حفظ الإعلان
                     </button>
 
+
                     <button
                         type="button"
                         id="annonceAnnuler"
                         class="secondary-button"
                     >
-                        إلغاء
+                        ↩️ إلغاء
                     </button>
 
                 </div>
@@ -269,7 +356,24 @@
             </form>
 
 
-            <div id="annoncesAdmin"></div>
+            <!-- Liste -->
+
+            <div class="list-header">
+
+                <h3>
+                    📋 الإعلانات الموجودة
+                </h3>
+
+            </div>
+
+
+            <div id="annoncesAdmin">
+
+                <p class="loading-message">
+                    جاري تحميل الإعلانات...
+                </p>
+
+            </div>
 
         </section>
 
@@ -279,11 +383,30 @@
              DOCUMENTS
         ================================================== -->
 
-        <section class="admin-card">
+        <section
+            id="gestionDocuments"
+            class="admin-card"
+        >
 
-            <h2>
-                📚 إدارة الوثائق
-            </h2>
+            <div class="card-header">
+
+                <div class="card-header-icon document-icon">
+                    📚
+                </div>
+
+                <div>
+
+                    <h2>
+                        إدارة الوثائق
+                    </h2>
+
+                    <p>
+                        إضافة وتعديل وحذف روابط الوثائق المدرسية.
+                    </p>
+
+                </div>
+
+            </div>
 
 
             <form id="documentForm">
@@ -295,7 +418,7 @@
                 >
 
 
-                <!-- TITRE -->
+                <!-- Titre -->
 
                 <div class="form-group">
 
@@ -307,13 +430,13 @@
                         type="text"
                         id="documentTitre"
                         required
-                        placeholder="أدخل عنوان الوثيقة"
+                        placeholder="مثال: جدول أوقات السنة السادسة"
                     >
 
                 </div>
 
 
-                <!-- DESCRIPTION -->
+                <!-- Description -->
 
                 <div class="form-group">
 
@@ -330,7 +453,7 @@
                 </div>
 
 
-                <!-- LIEN PDF -->
+                <!-- Lien -->
 
                 <div class="form-group">
 
@@ -347,13 +470,15 @@
                     >
 
                     <small class="file-help">
+
                         أدخل رابط ملف PDF الموجود على الإنترنت.
+
                     </small>
 
                 </div>
 
 
-                <!-- CATÉGORIE -->
+                <!-- Catégorie -->
 
                 <div class="form-group">
 
@@ -364,19 +489,19 @@
                     <select id="documentCategorie">
 
                         <option value="documents">
-                            الوثائق
+                            📚 الوثائق
                         </option>
 
                         <option value="horaires">
-                            جداول الأوقات
+                            🕐 جداول الأوقات
                         </option>
 
                         <option value="examens">
-                            جداول الامتحانات
+                            📝 جداول الامتحانات
                         </option>
 
                         <option value="concours-six">
-                            مناظرة السادسة
+                            🎓 مناظرة السيزيام
                         </option>
 
                     </select>
@@ -384,7 +509,7 @@
                 </div>
 
 
-                <!-- PUBLICATION -->
+                <!-- Publication -->
 
                 <label class="checkbox-line">
 
@@ -394,12 +519,14 @@
                         checked
                     >
 
-                    نشر الوثيقة
+                    <span>
+                        نشر الوثيقة على الموقع
+                    </span>
 
                 </label>
 
 
-                <!-- BOUTONS -->
+                <!-- Boutons -->
 
                 <div class="form-buttons">
 
@@ -416,18 +543,32 @@
                         id="documentAnnuler"
                         class="secondary-button"
                     >
-                        إلغاء
+                        ↩️ إلغاء
                     </button>
 
                 </div>
 
-
             </form>
 
 
-            <!-- DOCUMENTS EXISTANTS -->
+            <!-- Liste -->
 
-            <div id="documentsAdmin"></div>
+            <div class="list-header">
+
+                <h3>
+                    📋 الوثائق الموجودة
+                </h3>
+
+            </div>
+
+
+            <div id="documentsAdmin">
+
+                <p class="loading-message">
+                    جاري تحميل الوثائق...
+                </p>
+
+            </div>
 
         </section>
 
@@ -437,15 +578,44 @@
              PHOTOS
         ================================================== -->
 
-        <section class="admin-card">
+        <section
+            id="gestionPhotos"
+            class="admin-card future-card"
+        >
 
-            <h2>
-                📸 إدارة الصور
-            </h2>
+            <div class="card-header">
 
-            <p class="section-note">
-                سيتم تفعيل إدارة الصور لاحقًا.
-            </p>
+                <div class="card-header-icon photo-icon">
+                    📸
+                </div>
+
+                <div>
+
+                    <h2>
+                        إدارة الصور
+                    </h2>
+
+                    <p>
+                        سيتم تفعيل إدارة الصور في مرحلة لاحقة.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="future-message">
+
+                <span>
+                    📸
+                </span>
+
+                <p>
+                    يمكن لاحقًا إضافة صور أنشطة المدرسة
+                    ومعرض الصور من فضاء الإدارة.
+                </p>
+
+            </div>
 
         </section>
 
@@ -455,15 +625,43 @@
              HORAIRES
         ================================================== -->
 
-        <section class="admin-card">
+        <section
+            id="gestionHoraires"
+            class="admin-card future-card"
+        >
 
-            <h2>
-                🕐 إدارة جداول الأوقات
-            </h2>
+            <div class="card-header">
 
-            <p class="section-note">
-                سيتم تفعيل إدارة جداول الأوقات لاحقًا.
-            </p>
+                <div class="card-header-icon schedule-icon">
+                    🕐
+                </div>
+
+                <div>
+
+                    <h2>
+                        إدارة جداول الأوقات
+                    </h2>
+
+                    <p>
+                        إدارة جداول أوقات الدراسة.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="future-message">
+
+                <span>
+                    🕐
+                </span>
+
+                <p>
+                    هذه الوظيفة سيتم تفعيلها لاحقًا.
+                </p>
+
+            </div>
 
         </section>
 
@@ -473,15 +671,43 @@
              EXAMENS
         ================================================== -->
 
-        <section class="admin-card">
+        <section
+            id="gestionExamens"
+            class="admin-card future-card"
+        >
 
-            <h2>
-                📝 إدارة جداول الامتحانات
-            </h2>
+            <div class="card-header">
 
-            <p class="section-note">
-                سيتم تفعيل إدارة جداول الامتحانات لاحقًا.
-            </p>
+                <div class="card-header-icon exam-icon">
+                    📝
+                </div>
+
+                <div>
+
+                    <h2>
+                        إدارة جداول الامتحانات
+                    </h2>
+
+                    <p>
+                        إدارة جداول الامتحانات حسب الثلاثي والمستوى.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="future-message">
+
+                <span>
+                    📝
+                </span>
+
+                <p>
+                    هذه الوظيفة سيتم تفعيلها لاحقًا.
+                </p>
+
+            </div>
 
         </section>
 
@@ -499,20 +725,24 @@
 
 <footer class="admin-footer">
 
-    <p>
-        المدرسة الابتدائية نهج ميلود
-    </p>
+    <div class="footer-container">
 
-    <p>
-        جميع الحقوق محفوظة
-    </p>
+        <p>
+            المدرسة الابتدائية نهج ميلود
+        </p>
+
+        <p>
+            جميع الحقوق محفوظة
+        </p>
+
+    </div>
 
 </footer>
 
 
 
 <!-- =====================================================
-     JAVASCRIPT ADMIN
+     JAVASCRIPT
 ====================================================== -->
 
 <script
