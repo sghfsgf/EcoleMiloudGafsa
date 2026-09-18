@@ -1,4 +1,4 @@
-
+```javascript
 /* =========================================================
    ECOLE MILOUD GAFSA
    DOCUMENTS-PUBLIC.JS
@@ -12,6 +12,7 @@
    - ouverture des PDF
    - téléchargement des DOC / DOCX
    - compatibilité avec anciens documents
+   - indication 🆕 جديد pendant 3 jours
    ========================================================= */
 
 
@@ -295,6 +296,48 @@ function viderZonesDynamiques() {
 
 
 /* =========================================================
+   DOCUMENT NOUVEAU : 3 JOURS
+   ========================================================= */
+
+function documentEstNouveau(
+    documentData
+) {
+
+    if (
+        !documentData.createdAt ||
+        typeof documentData.createdAt.toMillis !==
+            "function"
+    ) {
+
+        return false;
+    }
+
+
+    const dateCreation =
+        documentData.createdAt.toMillis();
+
+
+    const maintenant =
+        Date.now();
+
+
+    const troisJours =
+        3 * 24 * 60 * 60 * 1000;
+
+
+    const difference =
+        maintenant -
+        dateCreation;
+
+
+    return (
+        difference >= 0 &&
+        difference <= troisJours
+    );
+}
+
+
+/* =========================================================
    CRÉER UNE CARTE DOCUMENT
    ========================================================= */
 
@@ -325,6 +368,37 @@ function creerCarteDocument(
     titre.textContent =
         documentData.titre ||
         "وثيقة";
+
+
+    /* -----------------------------------------
+       INDICATEUR NOUVEAU
+       pendant 3 jours
+    ----------------------------------------- */
+
+    if (
+        documentEstNouveau(
+            documentData
+        )
+    ) {
+
+        const badge =
+            document.createElement(
+                "span"
+            );
+
+
+        badge.className =
+            "badge-nouveau";
+
+
+        badge.textContent =
+            "🆕 جديد";
+
+
+        titre.appendChild(
+            badge
+        );
+    }
 
 
     /* -----------------------------------------
@@ -893,3 +967,36 @@ onSnapshot(
         );
     }
 );
+```
+
+### CSS à ajouter
+
+Dans **`style.css`**, ajoutez seulement ceci à la fin :
+
+```css
+/* =========================================================
+   BADGE DOCUMENT NOUVEAU
+   ========================================================= */
+
+.badge-nouveau {
+    display: inline-block;
+    background: #d99a00;
+    color: #ffffff;
+    padding: 3px 8px;
+    margin-right: 8px;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: bold;
+    white-space: nowrap;
+}
+```
+
+**Aucun autre fichier JavaScript n'est nécessaire.**
+
+Le fonctionnement sera :
+
+**Publication → 3 × 24 h → `🆕 جديد` → disparition automatique.**
+
+Et surtout, **aucune image n'est chargée dans la carte**, donc cette solution ne devrait pas bouleverser votre présentation originale.
+
+Je vous conseille de tester d'abord avec **un seul nouveau document** avant de modifier quoi que ce soit d'autre.
