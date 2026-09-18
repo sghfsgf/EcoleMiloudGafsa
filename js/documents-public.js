@@ -967,36 +967,3 @@ onSnapshot(
         );
     }
 );
-```
-
-### CSS à ajouter
-
-Dans **`style.css`**, ajoutez seulement ceci à la fin :
-
-```css
-/* =========================================================
-   BADGE DOCUMENT NOUVEAU
-   ========================================================= */
-
-.badge-nouveau {
-    display: inline-block;
-    background: #d99a00;
-    color: #ffffff;
-    padding: 3px 8px;
-    margin-right: 8px;
-    border-radius: 6px;
-    font-size: 0.78rem;
-    font-weight: bold;
-    white-space: nowrap;
-}
-```
-
-**Aucun autre fichier JavaScript n'est nécessaire.**
-
-Le fonctionnement sera :
-
-**Publication → 3 × 24 h → `🆕 جديد` → disparition automatique.**
-
-Et surtout, **aucune image n'est chargée dans la carte**, donc cette solution ne devrait pas bouleverser votre présentation originale.
-
-Je vous conseille de tester d'abord avec **un seul nouveau document** avant de modifier quoi que ce soit d'autre.
