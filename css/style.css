@@ -2484,3 +2484,19 @@ font-size: 13px;
 /* =========================================================
 FIN
 ========================================================= */
+/* =========================================================
+   BADGE DOCUMENT NOUVEAU
+   🆕 جديد pendant 3 jours
+   ========================================================= */
+
+.badge-nouveau {
+    display: inline-block;
+    background: #d99a00;
+    color: #ffffff;
+    padding: 3px 8px;
+    margin-right: 8px;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: bold;
+    white-space: nowrap;
+}
