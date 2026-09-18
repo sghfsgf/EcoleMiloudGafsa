@@ -1445,3 +1445,608 @@ input:focus-visible {
 
     font-size: 14px;
 }
+
+/* =========================================================
+   VERSION MOBILE
+   ECOLE MILOUD GAFSA
+   ========================================================= */
+
+
+/* =========================================================
+   TABLETTES ET PETITS ÉCRANS
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .header-container,
+    .section-container,
+    .hero-container {
+        width: 100%;
+        max-width: 100%;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+
+    /* En-tête */
+
+    .school-brand {
+        gap: 12px;
+    }
+
+
+    .school-title h1 {
+        font-size: 22px;
+    }
+
+
+    .school-title p {
+        font-size: 14px;
+    }
+
+
+    /* Navigation */
+
+    .main-navigation {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+
+    .nav-container {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        justify-content: flex-start;
+        gap: 6px;
+        padding: 8px 12px;
+
+        scrollbar-width: thin;
+
+        -webkit-overflow-scrolling: touch;
+    }
+
+
+    .nav-container a {
+        flex: 0 0 auto;
+        white-space: nowrap;
+        font-size: 15px;
+        padding: 8px 12px;
+    }
+
+
+    /* Hero */
+
+    .hero-section {
+        padding: 35px 0;
+    }
+
+
+    .hero-container h2 {
+        font-size: 25px;
+        line-height: 1.7;
+    }
+
+
+    .hero-container p {
+        font-size: 15px;
+    }
+
+
+    /* Recherche */
+
+    .search-box {
+        width: 100%;
+        max-width: 100%;
+        margin-top: 20px;
+    }
+
+
+    .search-box input {
+        width: 100%;
+        box-sizing: border-box;
+        font-size: 16px;
+    }
+
+
+    .search-box button {
+        width: 100%;
+        margin-top: 8px;
+        min-height: 46px;
+        font-size: 16px;
+    }
+
+
+    /* Cartes */
+
+    .cards-container {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 14px;
+    }
+
+
+    .feature-card {
+        padding: 18px 14px;
+    }
+
+
+    .feature-card h3 {
+        font-size: 17px;
+    }
+
+
+    .feature-card p {
+        font-size: 14px;
+    }
+
+
+    /* Documents */
+
+    .document-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 14px;
+    }
+
+
+    .document-card {
+        padding: 16px;
+    }
+
+
+    .document-card h3 {
+        font-size: 17px;
+    }
+
+
+    .document-card p {
+        font-size: 14px;
+    }
+
+
+    /* Sections */
+
+    .content-section {
+        padding: 45px 0;
+    }
+
+
+    .content-section h2 {
+        font-size: 24px;
+    }
+
+
+    .section-intro {
+        font-size: 15px;
+    }
+
+
+    /* Galerie */
+
+    .gallery-categories {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 14px;
+    }
+
+
+    .gallery-category {
+        padding: 16px;
+    }
+
+
+    .gallery-category h3 {
+        font-size: 16px;
+    }
+
+
+    .gallery-category p {
+        font-size: 14px;
+    }
+
+
+    /* Contact */
+
+    .contact-content,
+    .about-content {
+        padding: 18px;
+    }
+
+}
+
+
+/* =========================================================
+   TÉLÉPHONES
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    /* -----------------------------------------------------
+       BASE
+    ----------------------------------------------------- */
+
+    body {
+        font-size: 15px;
+        line-height: 1.75;
+    }
+
+
+    /* -----------------------------------------------------
+       EN-TÊTE
+    ----------------------------------------------------- */
+
+    .site-header {
+        padding: 10px 0;
+    }
+
+
+    .header-container {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+
+    .school-brand {
+        align-items: center;
+        gap: 10px;
+    }
+
+
+    .school-logo {
+        width: 44px;
+        height: 44px;
+        flex: 0 0 44px;
+    }
+
+
+    .school-logo img {
+        width: 25px;
+        height: 25px;
+    }
+
+
+    .school-title h1 {
+        font-size: 18px;
+        line-height: 1.5;
+    }
+
+
+    .school-title p {
+        font-size: 12px;
+        line-height: 1.5;
+    }
+
+
+    /* -----------------------------------------------------
+       MENU
+    ----------------------------------------------------- */
+
+    .main-navigation {
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+
+    .nav-container {
+        gap: 5px;
+        padding: 7px 8px;
+    }
+
+
+    .nav-container a {
+        font-size: 13px;
+        padding: 7px 10px;
+        border-radius: 7px;
+    }
+
+
+    /* -----------------------------------------------------
+       HERO
+    ----------------------------------------------------- */
+
+    .hero-section {
+        padding: 30px 0;
+    }
+
+
+    .hero-container {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+
+    .hero-container h2 {
+        font-size: 21px;
+        line-height: 1.75;
+    }
+
+
+    .hero-container p {
+        font-size: 14px;
+        margin-top: 10px;
+    }
+
+
+    /* -----------------------------------------------------
+       RECHERCHE
+    ----------------------------------------------------- */
+
+    .search-box {
+        padding: 15px;
+        border-radius: 10px;
+    }
+
+
+    .search-box label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 15px;
+    }
+
+
+    .search-box input {
+        min-height: 44px;
+        padding: 9px 12px;
+        font-size: 16px;
+    }
+
+
+    .search-box button {
+        min-height: 44px;
+        font-size: 15px;
+    }
+
+
+    /* -----------------------------------------------------
+       SERVICES
+    ----------------------------------------------------- */
+
+    .quick-access {
+        padding: 30px 0;
+    }
+
+
+    .section-container {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+
+    .section-container > h2 {
+        font-size: 22px;
+        margin-bottom: 18px;
+    }
+
+
+    .cards-container {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+
+    .feature-card {
+        padding: 16px;
+        border-radius: 11px;
+    }
+
+
+    .feature-card .card-icon {
+        font-size: 28px;
+    }
+
+
+    .feature-card h3 {
+        font-size: 17px;
+    }
+
+
+    .feature-card p {
+        font-size: 14px;
+    }
+
+
+    .feature-card a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 42px;
+        margin-top: 8px;
+    }
+
+
+    /* -----------------------------------------------------
+       SECTIONS
+    ----------------------------------------------------- */
+
+    .content-section {
+        padding: 35px 0;
+    }
+
+
+    .content-section h2 {
+        font-size: 21px;
+        line-height: 1.6;
+    }
+
+
+    .section-intro {
+        font-size: 14px;
+        line-height: 1.8;
+    }
+
+
+    /* -----------------------------------------------------
+       DOCUMENTS
+    ----------------------------------------------------- */
+
+    .document-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+
+    .document-card {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 15px;
+        border-radius: 10px;
+    }
+
+
+    .document-card h3 {
+        font-size: 16px;
+        line-height: 1.7;
+    }
+
+
+    .document-card p {
+        font-size: 14px;
+    }
+
+
+    .document-button,
+    .pdf-link {
+        width: 100%;
+        min-height: 42px;
+        box-sizing: border-box;
+        margin-top: 8px;
+        font-size: 14px;
+    }
+
+
+    /* -----------------------------------------------------
+       ANNONCES
+    ----------------------------------------------------- */
+
+    .announcement-card {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 15px;
+        border-radius: 10px;
+    }
+
+
+    .announcement-card h3 {
+        font-size: 17px;
+    }
+
+
+    .announcement-card p {
+        font-size: 14px;
+    }
+
+
+    /* -----------------------------------------------------
+       GALERIE
+    ----------------------------------------------------- */
+
+    .gallery-categories {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+
+    .gallery-category {
+        padding: 15px;
+        border-radius: 10px;
+    }
+
+
+    .gallery-category h3 {
+        font-size: 16px;
+    }
+
+
+    .gallery-category p {
+        font-size: 14px;
+    }
+
+
+    /* -----------------------------------------------------
+       ABOUT / CONTACT
+    ----------------------------------------------------- */
+
+    .about-content,
+    .contact-content {
+        padding: 16px;
+        border-radius: 10px;
+    }
+
+
+    .about-content h3 {
+        font-size: 18px;
+    }
+
+
+    .about-content p,
+    .contact-content p {
+        font-size: 14px;
+    }
+
+
+    /* -----------------------------------------------------
+       FOOTER
+    ----------------------------------------------------- */
+
+    .site-footer {
+        padding: 20px 0;
+    }
+
+
+    .footer-container {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+
+    .footer-container p {
+        font-size: 13px;
+    }
+
+}
+
+
+/* =========================================================
+   TRÈS PETITS TÉLÉPHONES
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+    .school-title h1 {
+        font-size: 16px;
+    }
+
+
+    .school-title p {
+        font-size: 11px;
+    }
+
+
+    .nav-container a {
+        font-size: 12px;
+        padding: 6px 8px;
+    }
+
+
+    .hero-container h2 {
+        font-size: 19px;
+    }
+
+
+    .section-container > h2 {
+        font-size: 20px;
+    }
+
+
+    .feature-card h3,
+    .document-card h3 {
+        font-size: 15px;
+    }
+
+}
+
