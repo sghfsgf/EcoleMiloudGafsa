@@ -1,0 +1,1021 @@
+
+/* =========================================================
+   ECOLE MILOUD GAFSA
+   ADMINISTRATION
+   Même identité visuelle que le site principal
+   ========================================================= */
+
+
+/* =========================================================
+   1. POLICE ARABE
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap');
+
+
+/* =========================================================
+   2. VARIABLES
+   ========================================================= */
+
+:root {
+
+    --bleu-fonce: #174a6e;
+    --bleu-principal: #2f80a8;
+    --bleu-clair: #dff1ff;
+    --bleu-tres-clair: #f5fbff;
+
+    --orange: #f4a261;
+    --orange-clair: #f6c66d;
+    --orange-tres-clair: #fff6eb;
+
+    --blanc: #ffffff;
+
+    --gris-texte: #46545d;
+    --gris-secondaire: #6d7d86;
+    --gris-bordure: #dceaf2;
+
+    --ombre-legere:
+        0 3px 12px rgba(23, 74, 110, 0.08);
+
+    --ombre-hover:
+        0 8px 22px rgba(23, 74, 110, 0.13);
+
+    --rayon: 12px;
+}
+
+
+/* =========================================================
+   3. RESET
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+
+    margin: 0;
+    padding: 0;
+
+    min-height: 100vh;
+
+    background: #f8fbfd;
+
+    color: var(--gris-texte);
+
+    font-family:
+        "Cairo",
+        "Noto Sans Arabic",
+        "Tahoma",
+        "Arial",
+        sans-serif;
+
+    font-size: 16px;
+
+    line-height: 1.8;
+
+    direction: rtl;
+
+    text-align: right;
+}
+
+
+/* =========================================================
+   4. EN-TÊTE ADMIN
+   Même style que l'en-tête principal
+   ========================================================= */
+
+.admin-header {
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff7ed 0%,
+            #ffffff 45%,
+            #eaf7ff 100%
+        );
+
+    border-bottom: 1px solid var(--gris-bordure);
+
+    padding: 22px 20px;
+}
+
+
+.admin-header-content {
+
+    width: 100%;
+
+    max-width: 1180px;
+
+    margin: 0 auto;
+
+    text-align: center;
+}
+
+
+.admin-header h1 {
+
+    margin: 0;
+
+    color: var(--bleu-fonce);
+
+    font-size: 28px;
+
+    font-weight: 700;
+
+    line-height: 1.6;
+}
+
+
+.admin-header p {
+
+    margin: 3px 0 0;
+
+    color: #587888;
+
+    font-size: 15px;
+
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   5. CONTENEUR ADMIN
+   ========================================================= */
+
+.admin-container {
+
+    width: 100%;
+
+    max-width: 1180px;
+
+    margin: 0 auto;
+
+    padding: 40px 20px;
+}
+
+
+/* =========================================================
+   6. CARTES
+   Même style que les cartes du site principal
+   ========================================================= */
+
+.admin-card {
+
+    margin-bottom: 20px;
+
+    padding: 25px;
+
+    background: var(--blanc);
+
+    border: 1px solid var(--gris-bordure);
+
+    border-radius: var(--rayon);
+
+    box-shadow: var(--ombre-legere);
+
+    transition:
+        box-shadow 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+.admin-card:hover {
+
+    box-shadow: var(--ombre-hover);
+}
+
+
+/* Titres des cartes */
+
+.admin-card h2 {
+
+    margin: 0 0 8px;
+
+    color: var(--bleu-fonce);
+
+    font-size: 21px;
+
+    font-weight: 700;
+
+    line-height: 1.7;
+}
+
+
+.form-intro {
+
+    margin: 0 0 20px;
+
+    color: var(--gris-secondaire);
+
+    font-size: 14px;
+
+    text-align: center;
+}
+
+
+.section-note {
+
+    margin: 0;
+
+    color: var(--gris-secondaire);
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   7. FORMULAIRES
+   ========================================================= */
+
+.form-group {
+
+    margin-bottom: 16px;
+}
+
+
+.form-group label {
+
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: var(--bleu-fonce);
+
+    font-size: 15px;
+
+    font-weight: 600;
+}
+
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+
+    width: 100%;
+
+    min-height: 44px;
+
+    padding: 9px 12px;
+
+    background: #ffffff;
+
+    border: 1px solid #cbdde7;
+
+    border-radius: 8px;
+
+    outline: none;
+
+    color: var(--gris-texte);
+
+    font-family:
+        "Cairo",
+        "Noto Sans Arabic",
+        "Tahoma",
+        "Arial",
+        sans-serif;
+
+    font-size: 15px;
+
+    line-height: 1.7;
+
+    direction: rtl;
+}
+
+
+.form-group textarea {
+
+    min-height: 100px;
+
+    resize: vertical;
+}
+
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+
+    color: #97a5ad;
+}
+
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+
+    border-color: var(--bleu-principal);
+
+    box-shadow:
+        0 0 0 3px rgba(47, 128, 168, 0.12);
+}
+
+
+/* =========================================================
+   8. FICHIER PDF
+   ========================================================= */
+
+input[type="file"] {
+
+    width: 100%;
+
+    min-height: 48px;
+
+    padding: 8px;
+
+    background: #f8fcff;
+
+    border: 1px dashed #b9d9e8;
+
+    border-radius: 8px;
+
+    color: var(--gris-texte);
+
+    font-family:
+        "Cairo",
+        "Tahoma",
+        "Arial",
+        sans-serif;
+
+    font-size: 14px;
+
+    cursor: pointer;
+}
+
+
+input[type="file"]:hover {
+
+    background: #f1faff;
+
+    border-color: var(--bleu-principal);
+}
+
+
+.file-help {
+
+    display: block;
+
+    margin-top: 5px;
+
+    color: var(--gris-secondaire);
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   9. CHECKBOX
+   ========================================================= */
+
+.checkbox-line {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin: 12px 0;
+
+    color: var(--gris-texte);
+
+    font-size: 14px;
+
+    cursor: pointer;
+}
+
+
+.checkbox-line input {
+
+    width: 17px;
+
+    height: 17px;
+
+    accent-color: var(--bleu-principal);
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   10. BOUTONS
+   ========================================================= */
+
+.primary-button,
+.secondary-button,
+.logout-button {
+
+    border: none;
+
+    border-radius: 8px;
+
+    min-height: 43px;
+
+    padding: 8px 16px;
+
+    font-family:
+        "Cairo",
+        "Noto Sans Arabic",
+        "Tahoma",
+        "Arial",
+        sans-serif;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+/* Bouton principal */
+
+.primary-button {
+
+    background: var(--bleu-principal);
+
+    color: #ffffff;
+
+    box-shadow:
+        0 2px 6px rgba(47, 128, 168, 0.12);
+}
+
+
+.primary-button:hover {
+
+    background: #246d91;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 4px 10px rgba(47, 128, 168, 0.16);
+}
+
+
+/* Bouton secondaire */
+
+.secondary-button {
+
+    background: var(--bleu-clair);
+
+    color: var(--bleu-fonce);
+}
+
+
+.secondary-button:hover {
+
+    background: #c7e8f8;
+
+    transform: translateY(-1px);
+}
+
+
+/* Déconnexion */
+
+.logout-button {
+
+    background: var(--orange);
+
+    color: #ffffff;
+}
+
+
+.logout-button:hover {
+
+    background: #e8904e;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   11. FORM BUTTONS
+   ========================================================= */
+
+.form-buttons {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    margin-top: 14px;
+}
+
+
+.form-buttons .primary-button {
+
+    width: auto;
+
+    min-width: 140px;
+}
+
+
+.form-buttons .secondary-button {
+
+    width: auto;
+
+    min-width: 100px;
+}
+
+
+/* Pour le bouton de connexion */
+
+#loginForm .primary-button {
+
+    width: 100%;
+
+    margin-top: 6px;
+}
+
+
+#loginForm .secondary-button {
+
+    width: 100%;
+
+    margin-top: 9px;
+}
+
+
+/* =========================================================
+   12. MESSAGE DE CONNEXION
+   ========================================================= */
+
+.message {
+
+    min-height: 26px;
+
+    margin: 12px 0 0;
+
+    color: #b15b1f;
+
+    text-align: center;
+
+    font-size: 14px;
+
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   13. TABLEAU DE BORD
+   ========================================================= */
+
+.dashboard {
+
+    width: 100%;
+}
+
+
+.dashboard-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 20px;
+
+    padding: 18px 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eaf7ff,
+            #ffffff
+        );
+
+    border: 1px solid var(--gris-bordure);
+
+    border-radius: var(--rayon);
+
+    box-shadow: var(--ombre-legere);
+}
+
+
+.dashboard-header h2 {
+
+    margin: 0;
+
+    color: var(--bleu-fonce);
+
+    font-size: 23px;
+
+    font-weight: 700;
+}
+
+
+.dashboard-header p {
+
+    margin: 2px 0 0;
+
+    color: var(--gris-secondaire);
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   14. LISTES ANNONCES / DOCUMENTS
+   ========================================================= */
+
+#annoncesAdmin,
+#documentsAdmin {
+
+    margin-top: 25px;
+}
+
+
+.admin-item {
+
+    margin-top: 12px;
+
+    padding: 16px;
+
+    background: #f8fcff;
+
+    border: 1px solid var(--gris-bordure);
+
+    border-right: 4px solid var(--orange);
+
+    border-radius: 9px;
+
+    transition:
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.admin-item:hover {
+
+    background: #ffffff;
+
+    box-shadow:
+        0 4px 12px rgba(23, 74, 110, 0.08);
+}
+
+
+.admin-item h3 {
+
+    margin: 0 0 5px;
+
+    color: var(--bleu-fonce);
+
+    font-size: 17px;
+
+    font-weight: 700;
+
+    line-height: 1.7;
+}
+
+
+.admin-item p {
+
+    margin: 0 0 7px;
+
+    color: var(--gris-secondaire);
+
+    font-size: 14px;
+
+    line-height: 1.8;
+}
+
+
+.admin-item small {
+
+    color: #7c8d96;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   15. BOUTONS DES ÉLÉMENTS
+   ========================================================= */
+
+.item-buttons {
+
+    display: flex;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 7px;
+
+    margin-top: 11px;
+}
+
+
+.item-buttons button,
+.item-buttons a {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 35px;
+
+    padding: 5px 11px;
+
+    border: 1px solid #d5e7f0;
+
+    border-radius: 7px;
+
+    background: #eef7fc;
+
+    color: var(--bleu-fonce);
+
+    text-decoration: none;
+
+    font-family:
+        "Cairo",
+        "Tahoma",
+        "Arial",
+        sans-serif;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.item-buttons button:hover,
+.item-buttons a:hover {
+
+    background: #dceff9;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   16. ÉTAT MASQUÉ
+   ========================================================= */
+
+.hidden {
+
+    display: none !important;
+}
+
+
+/* =========================================================
+   17. PIED DE PAGE
+   ========================================================= */
+
+.admin-footer {
+
+    margin-top: 20px;
+
+    padding: 23px 15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #174a6e,
+            #205f84
+        );
+
+    color: #ffffff;
+
+    text-align: center;
+}
+
+
+.admin-footer p {
+
+    margin: 3px 0;
+
+    font-size: 13px;
+
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   18. ACCESSIBILITÉ
+   ========================================================= */
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+a:focus-visible {
+
+    outline: 3px solid var(--orange);
+
+    outline-offset: 2px;
+}
+
+
+/* =========================================================
+   19. TABLETTE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .admin-container {
+
+        padding: 35px 15px;
+    }
+
+
+    .admin-header {
+
+        padding: 20px 15px;
+    }
+
+
+    .admin-header h1 {
+
+        font-size: 25px;
+    }
+
+
+    .dashboard-header {
+
+        padding: 17px;
+    }
+
+
+    .dashboard-header h2 {
+
+        font-size: 21px;
+    }
+}
+
+
+/* =========================================================
+   20. MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .admin-header {
+
+        padding: 17px 10px;
+    }
+
+
+    .admin-header h1 {
+
+        font-size: 21px;
+
+        line-height: 1.7;
+    }
+
+
+    .admin-header p {
+
+        font-size: 13px;
+    }
+
+
+    .admin-container {
+
+        padding: 25px 10px;
+    }
+
+
+    .admin-card {
+
+        padding: 18px;
+
+        margin-bottom: 16px;
+    }
+
+
+    .admin-card h2 {
+
+        font-size: 19px;
+    }
+
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+
+        font-size: 14px;
+    }
+
+
+    .dashboard-header {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+        text-align: center;
+
+        gap: 10px;
+    }
+
+
+    .dashboard-header h2 {
+
+        font-size: 20px;
+    }
+
+
+    .logout-button {
+
+        width: 100%;
+    }
+
+
+    .form-buttons {
+
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+
+    .form-buttons .primary-button,
+    .form-buttons .secondary-button {
+
+        width: 100%;
+
+        min-width: 0;
+    }
+
+
+    .admin-item {
+
+        padding: 14px;
+    }
+
+
+    .item-buttons {
+
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+
+    .item-buttons button,
+    .item-buttons a {
+
+        width: 100%;
+    }
+}
+
+
+/* =========================================================
+   21. PETITS TÉLÉPHONES
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+    body {
+
+        font-size: 15px;
+    }
+
+
+    .admin-header h1 {
+
+        font-size: 19px;
+    }
+
+
+    .admin-card {
+
+        padding: 15px;
+    }
+
+
+    .admin-card h2 {
+
+        font-size: 18px;
+    }
+}
+
+
+/* =========================================================
+   FIN
+   ========================================================= */
+
