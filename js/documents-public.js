@@ -1,4 +1,4 @@
-```javascript
+
 /* =========================================================
    ECOLE MILOUD GAFSA
    AFFICHAGE PUBLIC DES DOCUMENTS
@@ -475,4 +475,4 @@ if (!documentsContainer) {
         }
     );
 }
-```
+
