@@ -1,7 +1,5 @@
-```javascript
 /* =========================================================
    FIREBASE - ECOLE MILOUD GAFSA
-   Authentication + Firestore
    ========================================================= */
 
 import { initializeApp }
@@ -14,52 +12,24 @@ import { getFirestore }
     from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
-/* =========================================================
-   CONFIGURATION FIREBASE
-   ========================================================= */
-
 const firebaseConfig = {
 
-    apiKey:
-        "AIzaSyDejW6NPVy9lfP2CIblz_dWc7xsgDyizwM",
+    apiKey: "VOTRE_API_KEY",
 
-    authDomain:
-        "ecolemiloudgafsa.firebaseapp.com",
+    authDomain: "ecolemiloudgafsa.firebaseapp.com",
 
-    projectId:
-        "ecolemiloudgafsa",
+    projectId: "ecolemiloudgafsa",
 
-    storageBucket:
-        "ecolemiloudgafsa.firebasestorage.app",
+    storageBucket: "ecolemiloudgafsa.firebasestorage.app",
 
-    messagingSenderId:
-        "1088965354679",
+    messagingSenderId: "1088965354679",
 
-    appId:
-        "1:1088965354679:web:6eb1fddfcf34dffb781932"
+    appId: "VOTRE_APP_ID"
 };
 
 
-/* =========================================================
-   INITIALISATION
-   ========================================================= */
+const app = initializeApp(firebaseConfig);
 
-const app =
-    initializeApp(firebaseConfig);
+export const auth = getAuth(app);
 
-
-/* =========================================================
-   AUTHENTIFICATION
-   ========================================================= */
-
-export const auth =
-    getAuth(app);
-
-
-/* =========================================================
-   FIRESTORE
-   ========================================================= */
-
-export const db =
-    getFirestore(app);
-```
+export const db = getFirestore(app);
