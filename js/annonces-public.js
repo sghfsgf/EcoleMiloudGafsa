@@ -1,4 +1,4 @@
-```js
+
 /* =========================================================
    ECOLE MILOUD GAFSA
    AFFICHAGE PUBLIC DES ANNONCES
@@ -336,10 +336,3 @@ if (!annoncesContainer) {
         }
     );
 }
-```
-
-**Important :** ce code ne nécessite aucune modification de votre structure Firestore. Il utilise simplement `createdAt`, qui existe déjà dans votre logique de tri.
-
-Votre `style.css` doit déjà contenir le bloc `.badge-nouveau` que nous avons ajouté précédemment.
-
-Si une annonce a été créée il y a **moins ou exactement 72 heures**, elle affiche **🆕 جديد**. Après 72 heures, le badge disparaît automatiquement au prochain rechargement/rafraîchissement des données.
