@@ -1,4 +1,4 @@
-```html
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
@@ -54,14 +54,14 @@
 
 
 <!-- =====================================================
-     CONTENU
+     CONTENU PRINCIPAL
 ====================================================== -->
 
 <main class="admin-container">
 
 
     <!-- =================================================
-         CONNEXION
+         CONNEXION ADMIN
     ================================================== -->
 
     <section
@@ -101,7 +101,7 @@
             </div>
 
 
-            <!-- mot de passe -->
+            <!-- كلمة المرور -->
 
             <div class="form-group">
 
@@ -121,7 +121,7 @@
             </div>
 
 
-            <!-- bouton connexion -->
+            <!-- تسجيل الدخول -->
 
             <button
                 type="submit"
@@ -131,7 +131,7 @@
             </button>
 
 
-            <!-- mot de passe oublié -->
+            <!-- نسيت كلمة المرور -->
 
             <button
                 type="button"
@@ -158,7 +158,7 @@
 
 
     <!-- =================================================
-         TABLEAU DE BORD ADMIN
+         TABLEAU DE BORD
     ================================================== -->
 
     <section
@@ -167,7 +167,9 @@
     >
 
 
-        <!-- En-tête du tableau de bord -->
+        <!-- =================================================
+             EN-TÊTE TABLEAU DE BORD
+        ================================================== -->
 
         <div class="dashboard-header">
 
@@ -195,7 +197,7 @@
 
 
         <!-- =================================================
-             ANNONCES
+             GESTION DES ANNONCES
         ================================================== -->
 
         <section class="admin-card">
@@ -214,6 +216,8 @@
                 >
 
 
+                <!-- Titre -->
+
                 <div class="form-group">
 
                     <label for="annonceTitre">
@@ -228,6 +232,8 @@
 
                 </div>
 
+
+                <!-- Contenu -->
 
                 <div class="form-group">
 
@@ -244,6 +250,8 @@
                 </div>
 
 
+                <!-- Publication -->
+
                 <label class="checkbox-line">
 
                     <input
@@ -257,6 +265,8 @@
                 </label>
 
 
+                <!-- Boutons -->
+
                 <div class="form-buttons">
 
                     <button
@@ -265,6 +275,7 @@
                     >
                         💾 حفظ الإعلان
                     </button>
+
 
                     <button
                         type="button"
@@ -279,6 +290,8 @@
             </form>
 
 
+            <!-- Liste des annonces -->
+
             <div id="annoncesAdmin"></div>
 
         </section>
@@ -286,7 +299,7 @@
 
 
         <!-- =================================================
-             DOCUMENTS
+             GESTION DES DOCUMENTS
         ================================================== -->
 
         <section class="admin-card">
@@ -299,11 +312,17 @@
             <form id="documentForm">
 
 
+                <!-- ID document pour modification -->
+
                 <input
                     type="hidden"
                     id="documentId"
                 >
 
+
+                <!-- =========================================
+                     TITRE
+                ========================================== -->
 
                 <div class="form-group">
 
@@ -315,10 +334,15 @@
                         type="text"
                         id="documentTitre"
                         required
+                        placeholder="أدخل عنوان الوثيقة"
                     >
 
                 </div>
 
+
+                <!-- =========================================
+                     DESCRIPTION
+                ========================================== -->
 
                 <div class="form-group">
 
@@ -329,26 +353,39 @@
                     <textarea
                         id="documentDescription"
                         rows="3"
+                        placeholder="وصف مختصر للوثيقة"
                     ></textarea>
 
                 </div>
 
 
+                <!-- =========================================
+                     FICHIER
+                ========================================== -->
+
                 <div class="form-group">
 
-                    <label for="documentUrl">
-                        رابط الوثيقة
+                    <label for="documentFichier">
+                        📄 اختيار الوثيقة
                     </label>
 
                     <input
-                        type="url"
-                        id="documentUrl"
-                        required
-                        placeholder="https://..."
+                        type="file"
+                        id="documentFichier"
+                        name="documentFichier"
+                        accept=".pdf,application/pdf"
                     >
+
+                    <small class="file-help">
+                        اختر ملف PDF من جهازك.
+                    </small>
 
                 </div>
 
+
+                <!-- =========================================
+                     CATÉGORIE
+                ========================================== -->
 
                 <div class="form-group">
 
@@ -379,6 +416,10 @@
                 </div>
 
 
+                <!-- =========================================
+                     PUBLICATION
+                ========================================== -->
+
                 <label class="checkbox-line">
 
                     <input
@@ -392,6 +433,10 @@
                 </label>
 
 
+                <!-- =========================================
+                     BOUTONS
+                ========================================== -->
+
                 <div class="form-buttons">
 
                     <button
@@ -400,6 +445,7 @@
                     >
                         💾 حفظ الوثيقة
                     </button>
+
 
                     <button
                         type="button"
@@ -415,6 +461,10 @@
             </form>
 
 
+            <!-- =========================================
+                 DOCUMENTS EXISTANTS
+            ========================================== -->
+
             <div id="documentsAdmin"></div>
 
         </section>
@@ -422,7 +472,7 @@
 
 
         <!-- =================================================
-             PHOTOS
+             GESTION DES PHOTOS
         ================================================== -->
 
         <section class="admin-card">
@@ -432,8 +482,7 @@
             </h2>
 
             <p class="section-note">
-                سيتم إضافة تحميل الصور عبر Firebase Storage
-                في l'étape suivante.
+                سيتم تفعيل تحميل الصور عبر Firebase Storage.
             </p>
 
         </section>
@@ -441,7 +490,7 @@
 
 
         <!-- =================================================
-             HORAIRES
+             GESTION DES HORAIRES
         ================================================== -->
 
         <section class="admin-card">
@@ -459,7 +508,7 @@
 
 
         <!-- =================================================
-             EXAMENS
+             GESTION DES EXAMENS
         ================================================== -->
 
         <section class="admin-card">
@@ -473,7 +522,6 @@
             </p>
 
         </section>
-
 
 
     </section>
@@ -493,12 +541,16 @@
         المدرسة الابتدائية نهج ميلود
     </p>
 
+    <p>
+        جميع الحقوق محفوظة
+    </p>
+
 </footer>
 
 
 
 <!-- =====================================================
-     JAVASCRIPT
+     JAVASCRIPT ADMIN
 ====================================================== -->
 
 <script
@@ -508,5 +560,6 @@
 
 
 </body>
+
 </html>
-```
+
