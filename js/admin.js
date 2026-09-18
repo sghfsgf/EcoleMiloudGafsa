@@ -1,4 +1,4 @@
-```javascript
+
 /* =========================================================
    ECOLE MILOUD GAFSA
    ADMIN.JS
@@ -2280,4 +2280,3 @@ function resetDocumentForm() {
         mettreAJourDestinations();
     }
 }
-```
