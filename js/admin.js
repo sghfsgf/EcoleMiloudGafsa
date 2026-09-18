@@ -1,4 +1,4 @@
-```javascript
+
 /* =========================================================
    ECOLE MILOUD GAFSA
    ADMIN.JS
@@ -7,14 +7,23 @@
 
 
 /* =========================================================
-   FIREBASE AUTHENTIFICATION
+   AUTHENTIFICATION
    ========================================================= */
 
 import {
     connexionAdmin,
-    deconnexion,
-    motDePasseOublie
+    deconnexion
 } from "./auth.js";
+
+
+/* =========================================================
+   FIREBASE AUTH
+   Pour "Mot de passe oublié"
+   ========================================================= */
+
+import {
+    sendPasswordResetEmail
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
 
 /* =========================================================
@@ -33,7 +42,8 @@ import {
 
 
 import {
-    db
+    db,
+    auth
 } from "../firebase-config.js";
 
 
@@ -66,35 +76,38 @@ const forgotPasswordButton =
 const annonceForm =
     document.getElementById("annonceForm");
 
+const annonceAnnuler =
+    document.getElementById("annonceAnnuler");
+
+
 const documentForm =
     document.getElementById("documentForm");
 
+const documentAnnuler =
+    document.getElementById("documentAnnuler");
+
 
 /* =========================================================
-   VÉRIFICATION DES ÉLÉMENTS
+   VÉRIFICATION
    ========================================================= */
 
-if (!loginForm) {
-
-    console.error(
-        "Erreur : #loginForm introuvable."
-    );
-}
+console.log("admin.js chargé correctement.");
 
 
-if (!annonceForm) {
+/* =========================================================
+   MESSAGE
+   ========================================================= */
 
-    console.error(
-        "Erreur : #annonceForm introuvable."
-    );
-}
+function afficherMessage(message, erreur = false) {
 
+    if (!loginMessage) {
+        return;
+    }
 
-if (!documentForm) {
+    loginMessage.textContent = message;
 
-    console.error(
-        "Erreur : #documentForm introuvable."
-    );
+    loginMessage.style.color =
+        erreur ? "#b42318" : "#174a6e";
 }
 
 
@@ -110,29 +123,45 @@ if (loginForm) {
 
             event.preventDefault();
 
+            const emailInput =
+                document.getElementById("email");
 
-            const email =
-                document.getElementById("email")
-                    .value
-                    .trim();
-
-
-            const password =
-                document.getElementById("password")
-                    .value;
+            const passwordInput =
+                document.getElementById("password");
 
 
-            if (!email || !password) {
+            if (!emailInput || !passwordInput) {
 
-                loginMessage.textContent =
-                    "يرجى إدخال البريد الإلكتروني وكلمة المرور.";
+                afficherMessage(
+                    "Erreur : champs de connexion introuvables.",
+                    true
+                );
 
                 return;
             }
 
 
-            loginMessage.textContent =
-                "جاري تسجيل الدخول...";
+            const email =
+                emailInput.value.trim();
+
+            const password =
+                passwordInput.value;
+
+
+            if (!email || !password) {
+
+                afficherMessage(
+                    "يرجى إدخال البريد الإلكتروني وكلمة المرور.",
+                    true
+                );
+
+                return;
+            }
+
+
+            afficherMessage(
+                "جاري تسجيل الدخول..."
+            );
 
 
             try {
@@ -145,8 +174,14 @@ if (loginForm) {
 
 
                 /* -----------------------------------------
-                   Afficher tableau de bord
+                   CONNEXION RÉUSSIE
                 ----------------------------------------- */
+
+                console.log(
+                    "Admin connecté :",
+                    user.email
+                );
+
 
                 loginSection.classList.add(
                     "hidden"
@@ -158,26 +193,29 @@ if (loginForm) {
                 );
 
 
-                adminEmail.textContent =
-                    user.email;
+                if (adminEmail) {
+
+                    adminEmail.textContent =
+                        user.email || "";
+                }
 
 
-                loginMessage.textContent =
-                    "";
+                afficherMessage("");
 
 
                 /* -----------------------------------------
-                   Charger les données Firestore
+                   CHARGEMENT DES DONNÉES
                 ----------------------------------------- */
 
                 await chargerAnnonces();
 
                 await chargerDocuments();
 
+
             } catch (error) {
 
                 console.error(
-                    "Firebase Auth :",
+                    "Erreur connexion Admin :",
                     error
                 );
 
@@ -192,66 +230,74 @@ if (loginForm) {
 
 
 /* =========================================================
-   MESSAGE ERREUR CONNEXION
+   ERREURS CONNEXION
    ========================================================= */
 
 function afficherErreurConnexion(error) {
 
-    if (!loginMessage) {
-        return;
-    }
+    let message =
+        "تعذر تسجيل الدخول. تحقق من البريد الإلكتروني وكلمة المرور.";
 
 
     if (
-        error.code ===
-        "auth/invalid-credential"
+        error &&
+        error.code === "auth/invalid-credential"
     ) {
 
-        loginMessage.textContent =
+        message =
             "البريد الإلكتروني أو كلمة المرور غير صحيحة.";
-
-        return;
     }
 
-
-    if (
-        error.code ===
-        "auth/user-not-found"
+    else if (
+        error &&
+        error.code === "auth/user-not-found"
     ) {
 
-        loginMessage.textContent =
+        message =
             "هذا الحساب غير موجود.";
-
-        return;
     }
 
-
-    if (
-        error.code ===
-        "auth/wrong-password"
+    else if (
+        error &&
+        error.code === "auth/wrong-password"
     ) {
 
-        loginMessage.textContent =
+        message =
             "كلمة المرور غير صحيحة.";
-
-        return;
     }
 
-
-    if (
-        error.message ===
-        "Compte non autorisé."
+    else if (
+        error &&
+        error.code === "auth/invalid-email"
     ) {
 
-        loginMessage.textContent =
-            "هذا الحساب غير مصرح له بالدخول إلى الإدارة.";
+        message =
+            "عنوان البريد الإلكتروني غير صحيح.";
+    }
 
-        return;
+    else if (
+        error &&
+        error.code === "auth/too-many-requests"
+    ) {
+
+        message =
+            "تم تجاوز عدد محاولات الدخول. حاول لاحقًا.";
+    }
+
+    else if (
+        error &&
+        error.message === "Compte non autorisé."
+    ) {
+
+        message =
+            "هذا الحساب غير مصرح له بالدخول إلى الإدارة.";
     }
 
 
-    loginMessage.textContent =
-        "تعذر تسجيل الدخول. افتح F12 لمعرفة الخطأ.";
+    afficherMessage(
+        message,
+        true
+    );
 }
 
 
@@ -266,9 +312,12 @@ if (forgotPasswordButton) {
         async function () {
 
             const emailInput =
-                document.getElementById(
-                    "email"
-                );
+                document.getElementById("email");
+
+
+            if (!emailInput) {
+                return;
+            }
 
 
             const email =
@@ -277,8 +326,10 @@ if (forgotPasswordButton) {
 
             if (!email) {
 
-                loginMessage.textContent =
-                    "أدخل بريدك الإلكتروني أولاً.";
+                afficherMessage(
+                    "أدخل بريدك الإلكتروني أولاً.",
+                    true
+                );
 
                 emailInput.focus();
 
@@ -286,19 +337,23 @@ if (forgotPasswordButton) {
             }
 
 
-            loginMessage.textContent =
-                "جاري إرسال رسالة إعادة تعيين كلمة المرور...";
+            afficherMessage(
+                "جاري إرسال رابط إعادة تعيين كلمة المرور..."
+            );
 
 
             try {
 
-                await motDePasseOublie(
+                await sendPasswordResetEmail(
+                    auth,
                     email
                 );
 
 
-                loginMessage.textContent =
-                    "تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني.";
+                afficherMessage(
+                    "تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني."
+                );
+
 
             } catch (error) {
 
@@ -308,10 +363,11 @@ if (forgotPasswordButton) {
                 );
 
 
-                loginMessage.textContent =
-                    "تعذر إرسال رابط إعادة تعيين كلمة المرور.";
+                afficherMessage(
+                    "تعذر إرسال رابط إعادة تعيين كلمة المرور.",
+                    true
+                );
             }
-
         }
     );
 }
@@ -332,26 +388,40 @@ if (logoutButton) {
                 await deconnexion();
 
 
-                dashboardSection.classList.add(
-                    "hidden"
-                );
+                if (dashboardSection) {
+
+                    dashboardSection.classList.add(
+                        "hidden"
+                    );
+                }
 
 
-                loginSection.classList.remove(
-                    "hidden"
-                );
+                if (loginSection) {
+
+                    loginSection.classList.remove(
+                        "hidden"
+                    );
+                }
 
 
-                loginForm.reset();
+                if (loginForm) {
+
+                    loginForm.reset();
+                }
 
 
-                adminEmail.textContent =
-                    "";
+                if (adminEmail) {
+
+                    adminEmail.textContent = "";
+                }
 
 
                 resetAnnonceForm();
 
                 resetDocumentForm();
+
+
+                afficherMessage("");
 
 
             } catch (error) {
@@ -361,14 +431,13 @@ if (logoutButton) {
                     error
                 );
             }
-
         }
     );
 }
 
 
 /* =========================================================
-   ANNONCES
+   ===================== ANNONCES =========================
    ========================================================= */
 
 if (annonceForm) {
@@ -383,25 +452,25 @@ if (annonceForm) {
             const id =
                 document.getElementById(
                     "annonceId"
-                ).value;
+                )?.value.trim();
 
 
             const titre =
                 document.getElementById(
                     "annonceTitre"
-                ).value.trim();
+                )?.value.trim();
 
 
             const contenu =
                 document.getElementById(
                     "annonceContenu"
-                ).value.trim();
+                )?.value.trim();
 
 
             const publie =
                 document.getElementById(
                     "annoncePubliee"
-                ).checked;
+                )?.checked === true;
 
 
             if (!titre || !contenu) {
@@ -418,23 +487,18 @@ if (annonceForm) {
 
                 const donnees = {
 
-                    titre:
-                        titre,
+                    titre: titre,
 
-                    contenu:
-                        contenu,
+                    contenu: contenu,
 
-                    publie:
-                        publie,
+                    publie: publie,
 
                     updatedAt:
                         serverTimestamp()
                 };
 
 
-                /* -----------------------------------------
-                   MODIFICATION
-                ----------------------------------------- */
+                /* MODIFICATION */
 
                 if (id) {
 
@@ -447,12 +511,14 @@ if (annonceForm) {
                         donnees
                     );
 
+
+                    alert(
+                        "تم تعديل الإعلان بنجاح."
+                    );
                 }
 
 
-                /* -----------------------------------------
-                   AJOUT
-                ----------------------------------------- */
+                /* AJOUT */
 
                 else {
 
@@ -468,18 +534,17 @@ if (annonceForm) {
                                 serverTimestamp()
                         }
                     );
+
+
+                    alert(
+                        "تمت إضافة الإعلان بنجاح."
+                    );
                 }
 
 
                 resetAnnonceForm();
 
-
                 await chargerAnnonces();
-
-
-                alert(
-                    "تم حفظ الإعلان بنجاح."
-                );
 
 
             } catch (error) {
@@ -494,7 +559,6 @@ if (annonceForm) {
                     "حدث خطأ أثناء حفظ الإعلان."
                 );
             }
-
         }
     );
 }
@@ -518,7 +582,7 @@ async function chargerAnnonces() {
 
 
     container.innerHTML =
-        "<p class='loading-message'>جاري تحميل الإعلانات...</p>";
+        "<p>جاري تحميل الإعلانات...</p>";
 
 
     try {
@@ -532,8 +596,7 @@ async function chargerAnnonces() {
             );
 
 
-        container.innerHTML =
-            "";
+        container.innerHTML = "";
 
 
         if (snapshot.empty) {
@@ -545,12 +608,46 @@ async function chargerAnnonces() {
         }
 
 
+        const annonces = [];
+
+
         snapshot.forEach(
             function (docSnap) {
 
-                const data =
-                    docSnap.data();
+                annonces.push({
+                    id: docSnap.id,
+                    ...docSnap.data()
+                });
+            }
+        );
 
+
+        /* Plus récent en premier */
+
+        annonces.sort(
+            function (a, b) {
+
+                const dateA =
+                    a.createdAt &&
+                    typeof a.createdAt.toMillis === "function"
+                        ? a.createdAt.toMillis()
+                        : 0;
+
+
+                const dateB =
+                    b.createdAt &&
+                    typeof b.createdAt.toMillis === "function"
+                        ? b.createdAt.toMillis()
+                        : 0;
+
+
+                return dateB - dateA;
+            }
+        );
+
+
+        annonces.forEach(
+            function (annonce) {
 
                 const article =
                     document.createElement(
@@ -562,9 +659,7 @@ async function chargerAnnonces() {
                     "admin-item";
 
 
-                /* -----------------------------------------
-                   TITRE
-                ----------------------------------------- */
+                /* TITRE */
 
                 const titre =
                     document.createElement(
@@ -573,12 +668,10 @@ async function chargerAnnonces() {
 
 
                 titre.textContent =
-                    data.titre || "";
+                    annonce.titre || "إعلان";
 
 
-                /* -----------------------------------------
-                   CONTENU
-                ----------------------------------------- */
+                /* CONTENU */
 
                 const contenu =
                     document.createElement(
@@ -587,12 +680,10 @@ async function chargerAnnonces() {
 
 
                 contenu.textContent =
-                    data.contenu || "";
+                    annonce.contenu || "";
 
 
-                /* -----------------------------------------
-                   STATUT
-                ----------------------------------------- */
+                /* STATUT */
 
                 const statut =
                     document.createElement(
@@ -601,14 +692,12 @@ async function chargerAnnonces() {
 
 
                 statut.textContent =
-                    data.publie
+                    annonce.publie === true
                         ? "✅ منشور"
                         : "⏸️ غير منشور";
 
 
-                /* -----------------------------------------
-                   BOUTONS
-                ----------------------------------------- */
+                /* BOUTONS */
 
                 const boutons =
                     document.createElement(
@@ -620,7 +709,7 @@ async function chargerAnnonces() {
                     "item-buttons";
 
 
-                /* Modifier */
+                /* MODIFIER */
 
                 const modifier =
                     document.createElement(
@@ -643,25 +732,25 @@ async function chargerAnnonces() {
                         document.getElementById(
                             "annonceId"
                         ).value =
-                            docSnap.id;
+                            annonce.id;
 
 
                         document.getElementById(
                             "annonceTitre"
                         ).value =
-                            data.titre || "";
+                            annonce.titre || "";
 
 
                         document.getElementById(
                             "annonceContenu"
                         ).value =
-                            data.contenu || "";
+                            annonce.contenu || "";
 
 
                         document.getElementById(
                             "annoncePubliee"
                         ).checked =
-                            data.publie === true;
+                            annonce.publie === true;
 
 
                         document.getElementById(
@@ -677,7 +766,7 @@ async function chargerAnnonces() {
                 );
 
 
-                /* Supprimer */
+                /* SUPPRIMER */
 
                 const supprimer =
                     document.createElement(
@@ -697,13 +786,11 @@ async function chargerAnnonces() {
                     "click",
                     async function () {
 
-                        const confirmation =
-                            confirm(
+                        if (
+                            !confirm(
                                 "هل تريد حذف هذا الإعلان؟"
-                            );
-
-
-                        if (!confirmation) {
+                            )
+                        ) {
                             return;
                         }
 
@@ -714,7 +801,7 @@ async function chargerAnnonces() {
                                 doc(
                                     db,
                                     "annonces",
-                                    docSnap.id
+                                    annonce.id
                                 )
                             );
 
@@ -790,14 +877,8 @@ async function chargerAnnonces() {
 
 
 /* =========================================================
-   ANNULATION ANNONCE
+   ANNULER ANNONCE
    ========================================================= */
-
-const annonceAnnuler =
-    document.getElementById(
-        "annonceAnnuler"
-    );
-
 
 if (annonceAnnuler) {
 
@@ -842,7 +923,7 @@ function resetAnnonceForm() {
 
 
 /* =========================================================
-   DOCUMENTS
+   ===================== DOCUMENTS =========================
    ========================================================= */
 
 if (documentForm) {
@@ -857,37 +938,37 @@ if (documentForm) {
             const id =
                 document.getElementById(
                     "documentId"
-                ).value;
+                )?.value.trim();
 
 
             const titre =
                 document.getElementById(
                     "documentTitre"
-                ).value.trim();
+                )?.value.trim();
 
 
             const description =
                 document.getElementById(
                     "documentDescription"
-                ).value.trim();
+                )?.value.trim();
 
 
             const url =
                 document.getElementById(
                     "documentUrl"
-                ).value.trim();
+                )?.value.trim();
 
 
             const categorie =
                 document.getElementById(
                     "documentCategorie"
-                ).value;
+                )?.value;
 
 
             const publie =
                 document.getElementById(
                     "documentPublie"
-                ).checked;
+                )?.checked === true;
 
 
             if (!titre || !url) {
@@ -900,7 +981,7 @@ if (documentForm) {
             }
 
 
-            /* Vérification URL */
+            /* Vérifier URL */
 
             try {
 
@@ -920,29 +1001,24 @@ if (documentForm) {
 
                 const donnees = {
 
-                    titre:
-                        titre,
+                    titre: titre,
 
                     description:
-                        description,
+                        description || "",
 
-                    url:
-                        url,
+                    url: url,
 
                     categorie:
-                        categorie,
+                        categorie || "documents",
 
-                    publie:
-                        publie,
+                    publie: publie,
 
                     updatedAt:
                         serverTimestamp()
                 };
 
 
-                /* -----------------------------------------
-                   MODIFICATION
-                ----------------------------------------- */
+                /* MODIFICATION */
 
                 if (id) {
 
@@ -955,12 +1031,14 @@ if (documentForm) {
                         donnees
                     );
 
+
+                    alert(
+                        "تم تعديل الوثيقة بنجاح."
+                    );
                 }
 
 
-                /* -----------------------------------------
-                   AJOUT
-                ----------------------------------------- */
+                /* AJOUT */
 
                 else {
 
@@ -976,18 +1054,17 @@ if (documentForm) {
                                 serverTimestamp()
                         }
                     );
+
+
+                    alert(
+                        "تمت إضافة الوثيقة بنجاح."
+                    );
                 }
 
 
                 resetDocumentForm();
 
-
                 await chargerDocuments();
-
-
-                alert(
-                    "تم حفظ الوثيقة بنجاح."
-                );
 
 
             } catch (error) {
@@ -1002,7 +1079,6 @@ if (documentForm) {
                     "حدث خطأ أثناء حفظ الوثيقة."
                 );
             }
-
         }
     );
 }
@@ -1026,7 +1102,7 @@ async function chargerDocuments() {
 
 
     container.innerHTML =
-        "<p class='loading-message'>جاري تحميل الوثائق...</p>";
+        "<p>جاري تحميل الوثائق...</p>";
 
 
     try {
@@ -1040,8 +1116,7 @@ async function chargerDocuments() {
             );
 
 
-        container.innerHTML =
-            "";
+        container.innerHTML = "";
 
 
         if (snapshot.empty) {
@@ -1053,12 +1128,44 @@ async function chargerDocuments() {
         }
 
 
+        const documents = [];
+
+
         snapshot.forEach(
             function (docSnap) {
 
-                const data =
-                    docSnap.data();
+                documents.push({
+                    id: docSnap.id,
+                    ...docSnap.data()
+                });
+            }
+        );
 
+
+        documents.sort(
+            function (a, b) {
+
+                const dateA =
+                    a.createdAt &&
+                    typeof a.createdAt.toMillis === "function"
+                        ? a.createdAt.toMillis()
+                        : 0;
+
+
+                const dateB =
+                    b.createdAt &&
+                    typeof b.createdAt.toMillis === "function"
+                        ? b.createdAt.toMillis()
+                        : 0;
+
+
+                return dateB - dateA;
+            }
+        );
+
+
+        documents.forEach(
+            function (documentData) {
 
                 const article =
                     document.createElement(
@@ -1070,9 +1177,7 @@ async function chargerDocuments() {
                     "admin-item";
 
 
-                /* -----------------------------------------
-                   TITRE
-                ----------------------------------------- */
+                /* TITRE */
 
                 const titre =
                     document.createElement(
@@ -1081,12 +1186,11 @@ async function chargerDocuments() {
 
 
                 titre.textContent =
-                    data.titre || "";
+                    documentData.titre ||
+                    "وثيقة";
 
 
-                /* -----------------------------------------
-                   DESCRIPTION
-                ----------------------------------------- */
+                /* DESCRIPTION */
 
                 const description =
                     document.createElement(
@@ -1095,12 +1199,11 @@ async function chargerDocuments() {
 
 
                 description.textContent =
-                    data.description || "";
+                    documentData.description ||
+                    "";
 
 
-                /* -----------------------------------------
-                   CATÉGORIE
-                ----------------------------------------- */
+                /* CATÉGORIE */
 
                 const categorie =
                     document.createElement(
@@ -1111,13 +1214,12 @@ async function chargerDocuments() {
                 categorie.textContent =
                     "القسم: " +
                     (
-                        data.categorie || ""
+                        documentData.categorie ||
+                        "documents"
                     );
 
 
-                /* -----------------------------------------
-                   STATUT
-                ----------------------------------------- */
+                /* STATUT */
 
                 const statut =
                     document.createElement(
@@ -1126,14 +1228,12 @@ async function chargerDocuments() {
 
 
                 statut.textContent =
-                    data.publie
+                    documentData.publie === true
                         ? " ✅ منشور"
                         : " ⏸️ غير منشور";
 
 
-                /* -----------------------------------------
-                   BOUTONS
-                ----------------------------------------- */
+                /* BOUTONS */
 
                 const boutons =
                     document.createElement(
@@ -1145,7 +1245,7 @@ async function chargerDocuments() {
                     "item-buttons";
 
 
-                /* Ouvrir */
+                /* OUVRIR */
 
                 const ouvrir =
                     document.createElement(
@@ -1154,7 +1254,7 @@ async function chargerDocuments() {
 
 
                 ouvrir.href =
-                    data.url || "#";
+                    documentData.url || "#";
 
 
                 ouvrir.target =
@@ -1169,7 +1269,7 @@ async function chargerDocuments() {
                     "🔗 فتح";
 
 
-                /* Modifier */
+                /* MODIFIER */
 
                 const modifier =
                     document.createElement(
@@ -1192,38 +1292,38 @@ async function chargerDocuments() {
                         document.getElementById(
                             "documentId"
                         ).value =
-                            docSnap.id;
+                            documentData.id;
 
 
                         document.getElementById(
                             "documentTitre"
                         ).value =
-                            data.titre || "";
+                            documentData.titre || "";
 
 
                         document.getElementById(
                             "documentDescription"
                         ).value =
-                            data.description || "";
+                            documentData.description || "";
 
 
                         document.getElementById(
                             "documentUrl"
                         ).value =
-                            data.url || "";
+                            documentData.url || "";
 
 
                         document.getElementById(
                             "documentCategorie"
                         ).value =
-                            data.categorie ||
+                            documentData.categorie ||
                             "documents";
 
 
                         document.getElementById(
                             "documentPublie"
                         ).checked =
-                            data.publie === true;
+                            documentData.publie === true;
 
 
                         document.getElementById(
@@ -1239,7 +1339,7 @@ async function chargerDocuments() {
                 );
 
 
-                /* Supprimer */
+                /* SUPPRIMER */
 
                 const supprimer =
                     document.createElement(
@@ -1259,13 +1359,11 @@ async function chargerDocuments() {
                     "click",
                     async function () {
 
-                        const confirmation =
-                            confirm(
+                        if (
+                            !confirm(
                                 "هل تريد حذف هذه الوثيقة؟"
-                            );
-
-
-                        if (!confirmation) {
+                            )
+                        ) {
                             return;
                         }
 
@@ -1276,7 +1374,7 @@ async function chargerDocuments() {
                                 doc(
                                     db,
                                     "documents",
-                                    docSnap.id
+                                    documentData.id
                                 )
                             );
 
@@ -1300,9 +1398,7 @@ async function chargerDocuments() {
                 );
 
 
-                /* -----------------------------------------
-                   AJOUT DES BOUTONS
-                ----------------------------------------- */
+                /* AJOUT BOUTONS */
 
                 boutons.appendChild(
                     ouvrir
@@ -1319,9 +1415,7 @@ async function chargerDocuments() {
                 );
 
 
-                /* -----------------------------------------
-                   ASSEMBLAGE
-                ----------------------------------------- */
+                /* ASSEMBLAGE */
 
                 article.appendChild(
                     titre
@@ -1370,14 +1464,8 @@ async function chargerDocuments() {
 
 
 /* =========================================================
-   ANNULATION DOCUMENT
+   ANNULER DOCUMENT
    ========================================================= */
-
-const documentAnnuler =
-    document.getElementById(
-        "documentAnnuler"
-    );
-
 
 if (documentAnnuler) {
 
@@ -1419,4 +1507,4 @@ function resetDocumentForm() {
         publie.checked = true;
     }
 }
-```
+
