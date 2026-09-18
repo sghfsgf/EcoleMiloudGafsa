@@ -1,13 +1,15 @@
-
+```javascript
 /* =========================================================
    ECOLE MILOUD GAFSA
    ADMIN.JS
    Firebase Authentication + Firestore
+
    Gestion :
    - Connexion Admin
    - Mot de passe oublié
    - Annonces
    - Documents PDF / Word depuis le PC
+   - Catégorie + Destination
    ========================================================= */
 
 
@@ -97,7 +99,14 @@ const documentAnnuler =
 
 
 /* =========================================================
-   VÉRIFICATION DU CHARGEMENT
+   VARIABLES DOCUMENT
+   ========================================================= */
+
+let documentCibleSelect = null;
+
+
+/* =========================================================
+   VÉRIFICATION
    ========================================================= */
 
 console.log(
@@ -106,7 +115,7 @@ console.log(
 
 
 /* =========================================================
-   MESSAGE DE CONNEXION
+   MESSAGE
    ========================================================= */
 
 function afficherMessage(
@@ -128,6 +137,316 @@ function afficherMessage(
             ? "#b42318"
             : "#174a6e";
 }
+
+
+/* =========================================================
+   CRÉER AUTOMATIQUEMENT LE CHAMP DESTINATION
+   ========================================================= */
+
+function creerChampDestination() {
+
+    const categorieSelect =
+        document.getElementById(
+            "documentCategorie"
+        );
+
+
+    if (
+        !categorieSelect ||
+        !documentForm
+    ) {
+        return;
+    }
+
+
+    /* Éviter une double création */
+
+    if (
+        document.getElementById(
+            "documentCible"
+        )
+    ) {
+
+        documentCibleSelect =
+            document.getElementById(
+                "documentCible"
+            );
+
+        return;
+    }
+
+
+    const groupeCategorie =
+        categorieSelect.closest(
+            ".form-group"
+        );
+
+
+    if (!groupeCategorie) {
+        return;
+    }
+
+
+    const groupeCible =
+        document.createElement(
+            "div"
+        );
+
+
+    groupeCible.className =
+        "form-group";
+
+
+    const label =
+        document.createElement(
+            "label"
+        );
+
+
+    label.setAttribute(
+        "for",
+        "documentCible"
+    );
+
+
+    label.textContent =
+        "🎯 الوجهة";
+
+
+    const select =
+        document.createElement(
+            "select"
+        );
+
+
+    select.id =
+        "documentCible";
+
+    select.name =
+        "documentCible";
+
+
+    groupeCible.appendChild(
+        label
+    );
+
+
+    groupeCible.appendChild(
+        select
+    );
+
+
+    groupeCategorie.insertAdjacentElement(
+        "afterend",
+        groupeCible
+    );
+
+
+    documentCibleSelect =
+        select;
+
+
+    categorieSelect.addEventListener(
+        "change",
+        mettreAJourDestinations
+    );
+
+
+    mettreAJourDestinations();
+}
+
+
+/* =========================================================
+   DESTINATIONS
+   ========================================================= */
+
+function mettreAJourDestinations() {
+
+    const categorieSelect =
+        document.getElementById(
+            "documentCategorie"
+        );
+
+
+    if (
+        !categorieSelect ||
+        !documentCibleSelect
+    ) {
+        return;
+    }
+
+
+    const categorie =
+        categorieSelect.value;
+
+
+    documentCibleSelect.innerHTML =
+        "";
+
+
+    let destinations = [];
+
+
+    /* -----------------------------------------
+       DOCUMENTS GÉNÉRAUX
+    ----------------------------------------- */
+
+    if (
+        categorie ===
+        "documents"
+    ) {
+
+        destinations = [
+
+            {
+                value: "general",
+                label: "📚 الوثائق العامة"
+            }
+
+        ];
+    }
+
+
+    /* -----------------------------------------
+       HORAIRES
+    ----------------------------------------- */
+
+    else if (
+        categorie ===
+        "horaires"
+    ) {
+
+        destinations = [
+
+            {
+                value: "sana1",
+                label: "السنة الأولى"
+            },
+
+            {
+                value: "sana2",
+                label: "السنة الثانية"
+            },
+
+            {
+                value: "sana3",
+                label: "السنة الثالثة"
+            },
+
+            {
+                value: "sana4",
+                label: "السنة الرابعة"
+            },
+
+            {
+                value: "sana5",
+                label: "السنة الخامسة"
+            },
+
+            {
+                value: "sana6",
+                label: "السنة السادسة"
+            }
+
+        ];
+    }
+
+
+    /* -----------------------------------------
+       EXAMENS
+    ----------------------------------------- */
+
+    else if (
+        categorie ===
+        "examens"
+    ) {
+
+        destinations = [
+
+            {
+                value: "trimestre1",
+                label: "الثلاثي الأول"
+            },
+
+            {
+                value: "trimestre2",
+                label: "الثلاثي الثاني"
+            },
+
+            {
+                value: "trimestre3",
+                label: "الثلاثي الثالث"
+            }
+
+        ];
+    }
+
+
+    /* -----------------------------------------
+       CONCOURS SIX
+    ----------------------------------------- */
+
+    else if (
+        categorie ===
+        "concours-six"
+    ) {
+
+        destinations = [
+
+            {
+                value: "calendrier",
+                label: "📅 الرزنامة والمواعيد"
+            },
+
+            {
+                value: "anciens-sujets",
+                label: "📚 مواضيع السنوات السابقة"
+            },
+
+            {
+                value: "preparation",
+                label: "✏️ تمارين للتحضير"
+            },
+
+            {
+                value: "annonces",
+                label: "📢 الإعلانات"
+            }
+
+        ];
+    }
+
+
+    destinations.forEach(
+        function (destination) {
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+
+            option.value =
+                destination.value;
+
+
+            option.textContent =
+                destination.label;
+
+
+            documentCibleSelect.appendChild(
+                option
+            );
+        }
+    );
+}
+
+
+/* =========================================================
+   INITIALISATION DESTINATION
+   ========================================================= */
+
+creerChampDestination();
 
 
 /* =========================================================
@@ -211,8 +530,6 @@ if (loginForm) {
                 );
 
 
-                /* Afficher dashboard */
-
                 if (loginSection) {
 
                     loginSection.classList.add(
@@ -239,8 +556,6 @@ if (loginForm) {
                 afficherMessage("");
 
 
-                /* Charger données */
-
                 await chargerAnnonces();
 
                 await chargerDocuments();
@@ -264,7 +579,7 @@ if (loginForm) {
 
 
 /* =========================================================
-   AFFICHER ERREUR CONNEXION
+   ERREUR CONNEXION
    ========================================================= */
 
 function afficherErreurConnexion(
@@ -548,10 +863,6 @@ if (annonceForm) {
                 };
 
 
-                /* -----------------------------------------
-                   MODIFICATION
-                ----------------------------------------- */
-
                 if (id) {
 
                     await updateDoc(
@@ -567,14 +878,8 @@ if (annonceForm) {
                     alert(
                         "تم تعديل الإعلان بنجاح."
                     );
-                }
 
-
-                /* -----------------------------------------
-                   AJOUT
-                ----------------------------------------- */
-
-                else {
+                } else {
 
                     await addDoc(
                         collection(
@@ -680,8 +985,6 @@ async function chargerAnnonces() {
         );
 
 
-        /* Plus récent en premier */
-
         annonces.sort(
             function (a, b) {
 
@@ -719,8 +1022,6 @@ async function chargerAnnonces() {
                     "admin-item";
 
 
-                /* TITRE */
-
                 const titre =
                     document.createElement(
                         "h3"
@@ -732,8 +1033,6 @@ async function chargerAnnonces() {
                     "إعلان";
 
 
-                /* CONTENU */
-
                 const contenu =
                     document.createElement(
                         "p"
@@ -744,8 +1043,6 @@ async function chargerAnnonces() {
                     annonce.contenu ||
                     "";
 
-
-                /* STATUT */
 
                 const statut =
                     document.createElement(
@@ -759,8 +1056,6 @@ async function chargerAnnonces() {
                         : "⏸️ غير منشور";
 
 
-                /* BOUTONS */
-
                 const boutons =
                     document.createElement(
                         "div"
@@ -770,8 +1065,6 @@ async function chargerAnnonces() {
                 boutons.className =
                     "item-buttons";
 
-
-                /* MODIFIER */
 
                 const modifier =
                     document.createElement(
@@ -833,8 +1126,6 @@ async function chargerAnnonces() {
                 );
 
 
-                /* SUPPRIMER */
-
                 const supprimer =
                     document.createElement(
                         "button"
@@ -893,8 +1184,6 @@ async function chargerAnnonces() {
                 );
 
 
-                /* Ajouter boutons */
-
                 boutons.appendChild(
                     modifier
                 );
@@ -904,8 +1193,6 @@ async function chargerAnnonces() {
                     supprimer
                 );
 
-
-                /* Assemblage */
 
                 article.appendChild(
                     titre
@@ -961,10 +1248,6 @@ if (annonceAnnuler) {
 }
 
 
-/* =========================================================
-   RESET ANNONCE
-   ========================================================= */
-
 function resetAnnonceForm() {
 
     if (!annonceForm) {
@@ -1008,7 +1291,7 @@ function resetAnnonceForm() {
 
 
 /* =========================================================
-   CONVERSION FICHIER → BYTES FIRESTORE
+   CONVERSION FICHIER → BYTES
    ========================================================= */
 
 function lireFichierEnBytes(
@@ -1027,13 +1310,9 @@ function lireFichierEnBytes(
 
                     try {
 
-                        const buffer =
-                            reader.result;
-
-
                         const tableau =
                             new Uint8Array(
-                                buffer
+                                reader.result
                             );
 
 
@@ -1046,7 +1325,6 @@ function lireFichierEnBytes(
                         resolve(
                             bytes
                         );
-
 
                     } catch (error) {
 
@@ -1116,7 +1394,8 @@ if (documentForm) {
             const categorie =
                 document.getElementById(
                     "documentCategorie"
-                )?.value;
+                )?.value ||
+                "documents";
 
 
             const publie =
@@ -1130,9 +1409,12 @@ if (documentForm) {
                 null;
 
 
-            /* -----------------------------------------
-               TITRE OBLIGATOIRE
-            ----------------------------------------- */
+            const cible =
+                documentCibleSelect?.value ||
+                "general";
+
+
+            /* TITRE */
 
             if (!titre) {
 
@@ -1144,10 +1426,7 @@ if (documentForm) {
             }
 
 
-            /* -----------------------------------------
-               NOUVEL AJOUT
-               Fichier obligatoire
-            ----------------------------------------- */
+            /* NOUVEL AJOUT */
 
             if (
                 !id &&
@@ -1162,10 +1441,7 @@ if (documentForm) {
             }
 
 
-            /* -----------------------------------------
-               LIMITE PRATIQUE
-               900 Ko
-            ----------------------------------------- */
+            /* LIMITE */
 
             const tailleMax =
                 900 * 1024;
@@ -1195,8 +1471,10 @@ if (documentForm) {
                         description || "",
 
                     categorie:
-                        categorie ||
-                        "documents",
+                        categorie,
+
+                    cible:
+                        cible,
 
                     publie:
                         publie,
@@ -1206,9 +1484,7 @@ if (documentForm) {
                 };
 
 
-                /* -----------------------------------------
-                   NOUVEAU FICHIER
-                ----------------------------------------- */
+                /* NOUVEAU FICHIER */
 
                 if (fichier) {
 
@@ -1222,13 +1498,6 @@ if (documentForm) {
                     ];
 
 
-                    const extension =
-                        fichier.name
-                            .toLowerCase()
-                            .split(".")
-                            .pop();
-
-
                     const typesAcceptes = [
 
                         "application/pdf",
@@ -1237,6 +1506,13 @@ if (documentForm) {
 
                         "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                     ];
+
+
+                    const extension =
+                        fichier.name
+                            .toLowerCase()
+                            .split(".")
+                            .pop();
 
 
                     if (
@@ -1255,8 +1531,6 @@ if (documentForm) {
                         return;
                     }
 
-
-                    /* Lire fichier */
 
                     const fichierBytes =
                         await lireFichierEnBytes(
@@ -1282,9 +1556,7 @@ if (documentForm) {
                 }
 
 
-                /* -----------------------------------------
-                   MODIFICATION
-                ----------------------------------------- */
+                /* MODIFICATION */
 
                 if (id) {
 
@@ -1301,12 +1573,10 @@ if (documentForm) {
                     alert(
                         "تم تعديل الوثيقة بنجاح."
                     );
+
                 }
 
-
-                /* -----------------------------------------
-                   AJOUT
-                ----------------------------------------- */
+                /* AJOUT */
 
                 else {
 
@@ -1366,7 +1636,7 @@ if (documentForm) {
 
 
 /* =========================================================
-   CHARGER DOCUMENTS
+   CHARGER DOCUMENTS ADMIN
    ========================================================= */
 
 async function chargerDocuments() {
@@ -1426,8 +1696,6 @@ async function chargerDocuments() {
             }
         );
 
-
-        /* Plus récent en premier */
 
         documents.sort(
             function (a, b) {
@@ -1492,7 +1760,7 @@ async function chargerDocuments() {
                     "";
 
 
-                /* NOM FICHIER */
+                /* FICHIER */
 
                 const nomFichier =
                     document.createElement(
@@ -1508,45 +1776,19 @@ async function chargerDocuments() {
                     );
 
 
-                /* TAILLE */
+                /* DESTINATION */
 
-                const taille =
+                const destination =
                     document.createElement(
                         "small"
                     );
 
 
-                if (
-                    documentData.tailleFichier
-                ) {
-
-                    const ko =
-                        (
-                            documentData.tailleFichier /
-                            1024
-                        ).toFixed(1);
-
-
-                    taille.textContent =
-                        " • " +
-                        ko +
-                        " Ko";
-                }
-
-
-                /* CATÉGORIE */
-
-                const categorie =
-                    document.createElement(
-                        "small"
-                    );
-
-
-                categorie.textContent =
-                    "القسم: " +
-                    (
-                        documentData.categorie ||
-                        "documents"
+                destination.textContent =
+                    "🎯 " +
+                    obtenirLibelleDestination(
+                        documentData.categorie,
+                        documentData.cible
                     );
 
 
@@ -1564,7 +1806,7 @@ async function chargerDocuments() {
                         : " ⏸️ غير منشور";
 
 
-                /* CONTENEUR BOUTONS */
+                /* BOUTONS */
 
                 const boutons =
                     document.createElement(
@@ -1576,9 +1818,7 @@ async function chargerDocuments() {
                     "item-buttons";
 
 
-                /* =========================================
-                   OUVRIR
-                ========================================== */
+                /* OUVRIR */
 
                 const ouvrir =
                     document.createElement(
@@ -1596,104 +1836,16 @@ async function chargerDocuments() {
 
                 ouvrir.addEventListener(
                     "click",
-                    async function () {
+                    function () {
 
-                        try {
-
-                            /* Nouveau fichier Bytes */
-
-                            if (
-                                documentData.fichier &&
-                                typeof documentData
-                                    .fichier
-                                    .toUint8Array ===
-                                    "function"
-                            ) {
-
-                                const bytes =
-                                    documentData
-                                        .fichier
-                                        .toUint8Array();
-
-
-                                const blob =
-                                    new Blob(
-                                        [bytes],
-                                        {
-                                            type:
-                                                documentData
-                                                    .typeFichier ||
-                                                "application/pdf"
-                                        }
-                                    );
-
-
-                                const url =
-                                    URL.createObjectURL(
-                                        blob
-                                    );
-
-
-                                window.open(
-                                    url,
-                                    "_blank"
-                                );
-
-
-                                setTimeout(
-                                    function () {
-
-                                        URL.revokeObjectURL(
-                                            url
-                                        );
-
-                                    },
-                                    60000
-                                );
-
-
-                            }
-
-                            /* Ancienne compatibilité URL */
-
-                            else if (
-                                documentData.url
-                            ) {
-
-                                window.open(
-                                    documentData.url,
-                                    "_blank"
-                                );
-
-                            }
-
-                            else {
-
-                                alert(
-                                    "الوثيقة غير متوفرة."
-                                );
-                            }
-
-
-                        } catch (error) {
-
-                            console.error(
-                                "Erreur ouverture document :",
-                                error
-                            );
-
-
-                            alert(
-                                "تعذر فتح الوثيقة."
-                            );
-                        }
+                        ouvrirDocument(
+                            documentData
+                        );
                     }
                 );
 
 
-                /* =========================================
-                   MODIFIER
-                ========================================== */
+                /* MODIFIER */
 
                 const modifier =
                     document.createElement(
@@ -1740,13 +1892,22 @@ async function chargerDocuments() {
                             "documents";
 
 
+                        mettreAJourDestinations();
+
+
+                        if (documentCibleSelect) {
+
+                            documentCibleSelect.value =
+                                documentData.cible ||
+                                "general";
+                        }
+
+
                         document.getElementById(
                             "documentPublie"
                         ).checked =
                             documentData.publie === true;
 
-
-                        /* Vider champ fichier */
 
                         const fichierInput =
                             document.getElementById(
@@ -1777,9 +1938,7 @@ async function chargerDocuments() {
                 );
 
 
-                /* =========================================
-                   SUPPRIMER
-                ========================================== */
+                /* SUPPRIMER */
 
                 const supprimer =
                     document.createElement(
@@ -1839,10 +1998,6 @@ async function chargerDocuments() {
                 );
 
 
-                /* =========================================
-                   AJOUT BOUTONS
-                ========================================== */
-
                 boutons.appendChild(
                     ouvrir
                 );
@@ -1857,10 +2012,6 @@ async function chargerDocuments() {
                     supprimer
                 );
 
-
-                /* =========================================
-                   ASSEMBLAGE
-                ========================================== */
 
                 article.appendChild(
                     titre
@@ -1878,12 +2029,7 @@ async function chargerDocuments() {
 
 
                 article.appendChild(
-                    taille
-                );
-
-
-                article.appendChild(
-                    categorie
+                    destination
                 );
 
 
@@ -1914,6 +2060,164 @@ async function chargerDocuments() {
 
         container.innerHTML =
             "<p>تعذر تحميل الوثائق.</p>";
+    }
+}
+
+
+/* =========================================================
+   LIBELLÉ DESTINATION
+   ========================================================= */
+
+function obtenirLibelleDestination(
+    categorie,
+    cible
+) {
+
+    const destinations = {
+
+        sana1:
+            "السنة الأولى",
+
+        sana2:
+            "السنة الثانية",
+
+        sana3:
+            "السنة الثالثة",
+
+        sana4:
+            "السنة الرابعة",
+
+        sana5:
+            "السنة الخامسة",
+
+        sana6:
+            "السنة السادسة",
+
+        trimestre1:
+            "الثلاثي الأول",
+
+        trimestre2:
+            "الثلاثي الثاني",
+
+        trimestre3:
+            "الثلاثي الثالث",
+
+        calendrier:
+            "الرزنامة والمواعيد",
+
+        "anciens-sujets":
+            "مواضيع السنوات السابقة",
+
+        preparation:
+            "تمارين للتحضير",
+
+        annonces:
+            "الإعلانات",
+
+        general:
+            "الوثائق العامة"
+    };
+
+
+    return (
+        destinations[cible] ||
+        "الوثائق العامة"
+    );
+}
+
+
+/* =========================================================
+   OUVRIR DOCUMENT
+   ========================================================= */
+
+function ouvrirDocument(
+    documentData
+) {
+
+    try {
+
+        if (
+            documentData.fichier &&
+            typeof documentData
+                .fichier
+                .toUint8Array ===
+            "function"
+        ) {
+
+            const bytes =
+                documentData
+                    .fichier
+                    .toUint8Array();
+
+
+            const blob =
+                new Blob(
+                    [bytes],
+                    {
+                        type:
+                            documentData.typeFichier ||
+                            "application/pdf"
+                    }
+                );
+
+
+            const url =
+                URL.createObjectURL(
+                    blob
+                );
+
+
+            window.open(
+                url,
+                "_blank"
+            );
+
+
+            setTimeout(
+                function () {
+
+                    URL.revokeObjectURL(
+                        url
+                    );
+
+                },
+                60000
+            );
+
+
+            return;
+        }
+
+
+        if (
+            documentData.url
+        ) {
+
+            window.open(
+                documentData.url,
+                "_blank"
+            );
+
+            return;
+        }
+
+
+        alert(
+            "الوثيقة غير متوفرة."
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Erreur ouverture document :",
+            error
+        );
+
+
+        alert(
+            "تعذر فتح الوثيقة."
+        );
     }
 }
 
@@ -1969,5 +2273,11 @@ function resetDocumentForm() {
         publie.checked =
             true;
     }
-}
 
+
+    if (documentCibleSelect) {
+
+        mettreAJourDestinations();
+    }
+}
+```
