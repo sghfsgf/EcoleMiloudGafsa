@@ -1,8 +1,9 @@
-
 /* =========================================================
    ECOLE MILOUD GAFSA
    ADMINISTRATION
-   Même identité visuelle que le site principal
+   Identité visuelle :
+   Bleu clair + Orange clair
+   Responsive ordinateur / tablette / mobile
    ========================================================= */
 
 
@@ -33,6 +34,7 @@
     --gris-texte: #46545d;
     --gris-secondaire: #6d7d86;
     --gris-bordure: #dceaf2;
+    --gris-fond: #f8fbfd;
 
     --ombre-legere:
         0 3px 12px rgba(23, 74, 110, 0.08);
@@ -41,6 +43,9 @@
         0 8px 22px rgba(23, 74, 110, 0.13);
 
     --rayon: 12px;
+
+    --transition:
+        0.2s ease;
 }
 
 
@@ -65,7 +70,7 @@ body {
 
     min-height: 100vh;
 
-    background: #f8fbfd;
+    background: var(--gris-fond);
 
     color: var(--gris-texte);
 
@@ -83,12 +88,13 @@ body {
     direction: rtl;
 
     text-align: right;
+
+    overflow-x: hidden;
 }
 
 
 /* =========================================================
    4. EN-TÊTE ADMIN
-   Même style que l'en-tête principal
    ========================================================= */
 
 .admin-header {
@@ -101,9 +107,11 @@ body {
             #eaf7ff 100%
         );
 
-    border-bottom: 1px solid var(--gris-bordure);
+    border-bottom:
+        1px solid var(--gris-bordure);
 
-    padding: 22px 20px;
+    padding:
+        22px 20px;
 }
 
 
@@ -135,7 +143,8 @@ body {
 
 .admin-header p {
 
-    margin: 3px 0 0;
+    margin:
+        3px 0 0;
 
     color: #587888;
 
@@ -146,7 +155,7 @@ body {
 
 
 /* =========================================================
-   5. CONTENEUR ADMIN
+   5. CONTENEUR PRINCIPAL
    ========================================================= */
 
 .admin-container {
@@ -157,16 +166,18 @@ body {
 
     margin: 0 auto;
 
-    padding: 40px 20px;
+    padding:
+        40px 20px;
 }
 
 
 /* =========================================================
-   6. CARTES
-   Même style que les cartes du site principal
+   6. CARTES ADMIN
    ========================================================= */
 
 .admin-card {
+
+    width: 100%;
 
     margin-bottom: 20px;
 
@@ -174,29 +185,34 @@ body {
 
     background: var(--blanc);
 
-    border: 1px solid var(--gris-bordure);
+    border:
+        1px solid var(--gris-bordure);
 
     border-radius: var(--rayon);
 
     box-shadow: var(--ombre-legere);
 
     transition:
-        box-shadow 0.25s ease,
-        transform 0.25s ease;
+        box-shadow var(--transition),
+        transform var(--transition);
 }
 
 
 .admin-card:hover {
 
-    box-shadow: var(--ombre-hover);
+    box-shadow:
+        var(--ombre-hover);
 }
 
 
-/* Titres des cartes */
+/* =========================================================
+   7. TITRES
+   ========================================================= */
 
 .admin-card h2 {
 
-    margin: 0 0 8px;
+    margin:
+        0 0 8px;
 
     color: var(--bleu-fonce);
 
@@ -208,11 +224,19 @@ body {
 }
 
 
+.admin-card h3 {
+
+    line-height: 1.7;
+}
+
+
 .form-intro {
 
-    margin: 0 0 20px;
+    margin:
+        0 0 20px;
 
-    color: var(--gris-secondaire);
+    color:
+        var(--gris-secondaire);
 
     font-size: 14px;
 
@@ -224,14 +248,15 @@ body {
 
     margin: 0;
 
-    color: var(--gris-secondaire);
+    color:
+        var(--gris-secondaire);
 
     font-size: 14px;
 }
 
 
 /* =========================================================
-   7. FORMULAIRES
+   8. FORMULAIRES
    ========================================================= */
 
 .form-group {
@@ -246,7 +271,8 @@ body {
 
     margin-bottom: 6px;
 
-    color: var(--bleu-fonce);
+    color:
+        var(--bleu-fonce);
 
     font-size: 15px;
 
@@ -260,19 +286,23 @@ body {
 
     width: 100%;
 
-    min-height: 44px;
+    min-height: 46px;
 
-    padding: 9px 12px;
+    padding:
+        9px 12px;
 
-    background: #ffffff;
+    background:
+        var(--blanc);
 
-    border: 1px solid #cbdde7;
+    border:
+        1px solid #cbdde7;
 
     border-radius: 8px;
 
     outline: none;
 
-    color: var(--gris-texte);
+    color:
+        var(--gris-texte);
 
     font-family:
         "Cairo",
@@ -286,12 +316,17 @@ body {
     line-height: 1.7;
 
     direction: rtl;
+
+    transition:
+        border-color var(--transition),
+        box-shadow var(--transition),
+        background-color var(--transition);
 }
 
 
 .form-group textarea {
 
-    min-height: 100px;
+    min-height: 105px;
 
     resize: vertical;
 }
@@ -304,36 +339,53 @@ body {
 }
 
 
+.form-group input:hover,
+.form-group textarea:hover,
+.form-group select:hover {
+
+    border-color:
+        #b5cdd9;
+}
+
+
 .form-group input:focus,
 .form-group textarea:focus,
 .form-group select:focus {
 
-    border-color: var(--bleu-principal);
+    border-color:
+        var(--bleu-principal);
+
+    background:
+        #ffffff;
 
     box-shadow:
-        0 0 0 3px rgba(47, 128, 168, 0.12);
+        0 0 0 3px
+        rgba(47, 128, 168, 0.12);
 }
 
 
 /* =========================================================
-   8. FICHIER PDF
+   9. CHAMP FICHIER
    ========================================================= */
 
 input[type="file"] {
 
     width: 100%;
 
-    min-height: 48px;
+    min-height: 50px;
 
-    padding: 8px;
+    padding: 9px;
 
-    background: #f8fcff;
+    background:
+        var(--bleu-tres-clair);
 
-    border: 1px dashed #b9d9e8;
+    border:
+        1px dashed #b9d9e8;
 
     border-radius: 8px;
 
-    color: var(--gris-texte);
+    color:
+        var(--gris-texte);
 
     font-family:
         "Cairo",
@@ -344,14 +396,30 @@ input[type="file"] {
     font-size: 14px;
 
     cursor: pointer;
+
+    transition:
+        background-color var(--transition),
+        border-color var(--transition);
 }
 
 
 input[type="file"]:hover {
 
-    background: #f1faff;
+    background:
+        #f1faff;
 
-    border-color: var(--bleu-principal);
+    border-color:
+        var(--bleu-principal);
+}
+
+
+input[type="file"]:focus {
+
+    outline:
+        3px solid
+        rgba(244, 162, 97, 0.25);
+
+    outline-offset: 2px;
 }
 
 
@@ -361,14 +429,17 @@ input[type="file"]:hover {
 
     margin-top: 5px;
 
-    color: var(--gris-secondaire);
+    color:
+        var(--gris-secondaire);
 
     font-size: 12px;
+
+    line-height: 1.7;
 }
 
 
 /* =========================================================
-   9. CHECKBOX
+   10. CHECKBOX
    ========================================================= */
 
 .checkbox-line {
@@ -379,43 +450,60 @@ input[type="file"]:hover {
 
     gap: 8px;
 
-    margin: 12px 0;
+    margin:
+        12px 0;
 
-    color: var(--gris-texte);
+    color:
+        var(--gris-texte);
 
     font-size: 14px;
 
     cursor: pointer;
+
+    user-select: none;
 }
 
 
 .checkbox-line input {
 
-    width: 17px;
+    width: 18px;
 
-    height: 17px;
+    height: 18px;
 
-    accent-color: var(--bleu-principal);
+    margin: 0;
+
+    accent-color:
+        var(--bleu-principal);
 
     cursor: pointer;
+
+    flex: 0 0 auto;
 }
 
 
 /* =========================================================
-   10. BOUTONS
+   11. BOUTONS
    ========================================================= */
 
 .primary-button,
 .secondary-button,
 .logout-button {
 
-    border: none;
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 44px;
+
+    padding:
+        8px 16px;
+
+    border:
+        1px solid transparent;
 
     border-radius: 8px;
-
-    min-height: 43px;
-
-    padding: 8px 16px;
 
     font-family:
         "Cairo",
@@ -428,78 +516,185 @@ input[type="file"]:hover {
 
     font-weight: 600;
 
+    line-height: 1.5;
+
     cursor: pointer;
 
     transition:
-        background-color 0.2s ease,
-        color 0.2s ease,
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+        background-color var(--transition),
+        color var(--transition),
+        border-color var(--transition),
+        transform var(--transition),
+        box-shadow var(--transition);
 }
 
 
-/* Bouton principal */
+/* =========================================================
+   12. BOUTON PRINCIPAL
+   ========================================================= */
 
 .primary-button {
 
-    background: var(--bleu-principal);
+    background:
+        var(--bleu-principal);
 
-    color: #ffffff;
+    color:
+        #ffffff;
 
     box-shadow:
-        0 2px 6px rgba(47, 128, 168, 0.12);
+        0 2px 6px
+        rgba(47, 128, 168, 0.12);
 }
 
 
 .primary-button:hover {
 
-    background: #246d91;
+    background:
+        #246d91;
 
-    transform: translateY(-1px);
+    transform:
+        translateY(-1px);
 
     box-shadow:
-        0 4px 10px rgba(47, 128, 168, 0.16);
+        0 4px 10px
+        rgba(47, 128, 168, 0.16);
 }
 
 
-/* Bouton secondaire */
+.primary-button:active {
+
+    transform:
+        translateY(0);
+}
+
+
+/* =========================================================
+   13. BOUTON SECONDAIRE
+   ========================================================= */
 
 .secondary-button {
 
-    background: var(--bleu-clair);
+    background:
+        var(--bleu-clair);
 
-    color: var(--bleu-fonce);
+    color:
+        var(--bleu-fonce);
+
+    border-color:
+        #cbe3ef;
 }
 
 
 .secondary-button:hover {
 
-    background: #c7e8f8;
+    background:
+        #c7e8f8;
 
-    transform: translateY(-1px);
+    transform:
+        translateY(-1px);
 }
 
 
-/* Déconnexion */
+/* =========================================================
+   14. DÉCONNEXION
+   ========================================================= */
 
 .logout-button {
 
-    background: var(--orange);
+    background:
+        var(--orange);
 
-    color: #ffffff;
+    color:
+        #ffffff;
+
+    border-color:
+        var(--orange);
 }
 
 
 .logout-button:hover {
 
-    background: #e8904e;
+    background:
+        #e8904e;
 
-    transform: translateY(-1px);
+    border-color:
+        #e8904e;
+
+    transform:
+        translateY(-1px);
 }
 
 
 /* =========================================================
-   11. FORM BUTTONS
+   15. BOUTON SITE PRINCIPAL
+   ========================================================= */
+
+.site-button {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 44px;
+
+    padding:
+        8px 16px;
+
+    border:
+        1px solid #c9e0eb;
+
+    border-radius: 8px;
+
+    background:
+        var(--bleu-clair);
+
+    color:
+        var(--bleu-fonce);
+
+    text-decoration: none;
+
+    font-family:
+        "Cairo",
+        "Noto Sans Arabic",
+        "Tahoma",
+        "Arial",
+        sans-serif;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    line-height: 1.5;
+
+    transition:
+        background-color var(--transition),
+        border-color var(--transition),
+        transform var(--transition),
+        box-shadow var(--transition);
+}
+
+
+.site-button:hover {
+
+    background:
+        #c7e8f8;
+
+    border-color:
+        #b6d6e4;
+
+    transform:
+        translateY(-1px);
+
+    box-shadow:
+        0 3px 8px
+        rgba(23, 74, 110, 0.08);
+}
+
+
+/* =========================================================
+   16. BOUTONS DE FORMULAIRE
    ========================================================= */
 
 .form-buttons {
@@ -507,6 +702,8 @@ input[type="file"]:hover {
     display: flex;
 
     align-items: center;
+
+    flex-wrap: wrap;
 
     gap: 9px;
 
@@ -530,7 +727,7 @@ input[type="file"]:hover {
 }
 
 
-/* Pour le bouton de connexion */
+/* Connexion */
 
 #loginForm .primary-button {
 
@@ -549,27 +746,31 @@ input[type="file"]:hover {
 
 
 /* =========================================================
-   12. MESSAGE DE CONNEXION
+   17. MESSAGE
    ========================================================= */
 
 .message {
 
     min-height: 26px;
 
-    margin: 12px 0 0;
+    margin:
+        12px 0 0;
 
-    color: #b15b1f;
+    color:
+        #b15b1f;
 
     text-align: center;
 
     font-size: 14px;
 
     font-weight: 500;
+
+    line-height: 1.7;
 }
 
 
 /* =========================================================
-   13. TABLEAU DE BORD
+   18. TABLEAU DE BORD
    ========================================================= */
 
 .dashboard {
@@ -590,7 +791,8 @@ input[type="file"]:hover {
 
     margin-bottom: 20px;
 
-    padding: 18px 20px;
+    padding:
+        18px 20px;
 
     background:
         linear-gradient(
@@ -599,11 +801,53 @@ input[type="file"]:hover {
             #ffffff
         );
 
-    border: 1px solid var(--gris-bordure);
+    border:
+        1px solid var(--gris-bordure);
 
-    border-radius: var(--rayon);
+    border-radius:
+        var(--rayon);
 
-    box-shadow: var(--ombre-legere);
+    box-shadow:
+        var(--ombre-legere);
+}
+
+
+.dashboard-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    min-width: 0;
+}
+
+
+.dashboard-icon {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 46px;
+
+    height: 46px;
+
+    flex:
+        0 0 46px;
+
+    background:
+        var(--orange-tres-clair);
+
+    border:
+        1px solid #f4d4ae;
+
+    border-radius: 10px;
+
+    font-size: 22px;
 }
 
 
@@ -611,34 +855,84 @@ input[type="file"]:hover {
 
     margin: 0;
 
-    color: var(--bleu-fonce);
+    color:
+        var(--bleu-fonce);
 
     font-size: 23px;
 
     font-weight: 700;
+
+    line-height: 1.6;
 }
 
 
 .dashboard-header p {
 
-    margin: 2px 0 0;
+    margin:
+        2px 0 0;
 
-    color: var(--gris-secondaire);
+    color:
+        var(--gris-secondaire);
 
     font-size: 14px;
+
+    overflow-wrap: anywhere;
+}
+
+
+.dashboard-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    flex-shrink: 0;
 }
 
 
 /* =========================================================
-   14. LISTES ANNONCES / DOCUMENTS
+   19. LISTES
    ========================================================= */
+
+.list-header {
+
+    margin-top: 25px;
+
+    padding-bottom: 8px;
+
+    border-bottom:
+        1px solid
+        var(--gris-bordure);
+}
+
+
+.list-header h3 {
+
+    margin: 0;
+
+    color:
+        var(--bleu-fonce);
+
+    font-size: 17px;
+
+    font-weight: 700;
+}
+
 
 #annoncesAdmin,
 #documentsAdmin {
 
-    margin-top: 25px;
+    margin-top: 16px;
 }
 
+
+/* =========================================================
+   20. ÉLÉMENT ADMIN
+   ========================================================= */
 
 .admin-item {
 
@@ -646,34 +940,44 @@ input[type="file"]:hover {
 
     padding: 16px;
 
-    background: #f8fcff;
+    background:
+        #f8fcff;
 
-    border: 1px solid var(--gris-bordure);
+    border:
+        1px solid
+        var(--gris-bordure);
 
-    border-right: 4px solid var(--orange);
+    border-right:
+        4px solid
+        var(--orange);
 
     border-radius: 9px;
 
     transition:
-        background-color 0.2s ease,
-        box-shadow 0.2s ease;
+        background-color var(--transition),
+        box-shadow var(--transition),
+        transform var(--transition);
 }
 
 
 .admin-item:hover {
 
-    background: #ffffff;
+    background:
+        #ffffff;
 
     box-shadow:
-        0 4px 12px rgba(23, 74, 110, 0.08);
+        0 4px 12px
+        rgba(23, 74, 110, 0.08);
 }
 
 
 .admin-item h3 {
 
-    margin: 0 0 5px;
+    margin:
+        0 0 5px;
 
-    color: var(--bleu-fonce);
+    color:
+        var(--bleu-fonce);
 
     font-size: 17px;
 
@@ -685,26 +989,35 @@ input[type="file"]:hover {
 
 .admin-item p {
 
-    margin: 0 0 7px;
+    margin:
+        0 0 7px;
 
-    color: var(--gris-secondaire);
+    color:
+        var(--gris-secondaire);
 
     font-size: 14px;
 
     line-height: 1.8;
+
+    overflow-wrap: anywhere;
 }
 
 
 .admin-item small {
 
-    color: #7c8d96;
+    display: block;
+
+    color:
+        #7c8d96;
 
     font-size: 12px;
+
+    line-height: 1.8;
 }
 
 
 /* =========================================================
-   15. BOUTONS DES ÉLÉMENTS
+   21. BOUTONS DES ITEMS
    ========================================================= */
 
 .item-buttons {
@@ -730,17 +1043,21 @@ input[type="file"]:hover {
 
     justify-content: center;
 
-    min-height: 35px;
+    min-height: 37px;
 
-    padding: 5px 11px;
+    padding:
+        5px 11px;
 
-    border: 1px solid #d5e7f0;
+    border:
+        1px solid #d5e7f0;
 
     border-radius: 7px;
 
-    background: #eef7fc;
+    background:
+        #eef7fc;
 
-    color: var(--bleu-fonce);
+    color:
+        var(--bleu-fonce);
 
     text-decoration: none;
 
@@ -754,25 +1071,60 @@ input[type="file"]:hover {
 
     font-weight: 600;
 
+    line-height: 1.5;
+
     cursor: pointer;
 
     transition:
-        background-color 0.2s ease,
-        transform 0.2s ease;
+        background-color var(--transition),
+        border-color var(--transition),
+        transform var(--transition);
 }
 
 
 .item-buttons button:hover,
 .item-buttons a:hover {
 
-    background: #dceff9;
+    background:
+        #dceff9;
 
-    transform: translateY(-1px);
+    border-color:
+        #c6e0eb;
+
+    transform:
+        translateY(-1px);
 }
 
 
 /* =========================================================
-   16. ÉTAT MASQUÉ
+   22. DOCUMENTS DYNAMIQUES
+   ========================================================= */
+
+.dynamic-document-slot {
+
+    margin-top: 10px;
+}
+
+
+.public-document-item {
+
+    margin-top: 8px;
+
+    padding: 10px;
+
+    background:
+        #f7fbfe;
+
+    border:
+        1px solid
+        #e2edf3;
+
+    border-radius: 8px;
+}
+
+
+/* =========================================================
+   23. ÉTAT MASQUÉ
    ========================================================= */
 
 .hidden {
@@ -782,14 +1134,30 @@ input[type="file"]:hover {
 
 
 /* =========================================================
-   17. PIED DE PAGE
+   24. MESSAGES DE CHARGEMENT
+   ========================================================= */
+
+.loading-message {
+
+    color:
+        var(--gris-secondaire);
+
+    font-size: 14px;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   25. PIED DE PAGE
    ========================================================= */
 
 .admin-footer {
 
     margin-top: 20px;
 
-    padding: 23px 15px;
+    padding:
+        23px 15px;
 
     background:
         linear-gradient(
@@ -798,15 +1166,27 @@ input[type="file"]:hover {
             #205f84
         );
 
-    color: #ffffff;
+    color:
+        #ffffff;
 
     text-align: center;
 }
 
 
+.footer-container {
+
+    width: 100%;
+
+    max-width: 1180px;
+
+    margin: 0 auto;
+}
+
+
 .admin-footer p {
 
-    margin: 3px 0;
+    margin:
+        3px 0;
 
     font-size: 13px;
 
@@ -815,7 +1195,7 @@ input[type="file"]:hover {
 
 
 /* =========================================================
-   18. ACCESSIBILITÉ
+   26. ACCESSIBILITÉ
    ========================================================= */
 
 button:focus-visible,
@@ -824,27 +1204,31 @@ textarea:focus-visible,
 select:focus-visible,
 a:focus-visible {
 
-    outline: 3px solid var(--orange);
+    outline:
+        3px solid
+        var(--orange);
 
     outline-offset: 2px;
 }
 
 
 /* =========================================================
-   19. TABLETTE
+   27. TABLETTES
    ========================================================= */
 
 @media (max-width: 900px) {
 
     .admin-container {
 
-        padding: 35px 15px;
+        padding:
+            32px 15px;
     }
 
 
     .admin-header {
 
-        padding: 20px 15px;
+        padding:
+            20px 15px;
     }
 
 
@@ -856,7 +1240,10 @@ a:focus-visible {
 
     .dashboard-header {
 
-        padding: 17px;
+        gap: 15px;
+
+        padding:
+            17px;
     }
 
 
@@ -864,18 +1251,49 @@ a:focus-visible {
 
         font-size: 21px;
     }
+
+
+    .dashboard-title {
+
+        gap: 10px;
+    }
+
+
+    .dashboard-actions {
+
+        gap: 7px;
+    }
+
+
+    .site-button,
+    .logout-button {
+
+        min-height: 43px;
+    }
+
 }
 
 
 /* =========================================================
-   20. MOBILE
+   28. MOBILE
    ========================================================= */
 
 @media (max-width: 600px) {
 
+    body {
+
+        font-size: 15px;
+    }
+
+
+    /* -----------------------------------------------------
+       EN-TÊTE
+    ----------------------------------------------------- */
+
     .admin-header {
 
-        padding: 17px 10px;
+        padding:
+            15px 10px;
     }
 
 
@@ -889,27 +1307,67 @@ a:focus-visible {
 
     .admin-header p {
 
-        font-size: 13px;
+        margin-top: 2px;
+
+        font-size: 12px;
+
+        line-height: 1.6;
     }
 
+
+    /* -----------------------------------------------------
+       CONTENEUR
+    ----------------------------------------------------- */
 
     .admin-container {
 
-        padding: 25px 10px;
+        padding:
+            20px 10px;
     }
 
 
+    /* -----------------------------------------------------
+       CARTES
+    ----------------------------------------------------- */
+
     .admin-card {
 
-        padding: 18px;
+        padding:
+            17px;
 
-        margin-bottom: 16px;
+        margin-bottom:
+            14px;
+
+        border-radius:
+            10px;
     }
 
 
     .admin-card h2 {
 
-        font-size: 19px;
+        font-size:
+            19px;
+
+        line-height:
+            1.7;
+    }
+
+
+    /* -----------------------------------------------------
+       FORMULAIRES
+    ----------------------------------------------------- */
+
+    .form-group {
+
+        margin-bottom:
+            14px;
+    }
+
+
+    .form-group label {
+
+        font-size:
+            14px;
     }
 
 
@@ -917,105 +1375,392 @@ a:focus-visible {
     .form-group textarea,
     .form-group select {
 
-        font-size: 14px;
+        min-height:
+            46px;
+
+        padding:
+            9px 11px;
+
+        font-size:
+            14px;
     }
 
 
-    .dashboard-header {
+    .form-group textarea {
 
-        flex-direction: column;
-
-        align-items: stretch;
-
-        text-align: center;
-
-        gap: 10px;
+        min-height:
+            110px;
     }
 
 
-    .dashboard-header h2 {
+    input[type="file"] {
 
-        font-size: 20px;
+        min-height:
+            52px;
+
+        font-size:
+            13px;
     }
 
 
-    .logout-button {
+    .file-help {
 
-        width: 100%;
+        font-size:
+            11px;
     }
 
+
+    /* -----------------------------------------------------
+       CHECKBOX
+    ----------------------------------------------------- */
+
+    .checkbox-line {
+
+        align-items:
+            flex-start;
+
+        gap:
+            8px;
+
+        font-size:
+            13px;
+    }
+
+
+    .checkbox-line input {
+
+        margin-top:
+            4px;
+    }
+
+
+    /* -----------------------------------------------------
+       BOUTONS
+    ----------------------------------------------------- */
 
     .form-buttons {
 
-        flex-direction: column;
+        flex-direction:
+            column;
 
-        align-items: stretch;
+        align-items:
+            stretch;
+
+        gap:
+            8px;
     }
 
 
     .form-buttons .primary-button,
     .form-buttons .secondary-button {
 
-        width: 100%;
+        width:
+            100%;
 
-        min-width: 0;
+        min-width:
+            0;
+
+        min-height:
+            46px;
+    }
+
+
+    #loginForm .primary-button,
+    #loginForm .secondary-button {
+
+        min-height:
+            46px;
+    }
+
+
+    /* -----------------------------------------------------
+       DASHBOARD
+    ----------------------------------------------------- */
+
+    .dashboard-header {
+
+        flex-direction:
+            column;
+
+        align-items:
+            stretch;
+
+        text-align:
+            center;
+
+        gap:
+            12px;
+
+        padding:
+            15px;
+    }
+
+
+    .dashboard-title {
+
+        justify-content:
+            center;
+
+        text-align:
+            center;
+    }
+
+
+    .dashboard-icon {
+
+        width:
+            42px;
+
+        height:
+            42px;
+
+        flex-basis:
+            42px;
+
+        font-size:
+            20px;
+    }
+
+
+    .dashboard-header h2 {
+
+        font-size:
+            19px;
+    }
+
+
+    .dashboard-header p {
+
+        font-size:
+            12px;
+    }
+
+
+    .dashboard-actions {
+
+        display:
+            grid;
+
+        grid-template-columns:
+            1fr 1fr;
+
+        width:
+            100%;
+
+        gap:
+            7px;
+    }
+
+
+    .dashboard-actions .site-button,
+    .dashboard-actions .logout-button {
+
+        width:
+            100%;
+
+        min-height:
+            44px;
+    }
+
+
+    /* -----------------------------------------------------
+       LISTES
+    ----------------------------------------------------- */
+
+    .list-header {
+
+        margin-top:
+            20px;
+    }
+
+
+    .list-header h3 {
+
+        font-size:
+            16px;
     }
 
 
     .admin-item {
 
-        padding: 14px;
+        padding:
+            13px;
+
+        border-right-width:
+            3px;
     }
 
 
+    .admin-item h3 {
+
+        font-size:
+            16px;
+    }
+
+
+    .admin-item p {
+
+        font-size:
+            13px;
+    }
+
+
+    .admin-item small {
+
+        font-size:
+            11px;
+    }
+
+
+    /* -----------------------------------------------------
+       BOUTONS DES ITEMS
+    ----------------------------------------------------- */
+
     .item-buttons {
 
-        flex-direction: column;
+        flex-direction:
+            column;
 
-        align-items: stretch;
+        align-items:
+            stretch;
+
+        gap:
+            7px;
     }
 
 
     .item-buttons button,
     .item-buttons a {
 
-        width: 100%;
+        width:
+            100%;
+
+        min-height:
+            43px;
+
+        font-size:
+            13px;
     }
+
+
+    /* -----------------------------------------------------
+       FOOTER
+    ----------------------------------------------------- */
+
+    .admin-footer {
+
+        padding:
+            19px 12px;
+    }
+
+
+    .admin-footer p {
+
+        font-size:
+            12px;
+    }
+
 }
 
 
 /* =========================================================
-   21. PETITS TÉLÉPHONES
+   29. PETITS TÉLÉPHONES
    ========================================================= */
 
 @media (max-width: 400px) {
 
-    body {
+    .admin-header h1 {
 
-        font-size: 15px;
+        font-size:
+            19px;
     }
 
 
-    .admin-header h1 {
+    .admin-container {
 
-        font-size: 19px;
+        padding:
+            16px 8px;
     }
 
 
     .admin-card {
 
-        padding: 15px;
+        padding:
+            14px;
     }
 
 
     .admin-card h2 {
 
-        font-size: 18px;
+        font-size:
+            18px;
     }
+
+
+    .dashboard-actions {
+
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+
+        font-size:
+            14px;
+    }
+
+
+    .primary-button,
+    .secondary-button,
+    .logout-button,
+    .site-button {
+
+        font-size:
+            13px;
+    }
+
+}
+
+
+/* =========================================================
+   30. TRÈS PETITS ÉCRANS
+   ========================================================= */
+
+@media (max-width: 340px) {
+
+    .admin-container {
+
+        padding:
+            12px 6px;
+    }
+
+
+    .admin-card {
+
+        padding:
+            12px;
+    }
+
+
+    .admin-header h1 {
+
+        font-size:
+            18px;
+    }
+
+
+    .admin-header p {
+
+        font-size:
+            11px;
+    }
+
 }
 
 
 /* =========================================================
    FIN
    ========================================================= */
-
