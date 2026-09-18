@@ -1,31 +1,32 @@
+
 /* =========================================================
    FIREBASE - ECOLE MILOUD GAFSA
-   Authentication + Firestore
+   Authentication + Firestore + Storage
    ========================================================= */
 
 
-/* =========================================================
-   FIREBASE APP
-   ========================================================= */
+/* Firebase App */
 
 import { initializeApp }
     from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 
 
-/* =========================================================
-   FIREBASE AUTHENTICATION
-   ========================================================= */
+/* Authentication */
 
 import { getAuth }
     from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
 
-/* =========================================================
-   FIRESTORE
-   ========================================================= */
+/* Firestore */
 
 import { getFirestore }
     from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+
+/* Storage */
+
+import { getStorage }
+    from "https://www.gstatic.com/firebasejs/12.19.0/firebase-storage.js";
 
 
 /* =========================================================
@@ -49,21 +50,19 @@ const firebaseConfig = {
 
 
 /* =========================================================
-   INITIALISATION DE FIREBASE
+   INITIALISATION
    ========================================================= */
 
 const app = initializeApp(firebaseConfig);
 
 
 /* =========================================================
-   EXPORT AUTHENTIFICATION
+   SERVICES FIREBASE
    ========================================================= */
 
 export const auth = getAuth(app);
 
-
-/* =========================================================
-   EXPORT FIRESTORE
-   ========================================================= */
-
 export const db = getFirestore(app);
+
+export const storage = getStorage(app);
+
