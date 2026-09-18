@@ -1,3 +1,4 @@
+```js
 /* =========================================================
    ECOLE MILOUD GAFSA
    AFFICHAGE PUBLIC DES ANNONCES
@@ -33,6 +34,39 @@ if (!annoncesContainer) {
 
 
     /* =====================================================
+       FONCTION : DÉTECTER UNE ANNONCE NOUVELLE
+       🆕 جديد pendant 3 jours
+    ====================================================== */
+
+    function annonceEstNouvelle(annonce) {
+
+        if (
+            !annonce.createdAt ||
+            typeof annonce.createdAt.toMillis !== "function"
+        ) {
+            return false;
+        }
+
+        const dateCreation =
+            annonce.createdAt.toMillis();
+
+        const maintenant =
+            Date.now();
+
+        const troisJours =
+            3 * 24 * 60 * 60 * 1000;
+
+        const difference =
+            maintenant - dateCreation;
+
+        return (
+            difference >= 0 &&
+            difference <= troisJours
+        );
+    }
+
+
+    /* =====================================================
        REQUÊTE : UNIQUEMENT LES ANNONCES PUBLIÉES
     ====================================================== */
 
@@ -62,7 +96,9 @@ if (!annoncesContainer) {
             annoncesContainer.innerHTML = "";
 
 
-            /* Aucune annonce */
+            /* =================================================
+               AUCUNE ANNONCE
+            ================================================== */
 
             if (snapshot.empty) {
 
@@ -111,6 +147,7 @@ if (!annoncesContainer) {
 
             /* =================================================
                TRI PAR DATE
+               Plus récente → plus ancienne
             ================================================== */
 
             annonces.sort(
@@ -138,6 +175,10 @@ if (!annoncesContainer) {
             annonces.forEach(
                 annonce => {
 
+                    /* -----------------------------------------
+                       CARTE
+                    ----------------------------------------- */
+
                     const article =
                         document.createElement(
                             "article"
@@ -146,6 +187,10 @@ if (!annoncesContainer) {
                     article.className =
                         "announcement-card";
 
+
+                    /* -----------------------------------------
+                       TITRE
+                    ----------------------------------------- */
 
                     const titre =
                         document.createElement(
@@ -157,6 +202,37 @@ if (!annoncesContainer) {
                         "إعلان";
 
 
+                    /* -----------------------------------------
+                       BADGE NOUVELLE ANNONCE
+                    ----------------------------------------- */
+
+                    if (
+                        annonceEstNouvelle(
+                            annonce
+                        )
+                    ) {
+
+                        const badge =
+                            document.createElement(
+                                "span"
+                            );
+
+                        badge.className =
+                            "badge-nouveau";
+
+                        badge.textContent =
+                            "🆕 جديد";
+
+                        titre.appendChild(
+                            badge
+                        );
+                    }
+
+
+                    /* -----------------------------------------
+                       CONTENU
+                    ----------------------------------------- */
+
                     const contenu =
                         document.createElement(
                             "p"
@@ -167,6 +243,10 @@ if (!annoncesContainer) {
                         "";
 
 
+                    /* -----------------------------------------
+                       AJOUT DU TITRE ET DU CONTENU
+                    ----------------------------------------- */
+
                     article.appendChild(
                         titre
                     );
@@ -176,7 +256,9 @@ if (!annoncesContainer) {
                     );
 
 
-                    /* Date facultative */
+                    /* =================================================
+                       DATE FACULTATIVE
+                    ================================================== */
 
                     if (
                         annonce.createdAt &&
@@ -210,6 +292,10 @@ if (!annoncesContainer) {
                     }
 
 
+                    /* -----------------------------------------
+                       AJOUT DE LA CARTE
+                    ----------------------------------------- */
+
                     annoncesContainer.appendChild(
                         article
                     );
@@ -219,6 +305,10 @@ if (!annoncesContainer) {
 
         },
 
+
+        /* =====================================================
+           GESTION DES ERREURS
+        ====================================================== */
 
         (error) => {
 
@@ -246,3 +336,10 @@ if (!annoncesContainer) {
         }
     );
 }
+```
+
+**Important :** ce code ne nécessite aucune modification de votre structure Firestore. Il utilise simplement `createdAt`, qui existe déjà dans votre logique de tri.
+
+Votre `style.css` doit déjà contenir le bloc `.badge-nouveau` que nous avons ajouté précédemment.
+
+Si une annonce a été créée il y a **moins ou exactement 72 heures**, elle affiche **🆕 جديد**. Après 72 heures, le badge disparaît automatiquement au prochain rechargement/rafraîchissement des données.
