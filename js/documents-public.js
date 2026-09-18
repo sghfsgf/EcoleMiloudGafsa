@@ -1,4 +1,4 @@
-```javascript
+
 /* =========================================================
    ECOLE MILOUD GAFSA
    DOCUMENTS-PUBLIC.JS
