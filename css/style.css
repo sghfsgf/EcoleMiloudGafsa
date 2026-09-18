@@ -1357,3 +1357,91 @@ input:focus-visible {
 /* =========================================================
    FIN
    ========================================================= */
+/* =========================================================
+   RESULTATS DE RECHERCHE
+   ========================================================= */
+
+#searchResults {
+
+    margin-top: 15px;
+
+    text-align: right;
+}
+
+
+.search-results-title {
+
+    margin-bottom: 10px;
+
+    color: #174a6e;
+
+    font-size: 16px;
+
+    font-weight: 700;
+}
+
+
+.search-result-item {
+
+    margin-bottom: 9px;
+
+    padding: 12px 15px;
+
+    background: #f8fcff;
+
+    border: 1px solid #dcecf5;
+
+    border-right: 4px solid #f4a261;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.search-result-item:hover {
+
+    background: #ffffff;
+
+    transform: translateX(-2px);
+}
+
+
+.search-result-item h3 {
+
+    margin: 0 0 4px;
+
+    color: #174a6e;
+
+    font-size: 16px;
+}
+
+
+.search-result-item p {
+
+    margin: 0;
+
+    color: #687983;
+
+    font-size: 14px;
+}
+
+
+.search-no-result {
+
+    padding: 13px;
+
+    background: #fff6eb;
+
+    border-radius: 8px;
+
+    color: #8b5a2b;
+
+    text-align: center;
+
+    font-size: 14px;
+}
