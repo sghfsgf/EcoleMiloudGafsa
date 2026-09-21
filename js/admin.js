@@ -1590,6 +1590,28 @@ if (galerieForm) {
             event.preventDefault();
 
 
+            /* =========================================
+               RÉCUPÉRER LE TITRE ET LA DESCRIPTION
+            ========================================= */
+
+            const titre =
+                document.getElementById(
+                    "galerieTitre"
+                )?.value.trim() ||
+                "معرض الصور";
+
+
+            const description =
+                document.getElementById(
+                    "galerieDescription"
+                )?.value.trim() ||
+                "";
+
+
+            /* =========================================
+               VÉRIFIER LES FICHIERS
+            ========================================= */
+
             if (
                 !galerieFiles ||
                 !galerieFiles.files ||
@@ -1610,6 +1632,10 @@ if (galerieForm) {
                 );
 
 
+            /* =========================================
+               MESSAGE
+            ========================================= */
+
             if (galerieMessage) {
 
                 galerieMessage.textContent =
@@ -1618,6 +1644,10 @@ if (galerieForm) {
 
 
             try {
+
+                /* =====================================
+                   TRAITER CHAQUE PHOTO
+                ===================================== */
 
                 for (
                     const fichier of fichiers
@@ -1629,6 +1659,10 @@ if (galerieForm) {
                     );
 
 
+                    /* ================================
+                       1. ENVOYER VERS STORAGE
+                    ================================= */
+
                     const resultat =
                         await envoyerPhotoVersStorage(
                             fichier
@@ -1636,16 +1670,68 @@ if (galerieForm) {
 
 
                     console.log(
-                        "✅ تم رفع الصورة :",
+                        "✅ تم رفع الصورة إلى Storage :",
                         resultat
+                    );
+
+
+                    /* ================================
+                       2. ENREGISTRER DANS FIRESTORE
+                    ================================= */
+
+                    const galerieRef =
+                        await addDoc(
+                            collection(
+                                db,
+                                "galerie"
+                            ),
+                            {
+
+                                titre:
+                                    titre,
+
+                                description:
+                                    description,
+
+                                url:
+                                    resultat.url,
+
+                                chemin:
+                                    resultat.chemin,
+
+                                nomFichier:
+                                    resultat.nomFichier,
+
+                                typeFichier:
+                                    resultat.typeFichier,
+
+                                tailleFichier:
+                                    resultat.tailleFichier,
+
+                                createdAt:
+                                    serverTimestamp(),
+
+                                actif:
+                                    true
+                            }
+                        );
+
+
+                    console.log(
+                        "🖼️ Photo enregistrée dans Firestore :",
+                        galerieRef.id
                     );
                 }
 
 
+                /* =====================================
+                   SUCCÈS
+                ===================================== */
+
                 if (galerieMessage) {
 
                     galerieMessage.textContent =
-                        "✅ تم رفع الصور بنجاح.";
+                        "✅ تم رفع الصور وحفظها بنجاح.";
                 }
 
 
@@ -1655,7 +1741,7 @@ if (galerieForm) {
             } catch (error) {
 
                 console.error(
-                    "❌ خطأ أثناء رفع الصور :",
+                    "❌ خطأ أثناء إضافة الصور :",
                     error
                 );
 
@@ -1663,7 +1749,7 @@ if (galerieForm) {
                 if (galerieMessage) {
 
                     galerieMessage.textContent =
-                        "❌ تعذر رفع الصور.";
+                        "❌ تعذر رفع الصور أو حفظها.";
                 }
 
             }
@@ -1671,7 +1757,6 @@ if (galerieForm) {
         }
     );
 }
-
 
 /* =========================================================
    ====================== DOCUMENTS ========================
