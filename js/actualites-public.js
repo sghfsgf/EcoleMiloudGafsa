@@ -1,6 +1,8 @@
 // =====================================================
 // ACTUALITES-PUBLIC.JS
 // Affichage public des actualités depuis Firestore
+// Validité : 10 jours
+// Badge "جديد" : 3 premiers jours
 // =====================================================
 
 import {
@@ -14,6 +16,15 @@ import { db } from "../firebase-config.js";
 
 
 // =====================================================
+// PARAMÈTRES
+// =====================================================
+
+const DUREE_VALIDITE_JOURS = 10;
+
+const DUREE_NOUVEAUTE_JOURS = 3;
+
+
+// =====================================================
 // CONTENEUR HTML
 // =====================================================
 
@@ -22,6 +33,7 @@ const actualitesContainer =
 
 
 // Vérification de sécurité
+
 if (!actualitesContainer) {
 
     console.error(
@@ -55,7 +67,7 @@ if (!actualitesContainer) {
         (snapshot) => {
 
             console.log(
-                "📰 Nombre d'actualités :",
+                "📰 Nombre d'actualités Firestore :",
                 snapshot.size
             );
 
@@ -65,18 +77,9 @@ if (!actualitesContainer) {
             actualitesContainer.innerHTML = "";
 
 
-            // Aucune actualité
+            // Compteur des actualités encore valides
 
-            if (snapshot.empty) {
-
-                actualitesContainer.innerHTML = `
-                    <p class="empty-message">
-                        لا توجد مستجدات حاليًا.
-                    </p>
-                `;
-
-                return;
-            }
+            let nombreActualitesValides = 0;
 
 
             // =================================================
@@ -96,7 +99,89 @@ if (!actualitesContainer) {
                 );
 
 
-                // Création de la carte
+                // =================================================
+                // 1. VÉRIFIER SI L'ACTUALITÉ EST ACTIVE
+                // =================================================
+
+                if (actualite.actif !== true) {
+
+                    console.log(
+                        "⏸️ Actualité inactive :",
+                        docSnapshot.id
+                    );
+
+                    return;
+                }
+
+
+                // =================================================
+                // 2. VÉRIFIER createdAt
+                // =================================================
+
+                if (!actualite.createdAt) {
+
+                    console.warn(
+                        "⚠️ createdAt absent :",
+                        docSnapshot.id
+                    );
+
+                    return;
+                }
+
+
+                // =================================================
+                // 3. CALCULER L'ÂGE DE L'ACTUALITÉ
+                // =================================================
+
+                const dateCreation =
+                    actualite.createdAt.toDate();
+
+                const maintenant =
+                    new Date();
+
+                const ageMs =
+                    maintenant.getTime() -
+                    dateCreation.getTime();
+
+
+                const ageJours =
+                    ageMs /
+                    (1000 * 60 * 60 * 24);
+
+
+                console.log(
+                    "📅 Âge de l'actualité :",
+                    docSnapshot.id,
+                    ageJours.toFixed(2),
+                    "jours"
+                );
+
+
+                // =================================================
+                // 4. EXPIRATION APRÈS 10 JOURS
+                // =================================================
+
+                if (ageJours >= DUREE_VALIDITE_JOURS) {
+
+                    console.log(
+                        "⌛ Actualité expirée :",
+                        docSnapshot.id
+                    );
+
+                    return;
+                }
+
+
+                // =================================================
+                // 5. ACTUALITÉ VALIDE
+                // =================================================
+
+                nombreActualitesValides++;
+
+
+                // =================================================
+                // 6. CRÉATION DE LA CARTE
+                // =================================================
 
                 const card =
                     document.createElement("article");
@@ -105,34 +190,75 @@ if (!actualitesContainer) {
                     "announcement-card";
 
 
-                // Titre
+                // =================================================
+                // 7. BADGE "جديد"
+                // Pendant les 3 premiers jours
+                // =================================================
+
+                if (ageJours < DUREE_NOUVEAUTE_JOURS) {
+
+                    const badge =
+                        document.createElement("span");
+
+                    badge.className =
+                        "actualite-badge-nouveau";
+
+                    badge.textContent =
+                        "جديد";
+
+                    card.appendChild(badge);
+                }
+
+
+                // =================================================
+                // 8. TITRE
+                // =================================================
 
                 const title =
                     document.createElement("h3");
 
                 title.textContent =
-                    actualite.titre || "مستجد جديد";
+                    actualite.titre ||
+                    "مستجد جديد";
 
 
-                // Contenu
+                // =================================================
+                // 9. CONTENU
+                // =================================================
 
                 const content =
                     document.createElement("p");
 
                 content.textContent =
-                    actualite.description || "";
+                    actualite.description ||
+                    "";
 
 
-                // Assemblage
+                // =================================================
+                // 10. ASSEMBLAGE
+                // =================================================
 
                 card.appendChild(title);
 
                 card.appendChild(content);
 
-
                 actualitesContainer.appendChild(card);
 
             });
+
+
+            // =================================================
+            // 11. AUCUNE ACTUALITÉ VALIDE
+            // =================================================
+
+            if (nombreActualitesValides === 0) {
+
+                actualitesContainer.innerHTML = `
+                    <p class="empty-message">
+                        لا توجد مستجدات حاليًا.
+                    </p>
+                `;
+            }
 
         },
 
@@ -154,5 +280,3 @@ if (!actualitesContainer) {
     );
 
 }
-
-
