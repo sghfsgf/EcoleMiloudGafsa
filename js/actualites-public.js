@@ -8,6 +8,7 @@
 import {
     collection,
     query,
+    where,
     orderBy,
     onSnapshot
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
@@ -51,10 +52,11 @@ if (!actualitesContainer) {
         collection(db, "actualites");
 
     const actualitesQuery =
-        query(
-            actualitesRef,
-            orderBy("createdAt", "desc")
-        );
+    query(
+        actualitesRef,
+        where("actif", "==", true),
+        orderBy("createdAt", "desc")
+    );
 
 
     // =================================================
