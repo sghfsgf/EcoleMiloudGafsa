@@ -262,21 +262,34 @@ if (!actualitesContainer) {
 
         },
 
-        (error) => {
+       (error) => {
 
-            console.error(
-                "❌ Erreur lors du chargement des actualités :",
-                error
-            );
+    console.error(
+        "❌ Erreur lors du chargement des actualités :",
+        error
+    );
 
+    const errorBox = document.createElement("div");
+    errorBox.className = "error-message";
 
-            actualitesContainer.innerHTML = `
-                <p class="error-message">
-                    تعذر تحميل المستجدات حاليًا.
-                </p>
-            `;
+    const title = document.createElement("strong");
+    title.textContent = "تعذر تحميل المستجدات حاليًا";
 
-        }
+    const details = document.createElement("p");
+    details.style.direction = "ltr";
+    details.style.textAlign = "left";
+    details.style.marginTop = "10px";
+
+    details.textContent =
+        (error?.code || "unknown") +
+        " — " +
+        (error?.message || "Erreur inconnue");
+
+    errorBox.appendChild(title);
+    errorBox.appendChild(details);
+
+    actualitesContainer.replaceChildren(errorBox);
+}
     );
 
 }
