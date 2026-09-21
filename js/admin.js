@@ -63,7 +63,8 @@ import {
 
 import {
     db,
-    auth
+    auth,
+    storage
 } from "../firebase-config.js";
 
 
