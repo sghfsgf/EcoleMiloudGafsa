@@ -47,7 +47,16 @@ import {
     Bytes
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
+/* =========================================================
+   FIREBASE STORAGE
+   ========================================================= */
 
+import {
+    ref,
+    uploadBytes,
+    getDownloadURL,
+    deleteObject
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-storage.js";
 /* =========================================================
    FIREBASE CONFIG
    ========================================================= */
