@@ -1562,6 +1562,118 @@ async function envoyerPhotoVersStorage(
 }
 
 /* =========================================================
+   FORMULAIRE GALERIE
+========================================================= */
+
+const galerieForm =
+    document.getElementById(
+        "galerieForm"
+    );
+
+const galerieFiles =
+    document.getElementById(
+        "galerieFiles"
+    );
+
+const galerieMessage =
+    document.getElementById(
+        "galerieMessage"
+    );
+
+
+if (galerieForm) {
+
+    galerieForm.addEventListener(
+        "submit",
+        async function (event) {
+
+            event.preventDefault();
+
+
+            if (
+                !galerieFiles ||
+                !galerieFiles.files ||
+                galerieFiles.files.length === 0
+            ) {
+
+                alert(
+                    "يرجى اختيار صورة واحدة على الأقل."
+                );
+
+                return;
+            }
+
+
+            const fichiers =
+                Array.from(
+                    galerieFiles.files
+                );
+
+
+            if (galerieMessage) {
+
+                galerieMessage.textContent =
+                    "جاري رفع الصور...";
+            }
+
+
+            try {
+
+                for (
+                    const fichier of fichiers
+                ) {
+
+                    console.log(
+                        "📸 رفع الصورة :",
+                        fichier.name
+                    );
+
+
+                    const resultat =
+                        await envoyerPhotoVersStorage(
+                            fichier
+                        );
+
+
+                    console.log(
+                        "✅ تم رفع الصورة :",
+                        resultat
+                    );
+                }
+
+
+                if (galerieMessage) {
+
+                    galerieMessage.textContent =
+                        "✅ تم رفع الصور بنجاح.";
+                }
+
+
+                galerieForm.reset();
+
+
+            } catch (error) {
+
+                console.error(
+                    "❌ خطأ أثناء رفع الصور :",
+                    error
+                );
+
+
+                if (galerieMessage) {
+
+                    galerieMessage.textContent =
+                        "❌ تعذر رفع الصور.";
+                }
+
+            }
+
+        }
+    );
+}
+
+
+/* =========================================================
    ====================== DOCUMENTS ========================
    ========================================================= */
 
