@@ -2514,3 +2514,139 @@ FIN
     border-radius: 6px;
     margin-bottom: 8px;
 }
+/* =====================================================
+   VOLET مستجدات — DESIGN VISUEL
+===================================================== */
+
+/* Conteneur général des actualités */
+#actualitesContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 25px;
+}
+
+/* Carte d'une actualité */
+#actualitesContainer .announcement-card {
+    position: relative;
+    background: linear-gradient(
+        135deg,
+        #fffaf0,
+        #eef8ff
+    );
+
+    border: 1px solid #f0d9a6;
+    border-right: 6px solid #d4a017;
+    border-radius: 14px;
+
+    padding: 22px 20px;
+
+    box-shadow:
+        0 5px 15px rgba(0, 0, 0, 0.08);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+/* Effet au passage de la souris */
+#actualitesContainer .announcement-card:hover {
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 8px 22px rgba(0, 0, 0, 0.13);
+}
+
+/* Titre de l'actualité */
+#actualitesContainer .announcement-card h3 {
+    color: #245b7a;
+
+    font-size: 1.15rem;
+    font-weight: 700;
+
+    margin-top: 8px;
+    margin-bottom: 10px;
+}
+
+/* Description */
+#actualitesContainer .announcement-card p {
+    color: #4f4f4f;
+
+    font-size: 1rem;
+    line-height: 1.8;
+
+    margin: 0;
+}
+
+/* Badge جديد */
+.actualite-badge-nouveau {
+    display: inline-block;
+
+    background: #b8860b;
+    color: #ffffff;
+
+    font-size: 0.85rem;
+    font-weight: 700;
+
+    padding: 5px 12px;
+
+    border-radius: 20px;
+
+    margin-bottom: 8px;
+
+    box-shadow:
+        0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+/* Message lorsqu'il n'y a aucune actualité */
+#actualitesContainer .empty-message {
+    text-align: center;
+
+    color: #777;
+
+    background: #f8f9fa;
+
+    border-radius: 12px;
+
+    padding: 20px;
+}
+
+/* Message d'erreur */
+#actualitesContainer .error-message {
+    text-align: center;
+
+    color: #a94442;
+
+    background: #fff0f0;
+
+    border: 1px solid #f1c1c1;
+
+    border-radius: 12px;
+
+    padding: 20px;
+}
+
+/* =====================================================
+   ADAPTATION MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+    #actualitesContainer {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    #actualitesContainer .announcement-card {
+        padding: 18px 16px;
+        border-right-width: 5px;
+    }
+
+    #actualitesContainer .announcement-card h3 {
+        font-size: 1.05rem;
+    }
+
+    #actualitesContainer .announcement-card p {
+        font-size: 0.95rem;
+    }
+}
