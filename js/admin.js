@@ -1,4 +1,3 @@
-
 /* =========================================================
    ECOLE MILOUD GAFSA
    ADMIN.JS
@@ -10,6 +9,7 @@
    - Annonces
    - Documents PDF / Word depuis le PC
    - Catégorie + Destination
+   - Création automatique des actualités
    ========================================================= */
 
 
@@ -796,6 +796,85 @@ if (logoutButton) {
 
 
 /* =========================================================
+   =========================================================
+   OUTIL : CRÉER UNE ACTUALITÉ
+   =========================================================
+   
+   Structure Firestore :
+
+   actualites
+      titre
+      description
+      type
+      referenceId
+      actif
+      createdAt
+
+   La durée de validité de 10 jours et le badge
+   "جديد" sont gérés dans actualites-public.js.
+   ========================================================= */
+
+async function creerActualite(
+    titreActualite,
+    descriptionActualite,
+    typeActualite,
+    referenceId
+) {
+
+    try {
+
+        const actualiteRef =
+            await addDoc(
+                collection(
+                    db,
+                    "actualites"
+                ),
+                {
+
+                    titre:
+                        titreActualite,
+
+                    description:
+                        descriptionActualite,
+
+                    type:
+                        typeActualite,
+
+                    referenceId:
+                        referenceId,
+
+                    actif:
+                        true,
+
+                    createdAt:
+                        serverTimestamp()
+                }
+            );
+
+
+        console.log(
+            "📰 Actualité créée automatiquement :",
+            actualiteRef.id
+        );
+
+
+        return actualiteRef.id;
+
+
+    } catch (error) {
+
+        console.error(
+            "❌ Erreur création actualité :",
+            error
+        );
+
+
+        throw error;
+    }
+}
+
+
+/* =========================================================
    ====================== ANNONCES =========================
    ========================================================= */
 
@@ -863,6 +942,10 @@ if (annonceForm) {
                 };
 
 
+                /* =========================================
+                   MODIFICATION ANNONCE
+                ========================================= */
+
                 if (id) {
 
                     await updateDoc(
@@ -875,24 +958,119 @@ if (annonceForm) {
                     );
 
 
+                    /*
+                       Si l'annonce est publiée,
+                       créer une nouvelle actualité
+                       signalant sa modification.
+                    */
+
+                    if (publie === true) {
+
+                        try {
+
+                            await creerActualite(
+
+                                "تعديل إعلان",
+
+                                titre,
+
+                                "annonce-modification",
+
+                                id
+
+                            );
+
+                        } catch (
+                            actualiteError
+                        ) {
+
+                            console.error(
+                                "⚠️ Annonce modifiée mais actualité non créée :",
+                                actualiteError
+                            );
+
+                            alert(
+                                "تم تعديل الإعلان، لكن تعذر إنشاء المستجد."
+                            );
+
+                            resetAnnonceForm();
+
+                            await chargerAnnonces();
+
+                            return;
+                        }
+                    }
+
+
                     alert(
                         "تم تعديل الإعلان بنجاح."
                     );
 
-                } else {
 
-                    await addDoc(
-                        collection(
-                            db,
-                            "annonces"
-                        ),
-                        {
-                            ...donnees,
+                }
 
-                            createdAt:
-                                serverTimestamp()
+                /* =========================================
+                   AJOUT ANNONCE
+                ========================================= */
+
+                else {
+
+                    const annonceRef =
+                        await addDoc(
+                            collection(
+                                db,
+                                "annonces"
+                            ),
+                            {
+                                ...donnees,
+
+                                createdAt:
+                                    serverTimestamp()
+                            }
+                        );
+
+
+                    /*
+                       Créer une actualité uniquement
+                       si l'annonce est publiée.
+                    */
+
+                    if (publie === true) {
+
+                        try {
+
+                            await creerActualite(
+
+                                "إضافة إعلان جديد",
+
+                                titre,
+
+                                "annonce",
+
+                                annonceRef.id
+
+                            );
+
+                        } catch (
+                            actualiteError
+                        ) {
+
+                            console.error(
+                                "⚠️ Annonce ajoutée mais actualité non créée :",
+                                actualiteError
+                            );
+
+                            alert(
+                                "تمت إضافة الإعلان، لكن تعذر إنشاء المستجد."
+                            );
+
+                            resetAnnonceForm();
+
+                            await chargerAnnonces();
+
+                            return;
                         }
-                    );
+                    }
 
 
                     alert(
@@ -1484,7 +1662,9 @@ if (documentForm) {
                 };
 
 
-                /* NOUVEAU FICHIER */
+                /* =========================================
+                   NOUVEAU FICHIER
+                ========================================= */
 
                 if (fichier) {
 
@@ -1556,7 +1736,9 @@ if (documentForm) {
                 }
 
 
-                /* MODIFICATION */
+                /* =========================================
+                   MODIFICATION DOCUMENT
+                ========================================= */
 
                 if (id) {
 
@@ -1570,28 +1752,119 @@ if (documentForm) {
                     );
 
 
+                    /*
+                       Si le document est publié,
+                       créer une actualité signalant
+                       sa modification.
+                    */
+
+                    if (publie === true) {
+
+                        try {
+
+                            await creerActualite(
+
+                                "تعديل وثيقة",
+
+                                titre,
+
+                                "document-modification",
+
+                                id
+
+                            );
+
+                        } catch (
+                            actualiteError
+                        ) {
+
+                            console.error(
+                                "⚠️ Document modifié mais actualité non créée :",
+                                actualiteError
+                            );
+
+                            alert(
+                                "تم تعديل الوثيقة، لكن تعذر إنشاء المستجد."
+                            );
+
+                            resetDocumentForm();
+
+                            await chargerDocuments();
+
+                            return;
+                        }
+                    }
+
+
                     alert(
                         "تم تعديل الوثيقة بنجاح."
                     );
 
+
                 }
 
-                /* AJOUT */
+                /* =========================================
+                   AJOUT DOCUMENT
+                ========================================= */
 
                 else {
 
-                    await addDoc(
-                        collection(
-                            db,
-                            "documents"
-                        ),
-                        {
-                            ...donnees,
+                    const documentRef =
+                        await addDoc(
+                            collection(
+                                db,
+                                "documents"
+                            ),
+                            {
+                                ...donnees,
 
-                            createdAt:
-                                serverTimestamp()
+                                createdAt:
+                                    serverTimestamp()
+                            }
+                        );
+
+
+                    /*
+                       Créer une actualité uniquement
+                       si le document est publié.
+                    */
+
+                    if (publie === true) {
+
+                        try {
+
+                            await creerActualite(
+
+                                "إضافة وثيقة جديدة",
+
+                                titre,
+
+                                "document",
+
+                                documentRef.id
+
+                            );
+
+                        } catch (
+                            actualiteError
+                        ) {
+
+                            console.error(
+                                "⚠️ Document ajouté mais actualité non créée :",
+                                actualiteError
+                            );
+
+                            alert(
+                                "تمت إضافة الوثيقة، لكن تعذر إنشاء المستجد."
+                            );
+
+                            resetDocumentForm();
+
+                            await chargerDocuments();
+
+                            return;
                         }
-                    );
+                    }
 
 
                     alert(
