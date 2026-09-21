@@ -13,7 +13,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 import { db } from "../firebase-config.js";
-
+alert("VERSION TEST ACTUALITES 2026");
 
 // =====================================================
 // PARAMÈTRES
