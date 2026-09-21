@@ -1,8 +1,13 @@
 // =====================================================
 // ACTUALITES-PUBLIC.JS
 // Affichage public des actualités depuis Firestore
+//
 // Validité : 10 jours
 // Badge "جديد" : 3 premiers jours
+//
+// Règle supplémentaire :
+// Si une actualité correspond à une annonce supprimée,
+// cette actualité ne doit plus être affichée.
 // =====================================================
 
 import {
@@ -10,7 +15,9 @@ import {
     query,
     where,
     orderBy,
-    onSnapshot
+    onSnapshot,
+    doc,
+    getDoc
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 import { db } from "../firebase-config.js";
@@ -32,7 +39,9 @@ const actualitesContainer =
     document.getElementById("actualitesContainer");
 
 
-// Vérification de sécurité
+// =====================================================
+// VÉRIFICATION DE SÉCURITÉ
+// =====================================================
 
 if (!actualitesContainer) {
 
@@ -51,11 +60,11 @@ if (!actualitesContainer) {
         collection(db, "actualites");
 
     const actualitesQuery =
-    query(
-        actualitesRef,
-        where("actif", "==", true),
-        orderBy("createdAt", "desc")
-    );
+        query(
+            actualitesRef,
+            where("actif", "==", true),
+            orderBy("createdAt", "desc")
+        );
 
 
     // =================================================
@@ -65,7 +74,7 @@ if (!actualitesContainer) {
     onSnapshot(
         actualitesQuery,
 
-        (snapshot) => {
+        async (snapshot) => {
 
             console.log(
                 "📰 Nombre d'actualités Firestore :",
@@ -73,7 +82,9 @@ if (!actualitesContainer) {
             );
 
 
-            // Vider le conteneur
+            // =================================================
+            // VIDER LE CONTENEUR
+            // =================================================
 
             actualitesContainer.innerHTML = "";
 
@@ -87,7 +98,7 @@ if (!actualitesContainer) {
             // PARCOURIR LES ACTUALITÉS
             // =================================================
 
-            snapshot.forEach((docSnapshot) => {
+            for (const docSnapshot of snapshot.docs) {
 
                 const actualite =
                     docSnapshot.data();
@@ -111,7 +122,7 @@ if (!actualitesContainer) {
                         docSnapshot.id
                     );
 
-                    return;
+                    continue;
                 }
 
 
@@ -126,7 +137,7 @@ if (!actualitesContainer) {
                         docSnapshot.id
                     );
 
-                    return;
+                    continue;
                 }
 
 
@@ -169,19 +180,76 @@ if (!actualitesContainer) {
                         docSnapshot.id
                     );
 
-                    return;
+                    continue;
                 }
 
 
                 // =================================================
-                // 5. ACTUALITÉ VALIDE
+                // 5. VÉRIFICATION DE L'ANNONCE
+                //
+                // Si cette actualité est liée à une annonce,
+                // on vérifie que l'annonce existe toujours.
+                // =================================================
+
+                if (
+                    actualite.type === "annonce" &&
+                    actualite.referenceId
+                ) {
+
+                    try {
+
+                        const annonceRef =
+                            doc(
+                                db,
+                                "annonces",
+                                actualite.referenceId
+                            );
+
+                        const annonceSnapshot =
+                            await getDoc(annonceRef);
+
+
+                        // -------------------------------------------------
+                        // L'annonce a été supprimée
+                        // -------------------------------------------------
+
+                        if (!annonceSnapshot.exists()) {
+
+                            console.log(
+                                "🗑️ Annonce supprimée → actualité masquée :",
+                                actualite.referenceId
+                            );
+
+                            continue;
+                        }
+
+
+                    } catch (error) {
+
+                        console.error(
+                            "❌ Erreur lors de la vérification de l'annonce :",
+                            actualite.referenceId,
+                            error
+                        );
+
+                        // En cas d'erreur, on n'affiche pas
+                        // une actualité dont l'existence de
+                        // l'annonce n'a pas pu être vérifiée.
+
+                        continue;
+                    }
+                }
+
+
+                // =================================================
+                // 6. ACTUALITÉ VALIDE
                 // =================================================
 
                 nombreActualitesValides++;
 
 
                 // =================================================
-                // 6. CRÉATION DE LA CARTE
+                // 7. CRÉATION DE LA CARTE
                 // =================================================
 
                 const card =
@@ -192,7 +260,7 @@ if (!actualitesContainer) {
 
 
                 // =================================================
-                // 7. BADGE "جديد"
+                // 8. BADGE "جديد"
                 // Pendant les 3 premiers jours
                 // =================================================
 
@@ -212,7 +280,7 @@ if (!actualitesContainer) {
 
 
                 // =================================================
-                // 8. TITRE
+                // 9. TITRE
                 // =================================================
 
                 const title =
@@ -224,7 +292,7 @@ if (!actualitesContainer) {
 
 
                 // =================================================
-                // 9. CONTENU
+                // 10. CONTENU
                 // =================================================
 
                 const content =
@@ -236,7 +304,7 @@ if (!actualitesContainer) {
 
 
                 // =================================================
-                // 10. ASSEMBLAGE
+                // 11. ASSEMBLAGE
                 // =================================================
 
                 card.appendChild(title);
@@ -245,11 +313,11 @@ if (!actualitesContainer) {
 
                 actualitesContainer.appendChild(card);
 
-            });
+            }
 
 
             // =================================================
-            // 11. AUCUNE ACTUALITÉ VALIDE
+            // 12. AUCUNE ACTUALITÉ VALIDE
             // =================================================
 
             if (nombreActualitesValides === 0) {
@@ -263,34 +331,49 @@ if (!actualitesContainer) {
 
         },
 
-       (error) => {
+        // =================================================
+        // ERREUR FIRESTORE
+        // =================================================
 
-    console.error(
-        "❌ Erreur lors du chargement des actualités :",
-        error
-    );
+        (error) => {
 
-    const errorBox = document.createElement("div");
-    errorBox.className = "error-message";
+            console.error(
+                "❌ Erreur lors du chargement des actualités :",
+                error
+            );
 
-    const title = document.createElement("strong");
-    title.textContent = "تعذر تحميل المستجدات حاليًا";
+            const errorBox =
+                document.createElement("div");
 
-    const details = document.createElement("p");
-    details.style.direction = "ltr";
-    details.style.textAlign = "left";
-    details.style.marginTop = "10px";
+            errorBox.className =
+                "error-message";
 
-    details.textContent =
-        (error?.code || "unknown") +
-        " — " +
-        (error?.message || "Erreur inconnue");
 
-    errorBox.appendChild(title);
-    errorBox.appendChild(details);
+            const title =
+                document.createElement("strong");
 
-    actualitesContainer.replaceChildren(errorBox);
-}
+            title.textContent =
+                "تعذر تحميل المستجدات حاليًا";
+
+
+            const details =
+                document.createElement("p");
+
+            details.style.direction = "ltr";
+            details.style.textAlign = "left";
+            details.style.marginTop = "10px";
+
+            details.textContent =
+                (error?.code || "unknown") +
+                " — " +
+                (error?.message || "Erreur inconnue");
+
+
+            errorBox.appendChild(title);
+            errorBox.appendChild(details);
+
+            actualitesContainer.replaceChildren(errorBox);
+        }
     );
 
 }
