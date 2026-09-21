@@ -1474,6 +1474,94 @@ function resetAnnonceForm() {
 
 
 /* =========================================================
+   ======================== PHOTOS =========================
+   ========================================================= */
+
+
+/* =========================================================
+   ENVOYER UNE PHOTO VERS FIREBASE STORAGE
+   ========================================================= */
+
+async function envoyerPhotoVersStorage(
+    fichier
+) {
+
+    try {
+
+        /* Nom unique du fichier */
+
+        const nomUnique =
+            Date.now() +
+            "_" +
+            Math.random()
+                .toString(36)
+                .substring(2, 10) +
+            "_" +
+            fichier.name;
+
+
+        /* Chemin dans Firebase Storage */
+
+        const chemin =
+            "galerie/" +
+            nomUnique;
+
+
+        /* Référence Storage */
+
+        const fichierRef =
+            ref(
+                storage,
+                chemin
+            );
+
+
+        /* Envoi du fichier */
+
+        await uploadBytes(
+            fichierRef,
+            fichier
+        );
+
+
+        /* Récupération de l'URL */
+
+        const url =
+            await getDownloadURL(
+                fichierRef
+            );
+
+
+        console.log(
+            "📸 Photo envoyée vers Storage :",
+            url
+        );
+
+
+        return {
+            url: url,
+            chemin: chemin,
+            nomFichier: fichier.name,
+            typeFichier:
+                fichier.type ||
+                "application/octet-stream",
+            tailleFichier:
+                fichier.size
+        };
+
+
+    } catch (error) {
+
+        console.error(
+            "❌ Erreur envoi photo vers Storage :",
+            error
+        );
+
+        throw error;
+    }
+}
+
+/* =========================================================
    ====================== DOCUMENTS ========================
    ========================================================= */
 
