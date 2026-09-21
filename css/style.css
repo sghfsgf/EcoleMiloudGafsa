@@ -2650,3 +2650,19 @@ FIN
         font-size: 0.95rem;
     }
 }
+/* =====================================================
+   FOND DU VOLET مستجدات
+===================================================== */
+
+#actualites {
+    background: linear-gradient(
+        135deg,
+        #fff8e8,
+        #eef8ff
+    );
+
+    border-radius: 18px;
+
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
