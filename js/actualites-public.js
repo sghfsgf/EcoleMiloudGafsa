@@ -5,9 +5,11 @@
 // Validité : 10 jours
 // Badge "جديد" : 3 premiers jours
 //
-// Règle supplémentaire :
-// Si une actualité correspond à une annonce supprimée,
-// cette actualité ne doit plus être affichée.
+// Règles supplémentaires :
+// - Si une actualité correspond à une annonce supprimée,
+//   cette actualité ne doit plus être affichée.
+// - Si une actualité correspond à un document supprimé,
+//   cette actualité ne doit plus être affichée.
 // =====================================================
 
 import {
@@ -185,56 +187,80 @@ if (!actualitesContainer) {
 
 
                 // =================================================
-                // 5. VÉRIFICATION DE L'ANNONCE
+                // 5. VÉRIFICATION DE LA SOURCE
                 //
-                // Si cette actualité est liée à une annonce,
-                // on vérifie que l'annonce existe toujours.
+                // Si l'actualité est liée à une annonce
+                // OU à un document, on vérifie que la source
+                // existe toujours dans Firestore.
                 // =================================================
 
                 if (
-                    actualite.type === "annonce" &&
-                    actualite.referenceId
+                    actualite.referenceId &&
+                    (
+                        actualite.type === "annonce" ||
+                        actualite.type === "document"
+                    )
                 ) {
 
                     try {
 
-                        const annonceRef =
+                        // -------------------------------------------------
+                        // Déterminer la collection source
+                        // -------------------------------------------------
+
+                        const collectionSource =
+                            actualite.type === "annonce"
+                                ? "annonces"
+                                : "documents";
+
+
+                        // -------------------------------------------------
+                        // Référence vers la source
+                        // -------------------------------------------------
+
+                        const sourceRef =
                             doc(
                                 db,
-                                "annonces",
+                                collectionSource,
                                 actualite.referenceId
                             );
 
-                        const annonceSnapshot =
-                            await getDoc(annonceRef);
+
+                        // -------------------------------------------------
+                        // Vérifier si la source existe
+                        // -------------------------------------------------
+
+                        const sourceSnapshot =
+                            await getDoc(sourceRef);
 
 
                         // -------------------------------------------------
-                        // L'annonce a été supprimée
+                        // Source supprimée
                         // -------------------------------------------------
 
-                        if (!annonceSnapshot.exists()) {
+                        if (!sourceSnapshot.exists()) {
 
                             console.log(
-                                "🗑️ Annonce supprimée → actualité masquée :",
+                                "🗑️ Source supprimée → actualité masquée :",
+                                actualite.type,
                                 actualite.referenceId
                             );
 
                             continue;
                         }
 
-
                     } catch (error) {
 
                         console.error(
-                            "❌ Erreur lors de la vérification de l'annonce :",
+                            "❌ Erreur lors de la vérification de la source :",
+                            actualite.type,
                             actualite.referenceId,
                             error
                         );
 
                         // En cas d'erreur, on n'affiche pas
-                        // une actualité dont l'existence de
-                        // l'annonce n'a pas pu être vérifiée.
+                        // une actualité dont la source ne peut
+                        // pas être vérifiée.
 
                         continue;
                     }
@@ -330,6 +356,7 @@ if (!actualitesContainer) {
             }
 
         },
+
 
         // =================================================
         // ERREUR FIRESTORE
