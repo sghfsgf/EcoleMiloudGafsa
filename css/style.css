@@ -2669,3 +2669,8 @@ FIN
 #actualites h2 {
     color: #b71c1c;
 }
+
+.actualite-badge-nouveau {
+    background-color: red !important;
+    color: white !important;
+}
