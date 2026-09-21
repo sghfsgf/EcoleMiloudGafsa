@@ -577,51 +577,167 @@
         </section>
 
 
-        <!-- =================================================
-             PHOTOS
-        ================================================== -->
+       <!-- =================================================
+     PHOTOS
+================================================= -->
 
-        <section
-            id="gestionPhotos"
-            class="admin-card future-card"
-        >
+<section
+    id="gestionPhotos"
+    class="admin-card"
+>
 
-            <div class="card-header">
+    <div class="card-header">
 
-                <div class="card-header-icon photo-icon">
-                    📸
-                </div>
+        <div class="card-header-icon photo-icon">
+            📸
+        </div>
 
-                <div>
+        <div>
 
-                    <h2>
-                        إدارة الصور
-                    </h2>
+            <h2>
+                إدارة الصور
+            </h2>
 
-                    <p>
-                        سيتم تفعيل إدارة الصور في مرحلة لاحقة.
-                    </p>
+            <p>
+                إضافة وإدارة صور أنشطة المدرسة ومعرض الصور.
+            </p>
 
-                </div>
+        </div>
 
-            </div>
+    </div>
 
 
-            <div class="future-message">
+    <!-- =================================================
+         FORMULAIRE D'AJOUT DES PHOTOS
+    ================================================== -->
 
-                <span>
-                    📸
-                </span>
+    <form id="galerieForm">
 
-                <p>
-                    يمكن لاحقًا إضافة صور أنشطة المدرسة
-                    ومعرض الصور من فضاء الإدارة.
-                </p>
 
-            </div>
+        <!-- Titre -->
 
-        </section>
+        <div class="form-group">
 
+            <label for="galerieTitre">
+                عنوان الصور
+            </label>
+
+            <input
+                type="text"
+                id="galerieTitre"
+                placeholder="مثال: أنشطة المدرسة"
+            >
+
+        </div>
+
+
+        <!-- Description -->
+
+        <div class="form-group">
+
+            <label for="galerieDescription">
+                وصف الصور
+            </label>
+
+            <textarea
+                id="galerieDescription"
+                rows="3"
+                placeholder="وصف مختصر للصور"
+            ></textarea>
+
+        </div>
+
+
+        <!-- Sélection des images -->
+
+        <div class="form-group">
+
+            <label for="galerieFiles">
+                📸 اختيار الصور من جهاز الكمبيوتر
+            </label>
+
+            <input
+                type="file"
+                id="galerieFiles"
+                name="galerieFiles"
+                accept="image/*,.tif,.tiff"
+                multiple
+            >
+
+            <small class="file-help">
+                يمكنك اختيار صورة واحدة أو عدة صور دفعة واحدة.
+                JPG، JPEG، PNG، GIF، WEBP، BMP، SVG، TIFF وغيرها.
+            </small>
+
+        </div>
+
+
+        <!-- Prévisualisation -->
+
+        <div
+            id="galeriePreview"
+            class="galerie-preview"
+        ></div>
+
+
+        <!-- Boutons -->
+
+        <div class="form-buttons">
+
+            <button
+                type="submit"
+                class="primary-button"
+            >
+                📤 إضافة الصور
+            </button>
+
+
+            <button
+                type="button"
+                id="galerieAnnuler"
+                class="secondary-button"
+            >
+                ↩️ إلغاء
+            </button>
+
+        </div>
+
+
+        <!-- Message -->
+
+        <p
+            id="galerieMessage"
+            class="message"
+            aria-live="polite"
+        ></p>
+
+
+    </form>
+
+
+    <!-- =================================================
+         LISTE DES PHOTOS EXISTANTES
+    ================================================== -->
+
+    <div class="list-header">
+
+        <h3>
+            📋 الصور الموجودة في المعرض
+        </h3>
+
+    </div>
+
+
+    <div id="galerieAdmin">
+
+        <p class="loading-message">
+            جاري تحميل الصور...
+        </p>
+
+    </div>
+
+
+</section>
 
         <!-- =================================================
              HORAIRES
