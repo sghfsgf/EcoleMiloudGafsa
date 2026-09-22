@@ -307,7 +307,35 @@ if (!actualitesContainer) {
                     card.appendChild(badge);
                 }
 
+                // =================================================
+// TYPE D'ACTUALITÉ
+// =================================================
 
+const typeElement =
+    document.createElement("div");
+
+typeElement.className =
+    "actualite-type";
+
+if (
+    actualite.type === "document" ||
+    actualite.type === "document-modification"
+) {
+
+    typeElement.textContent =
+        "📄 وثيقة";
+
+} else if (
+    actualite.type === "annonce" ||
+    actualite.type === "annonce-modification"
+) {
+
+    typeElement.textContent =
+        "📢 إعلان";
+
+}
+
+                
                 // =================================================
                 // 9. TITRE
                 // =================================================
