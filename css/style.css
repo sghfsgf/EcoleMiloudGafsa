@@ -2674,3 +2674,12 @@ FIN
     background-color: red !important;
     color: white !important;
 }
+
+.actualite-date {
+    display: block;
+    margin-top: 10px;
+    font-size: 0.85rem;
+    opacity: 0.75;
+    direction: ltr;
+    text-align: right;
+}
