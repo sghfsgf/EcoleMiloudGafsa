@@ -387,14 +387,15 @@ dateElement.className =
                 // =================================================
                 // 11. ASSEMBLAGE
                 // =================================================
+                  card.appendChild(typeElement);
 
-              card.appendChild(title);
+                  card.appendChild(title);
 
-card.appendChild(content);
+                  card.appendChild(content);
 
-card.appendChild(dateElement);
+                  card.appendChild(dateElement);
 
-actualitesContainer.appendChild(card);
+                   actualitesContainer.appendChild(card);
 
             }
 
