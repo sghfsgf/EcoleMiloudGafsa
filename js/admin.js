@@ -2033,26 +2033,17 @@ const trimestre =
             try {
 
                 const donnees = {
+    titre: titre,
+    description: description || "",
+    categorie: categorie,
+    cible: cible,
+    publie: publie,
+    updatedAt: serverTimestamp()
+};
 
-                    titre:
-                        titre,
-
-                    description:
-                        description || "",
-
-                    categorie:
-                        categorie,
-
-                    cible:
-                        cible,
-
-                    publie:
-                        publie,
-
-                    updatedAt:
-                        serverTimestamp()
-                };
-
+if (categorie === "examens") {
+    donnees.trimestre = trimestre;
+}
 
                 /* =========================================
                    NOUVEAU FICHIER
