@@ -161,107 +161,159 @@ function creerChampDestination() {
             "documentCategorie"
         );
 
-
-    if (
-        !categorieSelect ||
-        !documentForm
-    ) {
+    if (!categorieSelect) {
         return;
     }
 
+    /* =====================================================
+       CHAMP DESTINATION / NIVEAU
+       ===================================================== */
 
-    /* Éviter une double création */
-
-    if (
+    let groupeCible =
         document.getElementById(
-            "documentCible"
-        )
-    ) {
+            "groupeDocumentCible"
+        );
+
+    if (!groupeCible) {
+
+        const groupeCategorie =
+            categorieSelect.closest(
+                ".form-group"
+            );
+
+        if (!groupeCategorie) {
+            return;
+        }
+
+        groupeCible =
+            document.createElement(
+                "div"
+            );
+
+        groupeCible.className =
+            "form-group";
+
+        groupeCible.id =
+            "groupeDocumentCible";
+
+        const labelCible =
+            document.createElement(
+                "label"
+            );
+
+        labelCible.htmlFor =
+            "documentCible";
+
+        labelCible.textContent =
+            "🎯 الوجهة";
+
+        documentCibleSelect =
+            document.createElement(
+                "select"
+            );
+
+        documentCibleSelect.id =
+            "documentCible";
+
+        documentCibleSelect.name =
+            "documentCible";
+
+        groupeCible.appendChild(
+            labelCible
+        );
+
+        groupeCible.appendChild(
+            documentCibleSelect
+        );
+
+        groupeCategorie.parentNode.insertBefore(
+            groupeCible,
+            groupeCategorie.nextSibling
+        );
+    }
+    else {
 
         documentCibleSelect =
             document.getElementById(
                 "documentCible"
             );
-
-        return;
     }
 
 
-    const groupeCategorie =
-        categorieSelect.closest(
-            ".form-group"
+    /* =====================================================
+       CHAMP TRIMESTRE
+       ===================================================== */
+
+    let groupeTrimestre =
+        document.getElementById(
+            "groupeDocumentTrimestre"
         );
 
+    if (!groupeTrimestre) {
 
-    if (!groupeCategorie) {
-        return;
+        groupeTrimestre =
+            document.createElement(
+                "div"
+            );
+
+        groupeTrimestre.className =
+            "form-group";
+
+        groupeTrimestre.id =
+            "groupeDocumentTrimestre";
+
+        const labelTrimestre =
+            document.createElement(
+                "label"
+            );
+
+        labelTrimestre.htmlFor =
+            "documentTrimestre";
+
+        labelTrimestre.textContent =
+            "📅 الثلاثي";
+
+        documentTrimestreSelect =
+            document.createElement(
+                "select"
+            );
+
+        documentTrimestreSelect.id =
+            "documentTrimestre";
+
+        documentTrimestreSelect.name =
+            "documentTrimestre";
+
+        groupeTrimestre.appendChild(
+            labelTrimestre
+        );
+
+        groupeTrimestre.appendChild(
+            documentTrimestreSelect
+        );
+
+        groupeCible.parentNode.insertBefore(
+            groupeTrimestre,
+            groupeCible.nextSibling
+        );
+    }
+    else {
+
+        documentTrimestreSelect =
+            document.getElementById(
+                "documentTrimestre"
+            );
     }
 
 
-    const groupeCible =
-        document.createElement(
-            "div"
-        );
-
-
-    groupeCible.className =
-        "form-group";
-
-
-    const label =
-        document.createElement(
-            "label"
-        );
-
-
-    label.setAttribute(
-        "for",
-        "documentCible"
-    );
-
-
-    label.textContent =
-        "🎯 الوجهة";
-
-
-    const select =
-        document.createElement(
-            "select"
-        );
-
-
-    select.id =
-        "documentCible";
-
-    select.name =
-        "documentCible";
-
-
-    groupeCible.appendChild(
-        label
-    );
-
-
-    groupeCible.appendChild(
-        select
-    );
-
-
-    groupeCategorie.insertAdjacentElement(
-        "afterend",
-        groupeCible
-    );
-
-
-    documentCibleSelect =
-        select;
-
+    /* =====================================================
+       MISE À JOUR SELON LA CATÉGORIE
+       ===================================================== */
 
     categorieSelect.addEventListener(
         "change",
         mettreAJourDestinations
     );
-
 
     mettreAJourDestinations();
 }
