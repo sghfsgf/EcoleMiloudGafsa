@@ -113,6 +113,7 @@ const documentAnnuler =
    ========================================================= */
 
 let documentCibleSelect = null;
+let documentTrimestreSelect = null;
 
 
 /* =========================================================
