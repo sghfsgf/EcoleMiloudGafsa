@@ -255,6 +255,102 @@ function obtenirSlot(
     return null;
 }
 
+/* =========================================================
+   OBTENIR LE SLOT D'EXAMEN
+   grâce au niveau + trimestre
+   ========================================================= */
+
+function obtenirSlotExamen(
+    cible,
+    trimestre
+) {
+
+    const slots =
+        document.querySelectorAll(
+            ".dynamic-document-slot"
+        );
+
+
+    /* -----------------------------------------
+       Recherche du niveau scolaire
+    ----------------------------------------- */
+
+    for (
+        const slot of slots
+    ) {
+
+        if (
+            slot.dataset.categorie ===
+                "examens" &&
+
+            slot.dataset.cible ===
+                cible
+        ) {
+
+            /*
+             * Chercher le sous-espace
+             * correspondant au trimestre.
+             */
+
+            let trimestreSlot =
+                slot.querySelector(
+                    `[data-trimestre="${trimestre}"]`
+                );
+
+
+            /*
+             * Si le trimestre n'existe pas encore,
+             * on le crée automatiquement.
+             */
+
+            if (!trimestreSlot) {
+
+                trimestreSlot =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                trimestreSlot.className =
+                    "examen-trimestre";
+
+
+                trimestreSlot.dataset.trimestre =
+                    trimestre;
+
+
+                const titreTrimestre =
+                    document.createElement(
+                        "h4"
+                    );
+
+
+                titreTrimestre.textContent =
+                    libellesDestination[
+                        trimestre
+                    ] ||
+                    trimestre;
+
+
+                trimestreSlot.appendChild(
+                    titreTrimestre
+                );
+
+
+                slot.appendChild(
+                    trimestreSlot
+                );
+            }
+
+
+            return trimestreSlot;
+        }
+    }
+
+
+    return null;
+}
+
 
 /* =========================================================
    VIDER UNIQUEMENT LES ZONES DYNAMIQUES
