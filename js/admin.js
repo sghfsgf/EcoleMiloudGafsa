@@ -1975,9 +1975,13 @@ if (documentForm) {
                 null;
 
 
-            const cible =
-                documentCibleSelect?.value ||
-                "general";
+           const cible =
+    documentCibleSelect?.value ||
+    "general";
+
+const trimestre =
+    documentTrimestreSelect?.value ||
+    "";
 
 
             /* TITRE */
