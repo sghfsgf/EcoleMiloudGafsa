@@ -330,7 +330,6 @@ function mettreAJourDestinations() {
             "documentCategorie"
         );
 
-
     if (
         !categorieSelect ||
         !documentCibleSelect
@@ -338,172 +337,213 @@ function mettreAJourDestinations() {
         return;
     }
 
-
     const categorie =
         categorieSelect.value;
 
+    /* =====================================================
+       VIDER LES LISTES
+       ===================================================== */
 
-    documentCibleSelect.innerHTML =
-        "";
+    documentCibleSelect.innerHTML = "";
 
-
-    let destinations = [];
-
-
-    /* -----------------------------------------
-       DOCUMENTS GÉNÉRAUX
-    ----------------------------------------- */
-
-    if (
-        categorie ===
-        "documents"
-    ) {
-
-        destinations = [
-
-            {
-                value: "general",
-                label: "📚 الوثائق العامة"
-            }
-
-        ];
+    if (documentTrimestreSelect) {
+        documentTrimestreSelect.innerHTML = "";
     }
 
 
-    /* -----------------------------------------
+    /* =====================================================
+       DOCUMENTS
+       ===================================================== */
+
+    if (categorie === "documents") {
+
+        documentCibleSelect.innerHTML = `
+            <option value="general">
+                📚 الوثائق العامة
+            </option>
+        `;
+
+        if (documentTrimestreSelect) {
+            documentTrimestreSelect.parentElement.style.display =
+                "none";
+        }
+    }
+
+
+    /* =====================================================
        HORAIRES
-    ----------------------------------------- */
+       ===================================================== */
 
-    else if (
-        categorie ===
-        "horaires"
-    ) {
+    else if (categorie === "horaires") {
 
-        destinations = [
-
-            {
-                value: "sana1",
-                label: "السنة الأولى"
-            },
-
-            {
-                value: "sana2",
-                label: "السنة الثانية"
-            },
-
-            {
-                value: "sana3",
-                label: "السنة الثالثة"
-            },
-
-            {
-                value: "sana4",
-                label: "السنة الرابعة"
-            },
-
-            {
-                value: "sana5",
-                label: "السنة الخامسة"
-            },
-
-            {
-                value: "sana6",
-                label: "السنة السادسة"
-            }
-
+        const niveaux = [
+            { value: "sana1", label: "السنة الأولى" },
+            { value: "sana2", label: "السنة الثانية" },
+            { value: "sana3", label: "السنة الثالثة" },
+            { value: "sana4", label: "السنة الرابعة" },
+            { value: "sana5", label: "السنة الخامسة" },
+            { value: "sana6", label: "السنة السادسة" }
         ];
+
+        niveaux.forEach(
+            function(niveau) {
+
+                const option =
+                    document.createElement(
+                        "option"
+                    );
+
+                option.value =
+                    niveau.value;
+
+                option.textContent =
+                    niveau.label;
+
+                documentCibleSelect.appendChild(
+                    option
+                );
+            }
+        );
+
+        if (documentTrimestreSelect) {
+            documentTrimestreSelect.parentElement.style.display =
+                "none";
+        }
     }
 
 
-    /* -----------------------------------------
+    /* =====================================================
        EXAMENS
-    ----------------------------------------- */
+       ===================================================== */
 
-    else if (
-        categorie ===
-        "examens"
-    ) {
+    else if (categorie === "examens") {
 
-        destinations = [
-
-            {
-                value: "trimestre1",
-                label: "الثلاثي الأول"
-            },
-
-            {
-                value: "trimestre2",
-                label: "الثلاثي الثاني"
-            },
-
-            {
-                value: "trimestre3",
-                label: "الثلاثي الثالث"
-            }
-
+        const niveaux = [
+            { value: "sana1", label: "السنة الأولى" },
+            { value: "sana2", label: "السنة الثانية" },
+            { value: "sana3", label: "السنة الثالثة" },
+            { value: "sana4", label: "السنة الرابعة" },
+            { value: "sana5", label: "السنة الخامسة" },
+            { value: "sana6", label: "السنة السادسة" }
         ];
+
+        niveaux.forEach(
+            function(niveau) {
+
+                const option =
+                    document.createElement(
+                        "option"
+                    );
+
+                option.value =
+                    niveau.value;
+
+                option.textContent =
+                    niveau.label;
+
+                documentCibleSelect.appendChild(
+                    option
+                );
+            }
+        );
+
+
+        /* ----- TRIMESTRE ----- */
+
+        if (documentTrimestreSelect) {
+
+            const trimestres = [
+                {
+                    value: "trimestre1",
+                    label: "الثلاثي الأول"
+                },
+                {
+                    value: "trimestre2",
+                    label: "الثلاثي الثاني"
+                },
+                {
+                    value: "trimestre3",
+                    label: "الثلاثي الثالث"
+                }
+            ];
+
+            trimestres.forEach(
+                function(trimestre) {
+
+                    const option =
+                        document.createElement(
+                            "option"
+                        );
+
+                    option.value =
+                        trimestre.value;
+
+                    option.textContent =
+                        trimestre.label;
+
+                    documentTrimestreSelect.appendChild(
+                        option
+                    );
+                }
+            );
+
+            documentTrimestreSelect.parentElement.style.display =
+                "";
+        }
     }
 
 
-    /* -----------------------------------------
-       CONCOURS SIX
-    ----------------------------------------- */
+    /* =====================================================
+       CONCOURS SIXIÈME
+       ===================================================== */
 
-    else if (
-        categorie ===
-        "concours-six"
-    ) {
+    else if (categorie === "concours-six") {
 
-        destinations = [
-
+        const destinations = [
             {
                 value: "calendrier",
                 label: "📅 الرزنامة والمواعيد"
             },
-
             {
                 value: "anciens-sujets",
                 label: "📚 مواضيع السنوات السابقة"
             },
-
             {
                 value: "preparation",
                 label: "✏️ تمارين للتحضير"
             },
-
             {
                 value: "annonces",
                 label: "📢 الإعلانات"
             }
-
         ];
-    }
 
+        destinations.forEach(
+            function(destination) {
 
-    destinations.forEach(
-        function (destination) {
+                const option =
+                    document.createElement(
+                        "option"
+                    );
 
-            const option =
-                document.createElement(
-                    "option"
+                option.value =
+                    destination.value;
+
+                option.textContent =
+                    destination.label;
+
+                documentCibleSelect.appendChild(
+                    option
                 );
+            }
+        );
 
-
-            option.value =
-                destination.value;
-
-
-            option.textContent =
-                destination.label;
-
-
-            documentCibleSelect.appendChild(
-                option
-            );
+        if (documentTrimestreSelect) {
+            documentTrimestreSelect.parentElement.style.display =
+                "none";
         }
-    );
+    }
 }
-
 
 /* =========================================================
    INITIALISATION DESTINATION
