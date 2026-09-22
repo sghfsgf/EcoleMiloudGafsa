@@ -331,16 +331,42 @@ if (!actualitesContainer) {
                     actualite.description ||
                     "";
 
+                // =================================================
+// DATE
+// =================================================
+
+const dateElement =
+    document.createElement("small");
+
+const datePublication =
+    actualite.createdAt.toDate();
+
+dateElement.textContent =
+    "📅 " +
+    datePublication.toLocaleDateString(
+        "fr-FR",
+        {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric"
+        }
+    );
+
+dateElement.className =
+    "actualite-date";
+
 
                 // =================================================
                 // 11. ASSEMBLAGE
                 // =================================================
 
-                card.appendChild(title);
+              card.appendChild(title);
 
-                card.appendChild(content);
+card.appendChild(content);
 
-                actualitesContainer.appendChild(card);
+card.appendChild(dateElement);
+
+actualitesContainer.appendChild(card);
 
             }
 
