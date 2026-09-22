@@ -2683,3 +2683,57 @@ FIN
     direction: ltr;
     text-align: right;
 }
+/*2686 dernier style=========================================================
+
+/* =====================================================
+   ACTUALITÉS — مستجدات
+   ===================================================== */
+
+/* Type : وثيقة / إعلان */
+.actualite-type {
+    display: inline-block;
+    margin-bottom: 8px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background: #eaf4fb;
+    color: #245b78;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* Titre de l'actualité */
+.announcement-card h3 {
+    margin-top: 5px;
+    margin-bottom: 8px;
+    font-size: 1.05rem;
+}
+
+/* Contenu */
+.announcement-card p {
+    line-height: 1.7;
+    margin-bottom: 8px;
+}
+
+/* Date */
+.actualite-date {
+    display: block;
+    margin-top: 10px;
+    padding-top: 7px;
+    border-top: 1px solid #eeeeee;
+    font-size: 0.82rem;
+    opacity: 0.75;
+    direction: ltr;
+    text-align: right;
+}
+
+/* Badge جديد */
+.actualite-badge-nouveau {
+    display: inline-block;
+    margin-bottom: 8px;
+    padding: 4px 9px;
+    border-radius: 5px;
+    background: #b8860b;
+    color: #ffffff;
+    font-size: 0.78rem;
+    font-weight: bold;
+}
