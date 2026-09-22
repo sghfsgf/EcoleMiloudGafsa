@@ -194,13 +194,15 @@ if (!actualitesContainer) {
                 // existe toujours dans Firestore.
                 // =================================================
 
-                if (
-                    actualite.referenceId &&
-                    (
-                        actualite.type === "annonce" ||
-                        actualite.type === "document"
-                    )
-                ) {
+               if (
+    actualite.referenceId &&
+    (
+        actualite.type === "annonce" ||
+        actualite.type === "annonce-modification" ||
+        actualite.type === "document" ||
+        actualite.type === "document-modification"
+    )
+) {
 
                     try {
 
