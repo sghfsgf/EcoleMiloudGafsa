@@ -211,9 +211,10 @@ if (!actualitesContainer) {
                         // -------------------------------------------------
 
                         const collectionSource =
-                            actualite.type === "annonce"
-                                ? "annonces"
-                                : "documents";
+    actualite.type === "annonce" ||
+    actualite.type === "annonce-modification"
+        ? "annonces"
+        : "documents";
 
 
                         // -------------------------------------------------
