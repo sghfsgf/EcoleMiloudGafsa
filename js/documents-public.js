@@ -953,11 +953,44 @@ onSnapshot(
                     "general";
 
 
-                const slot =
-                    obtenirSlot(
-                        categorie,
-                        cible
-                    );
+               let slot = null;
+
+
+/* -----------------------------------------
+   CAS PARTICULIER : EXAMENS
+   cible = niveau
+   trimestre = période
+----------------------------------------- */
+
+if (
+    categorie ===
+    "examens"
+) {
+
+    const trimestre =
+        documentData.trimestre ||
+        "trimestre1";
+
+
+    slot =
+        obtenirSlotExamen(
+            cible,
+            trimestre
+        );
+
+} else {
+
+    /*
+     * Toutes les autres catégories
+     * gardent exactement leur logique actuelle.
+     */
+
+    slot =
+        obtenirSlot(
+            categorie,
+            cible
+        );
+}
 
 
                 if (!slot) {
